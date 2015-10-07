@@ -42,10 +42,21 @@
 (package
   (name "guile-sdl2")
   (version "0.1")
-  (source #f)
+  (source (origin
+            (method git-fetch)
+            (uri (git-reference
+                  (url "git://dthompson.us/guile-sdl2.git")
+                  (commit "9ce20c4")))
+            (sha256
+             (base32
+              "067vbbl643cijnc45jd06w5wz7y8b9vfb3mcjrxbynz8vv5sl9kn"))))
   (build-system gnu-build-system)
   (arguments
-   '(#:phases
+   '(#:configure-flags
+     (list (string-append "--with-libsdl2-prefix="
+                          (assoc-ref %build-inputs "sdl2")))
+     #:make-flags '("GUILE_AUTO_COMPILE=0")
+     #:phases
      (modify-phases %standard-phases
        (add-after 'unpack 'bootstrap
          (lambda _ (zero? (system* "sh" "bootstrap")))))))
