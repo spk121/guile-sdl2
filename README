@@ -1,0 +1,65 @@
+-*- mode: org -*-
+
+Guile-sdl2 provides Guile Scheme bindings for the SDL2 C shared
+library.  The bindings are written in pure Scheme by using Guile's
+foreign function interface.
+
+* Requirements
+
+  Guile-sdl2 currently depends on the following packages:
+
+  - GNU Guile >= 2.0.9
+  - SDL2 >= 2.0.0
+  - GNU Make
+  - GNU pkg-config
+
+  When building from a Git checkout, the following additional packages
+  are required:
+
+  - GNU Autoconf
+  - GNU Automake
+
+* Installing
+
+  Guile-sdl2 uses the standard GNU build system, so installation
+  requires the usual incantations:
+
+  # ./configure
+  # make
+  # make install
+
+  When building from a Git checkout, the following spell is necessary
+  before running the above commands:
+
+  # ./bootstrap
+
+  GNU Guix users may install the current development snapshot
+  described in =guix.scm= with the following command:
+
+  # guix package -f guix.scm
+
+* Developing
+
+  To build the source code from a Git checkout, run the following:
+
+  # ./bootstrap
+  # ./configure
+  # make
+
+  To start a Guile REPL with a pre-configured load path for using
+  guile-sdl2, use the =pre-inst-env= script:
+
+  # ./pre-inst-env guile
+
+  GNU Guix users may create a development environment with all of the
+  necessary dependencies by running the following command:
+
+  # guix environment -l guix.scm
+
+* Contact
+
+  Bug reports and patches may be sent to <davet@gnu.org>.
+
+  The maintainer of this library hangs out in the #guile channel on
+  irc.freenode.net, so help and general discussion may also be found
+  there.

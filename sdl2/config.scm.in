@@ -1,0 +1,5 @@
+(define-module (sdl2 config)
+  #:export (%libsdl2))
+
+(define %libsdl2
+  "@LIBSDL2@")
