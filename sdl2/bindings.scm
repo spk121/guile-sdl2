@@ -192,3 +192,11 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign sdl-gl-swap-window
   void "SDL_GL_SwapWindow" '(*))
+
+
+;;;
+;;; Timer
+;;;
+
+(define-foreign sdl-get-ticks
+  uint32 "SDL_GetTicks" '())

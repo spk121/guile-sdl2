@@ -32,7 +32,8 @@
             sdl-error
             sdl-version
             sdl-init
-            sdl-quit))
+            sdl-quit
+            sdl-ticks))
 
 (define %default-init-flags
   '(timer audio video haptic game-controller events))
@@ -77,3 +78,8 @@ The possible flags are 'timer', 'audio', 'video', 'haptic',
   "Quit all activated SDL subsystems.  This procedure should be called
 upon all exit conditions."
   (ffi:sdl-quit))
+
+(define (sdl-ticks)
+  "Return the number of milliseconds since the SDL library
+initialization."
+  (ffi:sdl-get-ticks))
