@@ -50,7 +50,12 @@
             SDL_WINDOW_FULLSCREEN_DESKTOP
             SDL_WINDOW_FOREIGN
             SDL_WINDOW_ALLOW_HIGHDPI
-            SDL_WINDOW_MOUSE_CAPTURE))
+            SDL_WINDOW_MOUSE_CAPTURE
+
+            SDL_RENDERER_SOFTWARE
+            SDL_RENDERER_ACCELERATED
+            SDL_RENDERER_PRESENTVSYNC
+            SDL_RENDERER_TARGETTEXTURE))
 
 (define sdl-func
   (let ((lib (dynamic-link %libsdl2)))
@@ -192,6 +197,29 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign sdl-gl-swap-window
   void "SDL_GL_SwapWindow" '(*))
+
+(define SDL_RENDERER_SOFTWARE #x00000001)
+(define SDL_RENDERER_ACCELERATED #x00000002)
+(define SDL_RENDERER_PRESENTVSYNC #x00000004)
+(define SDL_RENDERER_TARGETTEXTURE #x00000008)
+
+(define-foreign sdl-create-renderer
+  '* "SDL_CreateRenderer" (list '* int uint32))
+
+(define-foreign sdl-destroy-renderer
+  void "SDL_DestroyRenderer" '(*))
+
+(define-foreign sdl-render-clear
+  int "SDL_RenderClear" '(*))
+
+(define-foreign sdl-render-present
+  void "SDL_RenderPresent" '(*))
+
+(define-foreign sdl-render-copy
+  int "SDL_RenderCopy" '(* * * *))
+
+(define-foreign sdl-create-texture-from-surface
+  '* "SDL_CreateTextureFromSurface" '(* *))
 
 
 ;;;
