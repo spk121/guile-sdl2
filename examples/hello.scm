@@ -22,17 +22,18 @@
              (sdl2 surface)
              (sdl2 video))
 
+(define (draw ren)
+  (let* ((surface (load-bmp "hello.bmp"))
+         (texture (surface->texture ren surface)))
+    (clear-renderer ren)
+    (render-copy ren texture)
+    (present-renderer ren)
+    (sleep 2)))
+
 (sdl-init)
 
-(define window (make-window))
-(define ren (make-renderer window))
-(define surface (load-bmp "hello.bmp"))
-(define texture (surface->texture ren surface))
+(call-with-window (make-window)
+  (lambda (window)
+    (call-with-renderer (make-renderer window) draw)))
 
-(clear-renderer ren)
-(render-copy ren texture)
-(present-renderer ren)
-(sleep 2)
-(close-window! window)
-(delete-renderer! ren)
 (sdl-quit)
