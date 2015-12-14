@@ -69,7 +69,7 @@ FLAGS are:
 * accelerated, to use hardware acceleration
 * vsync, to synchronize rendering with the monitor's refresh rate
 * texture, for render to texture support"
-  (let ((ptr (ffi:sdl-create-renderer ((@@ (sdl2 video) unwrap-sdl-window)
+  (let ((ptr (ffi:sdl-create-renderer ((@@ (sdl2 video) unwrap-window)
                                        window)
                                       -1 ; pick driver automatically
                                       (renderer-flags->bitmask flags))))

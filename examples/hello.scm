@@ -24,7 +24,7 @@
 
 (sdl-init)
 
-(define window (make-sdl-window))
+(define window (make-window))
 (define ren (make-renderer window))
 (define surface (load-bmp "hello.bmp"))
 (define texture (surface->texture ren surface))
@@ -33,5 +33,6 @@
 (render-copy ren texture)
 (present-renderer ren)
 (sleep 2)
-(close-sdl-window! window)
+(close-window! window)
+(delete-renderer! ren)
 (sdl-quit)
