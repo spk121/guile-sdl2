@@ -127,16 +127,14 @@ the form '(x y)', where each coordinate is measured in pixels."
   "Close WINDOW."
   (ffi:sdl-destroy-window (unwrap-window window)))
 
-(define (call-with-window args proc)
-  "Call PROC with a new window defined by ARGS, a list of keyword
-arguments accepted by 'make-window', and close it when PROC
+(define (call-with-window window proc)
+  "Call PROC with WINDOW, an SDL window object, and close it when PROC
 returns or otherwise exits."
-  (let ((window (apply make-window args)))
-    (dynamic-wind
-      (const #t)
-      (lambda () (proc window))
-      (lambda ()
-        (close-window! window)))))
+  (dynamic-wind
+    (const #t)
+    (lambda () (proc window))
+    (lambda ()
+      (close-window! window))))
 
 (define (window-title window)
   "Return the title for WINDOW."
