@@ -228,3 +228,22 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign sdl-get-ticks
   uint32 "SDL_GetTicks" '())
+
+
+;;;
+;;; File I/O
+;;;
+
+(define-foreign sdl-rw-from-file
+  '* "SDL_RWFromFile" (list '* '*))
+
+
+;;;
+;;; Surface
+;;;
+
+(define-foreign sdl-free-surface
+  void "SDL_FreeSurface" '(*))
+
+(define-foreign sdl-load-bmp-rw
+  '* "SDL_LoadBMP_RW" (list '* int))
