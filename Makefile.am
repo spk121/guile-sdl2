@@ -46,7 +46,8 @@ SOURCES =					\
   sdl2/bindings.scm				\
   sdl2/surface.scm				\
   sdl2/render.scm				\
-  sdl2/video.scm
+  sdl2/video.scm				\
+  sdl2/events.scm
 
 EXTRA_DIST +=					\
   pre-inst-env.in				\
