@@ -26,6 +26,7 @@
 (define-module (sdl2)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-4)
+  #:use-module (srfi srfi-9)
   #:use-module (system foreign)
   #:use-module ((sdl2 bindings) #:prefix ffi:)
   #:export (sdl-error-string
@@ -33,7 +34,15 @@
             sdl-version
             sdl-init
             sdl-quit
-            sdl-ticks))
+            sdl-ticks
+
+            <color>
+            make-color
+            color?
+            color-r
+            color-g
+            color-b
+            color-a))
 
 (define %default-init-flags
   '(timer audio video haptic game-controller events))
@@ -83,3 +92,18 @@ upon all exit conditions."
   "Return the number of milliseconds since the SDL library
 initialization."
   (ffi:sdl-get-ticks))
+
+;; SDL_Color
+(define-record-type <color>
+  (make-color r g b a)
+  color?
+  (r color-r)
+  (g color-g)
+  (b color-b)
+  (a color-a))
+
+(define (color->struct color)
+  "Convert COLOR into a foreign struct."
+  (match color
+    (($ <color> r g b a)
+     (make-c-struct ffi:sdl-color (list r g b a)))))

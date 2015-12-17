@@ -76,6 +76,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 ;;; Foreign Types
 ;;;
 
+(define-public sdl-color
+  (list uint8 uint8 uint8 uint8))
+
 (define sdl-bool int)
 
 (define (boolean->sdl-bool b)
