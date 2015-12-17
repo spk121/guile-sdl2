@@ -74,6 +74,13 @@
             mouse-motion-event-x-rel
             mouse-motion-event-y-rel
 
+            make-joystick-axis-event
+            joystick-axis-event?
+            joystick-axis-event-timestamp
+            joystick-axis-event-which
+            joystick-axis-event-axis
+            joystick-axis-event-value
+
             poll-event))
 
 (define (make-sdl-event)
@@ -791,6 +798,35 @@
 
 
 ;;;
+;;; Joystick
+;;;
+
+(define-record-type <joystick-axis-event>
+  (make-joystick-axis-event timestamp which axis value)
+  joystick-axis-event?
+  (timestamp joystick-axis-event-timestamp)
+  (which joystick-axis-event-which)
+  (axis joystick-axis-event-axis)
+  (value joystick-axis-event-value))
+
+(define (parse-joystick-axis-event ptr)
+  (define types
+    (list uint32   ; type
+          uint32   ; timestamp
+          int32    ; which
+          uint8    ; axis
+          uint8    ; padding1
+          uint8    ; padding2
+          uint8    ; padding3
+          int16    ; value
+          uint16)) ; padding4
+
+  (match (parse-c-struct ptr types)
+    ((_ timestamp which axis _ _ _ value _)
+     (make-joystick-axis-event timestamp which axis value))))
+
+
+;;;
 ;;; Event management
 ;;;
 
@@ -811,4 +847,6 @@
              (parse-mouse-button-event ptr))
             ((= type ffi:SDL_MOUSEMOTION)
              (parse-mouse-motion-event ptr))
+            ((= type ffi:SDL_JOYAXISMOTION)
+             (parse-joystick-axis-event ptr))
             (else 'fixme:unsupported-event))))))
