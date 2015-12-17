@@ -42,6 +42,8 @@
 
             make-keyboard-event
             keyboard-event?
+            keyboard-down-event?
+            keyboard-up-event?
             keyboard-event-timestamp
             keyboard-event-window-id
             keyboard-event-pressed?
@@ -132,6 +134,16 @@
   (key keyboard-event-key)
   (scancode keyboard-event-scancode)
   (modifiers keyboard-event-modifiers))
+
+(define (keyboard-down-event? e)
+  "Return #t if E is a key press event."
+  (and (keyboard-event? e)
+       (keyboard-event-pressed? e)))
+
+(define (keyboard-up-event? e)
+  "Return #t if E is a key release event."
+  (and (keyboard-event? e)
+       (not (keyboard-event-pressed? e))))
 
 (define keycode-map
   (alist->hash-table
