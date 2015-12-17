@@ -29,6 +29,8 @@ AC_CONFIG_FILES([Makefile sdl2/config.scm])
 AC_CONFIG_FILES([pre-inst-env], [chmod +x pre-inst-env])
 
 GUILE_PROGS([2.0.9])
+
+# Core SDL2
 PKG_CHECK_MODULES([SDL2], [sdl2])
 
 LIBSDL2="libSDL2"
@@ -53,5 +55,44 @@ AC_MSG_RESULT([$LIBSDL2])
 AC_SUBST([LIBSDL2])
 AC_SUBST([LIBSDL2_PREFIX])
 AC_SUBST([LIBSDL2_LIBDIR])
+
+# SDL2_image
+AC_ARG_WITH([libsdl2_image],
+  AS_HELP_STRING([--with-libsdl2-image],
+                 [Build with the SDL2_image library]),
+  [], [with_libsdl2_image=yes])
+
+
+if test "x$with_libsdl2_image" = "xyes"; then
+   PKG_CHECK_MODULES([SDL2_image], [SDL2_image])
+fi
+
+LIBSDL2_IMAGE="libSDL2_image"
+LIBSDL2_IMAGE_LIBDIR="no"
+LIBSDL2_IMAGE_PREFIX="no"
+
+AC_ARG_WITH([libsdl2-image-prefix],
+  [AS_HELP_STRING([--with-libsdl2-image-prefix=DIR],
+                  [search for SDL2_image in DIR])],
+  [case "$withval" in
+    yes|no)
+      ;;
+    *)
+      LIBSDL2_IMAGE="$withval/lib/libSDL2_image"
+      LIBSDL2_IMAGE_PREFIX="$withval"
+      LIBSDL2_IMAGE_LIBDIR="$withval/lib"
+      ;;
+   esac])
+
+AM_CONDITIONAL([WITH_LIBSDL2_IMAGE], [test "x$with_libsdl2_image" = "xyes"])
+
+if test "x$with_libsdl2_image" = "xyes"; then
+   AC_MSG_CHECKING([for libSDL2_image shared library name])
+   AC_MSG_RESULT([$LIBSDL2_IMAGE])
+fi
+
+AC_SUBST([LIBSDL2_IMAGE])
+AC_SUBST([LIBSDL2_IMAGE_PREFIX])
+AC_SUBST([LIBSDL2_IMAGE_LIBDIR])
 
 AC_OUTPUT
