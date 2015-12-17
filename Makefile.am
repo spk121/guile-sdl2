@@ -57,6 +57,14 @@ SOURCES +=					\
 
 endif
 
+if WITH_LIBSDL2_TTF
+
+SOURCES +=					\
+  sdl2/bindings/ttf.scm				\
+  sdl2/ttf.scm
+
+endif
+
 EXTRA_DIST +=					\
   pre-inst-env.in				\
   README					\
