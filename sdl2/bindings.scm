@@ -807,6 +807,17 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 
 ;;;
+;;; Mouse
+;;;
+
+(define-public SDL_BUTTON_LEFT   1)
+(define-public SDL_BUTTON_MIDDLE 2)
+(define-public SDL_BUTTON_RIGHT  3)
+(define-public SDL_BUTTON_X1     4)
+(define-public SDL_BUTTON_X2     5)
+
+
+;;;
 ;;; Timer
 ;;;
 

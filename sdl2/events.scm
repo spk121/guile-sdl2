@@ -48,6 +48,19 @@
             keyboard-event-repeat
             keyboard-event-keysym
 
+            make-mouse-button-event
+            mouse-button-event?
+            mouse-button-down-event?
+            mouse-button-up-event?
+            mouse-button-event-timestamp
+            mouse-button-event-window-id
+            mouse-button-event-which
+            mouse-button-event-button
+            mouse-button-event-pressed?
+            mouse-button-event-clicks
+            mouse-button-event-x
+            mouse-button-event-y
+
             poll-event))
 
 (define (make-sdl-event)
@@ -655,6 +668,60 @@
 
 
 ;;;
+;;; Mouse
+;;;
+
+(define-record-type <mouse-button-event>
+  (make-mouse-button-event timestamp window-id which
+                           button pressed? clicks x y)
+  mouse-button-event?
+  (timestamp mouse-button-event-timestamp)
+  (window-id mouse-button-event-window-id)
+  (which mouse-button-event-which)
+  (button mouse-button-event-button)
+  (pressed? mouse-button-event-pressed?)
+  (clicks mouse-button-event-clicks)
+  (x mouse-button-event-x)
+  (y mouse-button-event-y))
+
+(define (mouse-button-down-event? e)
+  "Return #t if E is a mouse button down event."
+  (and (mouse-button-event? e)
+       (mouse-button-event-pressed? e)))
+
+(define (mouse-button-up-event? e)
+  "Return #t if E is a mouse button up event."
+  (and (mouse-button-event? e)
+       (not (mouse-button-event-pressed? e))))
+
+(define (parse-mouse-button-event ptr)
+  (define types
+    (list uint32  ; type
+          uint32  ; timestamp
+          uint32  ; windowID
+          uint32  ; which
+          uint8   ; button
+          uint8   ; state
+          uint8   ; clicks
+          uint8   ; padding1
+          int32   ; x
+          int32)) ; y
+
+  (define (button->symbol n)
+    (list-ref '(left middle right x1 x2) (1- n)))
+
+  (match (parse-c-struct ptr types)
+    ((_ timestamp window-id which button state clicks _ x y)
+     (make-mouse-button-event timestamp
+                              window-id
+                              which
+                              (button->symbol button)
+                              (= state ffi:SDL_PRESSED)
+                              clicks
+                              x y))))
+
+
+;;;
 ;;; Event management
 ;;;
 
@@ -670,4 +737,7 @@
             ((or (= type ffi:SDL_KEYDOWN)
                  (= type ffi:SDL_KEYUP))
              (parse-keyboard-event ptr))
+            ((or (= type ffi:SDL_MOUSEBUTTONDOWN)
+                 (= type ffi:SDL_MOUSEBUTTONUP))
+             (parse-mouse-button-event ptr))
             (else 'fixme:unsupported-event))))))
