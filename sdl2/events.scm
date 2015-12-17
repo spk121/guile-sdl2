@@ -81,6 +81,15 @@
             joystick-axis-event-axis
             joystick-axis-event-value
 
+            make-joystick-button-event
+            joystick-button-event?
+            joystick-button-down-event?
+            joystick-button-up-event?
+            joystick-button-event-timestamp
+            joystick-button-event-which
+            joystick-button-event-button
+            joystick-button-event-pressed?
+
             poll-event))
 
 (define (make-sdl-event)
@@ -825,6 +834,39 @@
     ((_ timestamp which axis _ _ _ value _)
      (make-joystick-axis-event timestamp which axis value))))
 
+(define-record-type <joystick-button-event>
+  (make-joystick-button-event timestamp which button pressed?)
+  joystick-button-event?
+  (timestamp joystick-button-event-timestamp)
+  (which joystick-button-which)
+  (button joystick-button-event-button)
+  (pressed? joystick-button-event-pressed?))
+
+(define (joystick-button-down-event? e)
+  "Return #t if E is a joystick button press event."
+  (and (joystick-button-event? e)
+       (joystick-button-event-pressed? e)))
+
+(define (joystick-button-up-event? e)
+  "Return #t if E is a joystick button release event."
+  (and (joystick-button-event? e)
+       (not (joystick-button-event-pressed? e))))
+
+(define (parse-joystick-button-event ptr)
+  (define types
+    (list uint32  ; type
+          uint32  ; timestamp
+          int32   ; which
+          uint8   ; button
+          uint8   ; state
+          uint8   ; padding1
+          uint8)) ; padding2
+
+  (match (parse-c-struct ptr types)
+    ((_ timestamp which button state _ _)
+     (make-joystick-button-event timestamp which button
+                                 (= state ffi:SDL_PRESSED)))))
+
 
 ;;;
 ;;; Event management
@@ -849,4 +891,7 @@
              (parse-mouse-motion-event ptr))
             ((= type ffi:SDL_JOYAXISMOTION)
              (parse-joystick-axis-event ptr))
+            ((or (= type ffi:SDL_JOYBUTTONDOWN)
+                 (= type ffi:SDL_JOYBUTTONUP))
+             (parse-joystick-button-event ptr))
             (else 'fixme:unsupported-event))))))
