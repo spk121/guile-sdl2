@@ -63,6 +63,17 @@
             mouse-button-event-x
             mouse-button-event-y
 
+            make-mouse-motion-event
+            mouse-motion-event?
+            mouse-motion-event-timestamp
+            mouse-motion-event-window-id
+            mouse-motion-event-which
+            mouse-motion-event-buttons
+            mouse-motion-event-x
+            mouse-motion-event-y
+            mouse-motion-event-x-rel
+            mouse-motion-event-y-rel
+
             poll-event))
 
 (define (make-sdl-event)
@@ -732,6 +743,52 @@
                               clicks
                               x y))))
 
+(define-record-type <mouse-motion-event>
+  (make-mouse-motion-event timestamp window-id which buttons x y x-rel y-rel)
+  mouse-motion-event?
+  (timestamp mouse-motion-event-timestamp)
+  (window-id mouse-motion-event-window-id)
+  (which mouse-motion-event-which)
+  (buttons mouse-motion-event-buttons)
+  (x mouse-motion-event-x)
+  (y mouse-motion-event-y)
+  (x-rel mouse-motion-event-x-rel)
+  (y-rel mouse-motion-event-y-rel))
+
+(define (parse-mouse-motion-event ptr)
+  (define types
+    (list uint32  ; type
+          uint32  ; timestamp
+          uint32  ; windowID
+          uint32  ; which
+          uint32  ; state
+          int32   ; x
+          int32   ; y
+          int32   ; xrel
+          int32)) ; yrel
+
+  (define (button-mask->list mask)
+    (fold (lambda (pair prev)
+            (match pair
+              ((sym . bit)
+               (if (zero? (logand mask bit))
+                   prev
+                   (cons sym prev)))))
+          '()
+          `((left   . ,ffi:SDL_BUTTON_LMASK)
+            (middle . ,ffi:SDL_BUTTON_MMASK)
+            (right  . ,ffi:SDL_BUTTON_RMASK)
+            (x1     . ,ffi:SDL_BUTTON_X1MASK)
+            (x2     . ,ffi:SDL_BUTTON_X2MASK))))
+
+  (match (parse-c-struct ptr types)
+    ((_ timestamp window-id which state x y xrel yrel)
+     (make-mouse-motion-event timestamp
+                              window-id
+                              which
+                              (button-mask->list state)
+                              x y xrel yrel))))
+
 
 ;;;
 ;;; Event management
@@ -752,4 +809,6 @@
             ((or (= type ffi:SDL_MOUSEBUTTONDOWN)
                  (= type ffi:SDL_MOUSEBUTTONUP))
              (parse-mouse-button-event ptr))
+            ((= type ffi:SDL_MOUSEMOTION)
+             (parse-mouse-motion-event ptr))
             (else 'fixme:unsupported-event))))))

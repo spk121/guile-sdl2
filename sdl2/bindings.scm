@@ -816,6 +816,16 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-public SDL_BUTTON_X1     4)
 (define-public SDL_BUTTON_X2     5)
 
+(define (button-mask n)
+  (ash 1 (1- n)))
+
+(define-public SDL_BUTTON_LMASK  (button-mask SDL_BUTTON_LEFT))
+(define-public SDL_BUTTON_MMASK  (button-mask SDL_BUTTON_MIDDLE))
+(define-public SDL_BUTTON_RMASK  (button-mask SDL_BUTTON_RIGHT))
+(define-public SDL_BUTTON_X1MASK (button-mask SDL_BUTTON_X1))
+(define-public SDL_BUTTON_X2MASK (button-mask SDL_BUTTON_X2))
+
+
 
 ;;;
 ;;; Timer
