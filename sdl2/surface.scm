@@ -37,9 +37,9 @@
 (define-wrapped-pointer-type <surface>
   surface?
   wrap-surface unwrap-surface
-  (lambda (context port)
+  (lambda (surface port)
     (format port "#<surface ~x>"
-            (pointer-address (unwrap-surface context)))))
+            (pointer-address (unwrap-surface surface)))))
 
 (define (delete-surface! surface)
   "Free the memory used by SURFACE."
