@@ -101,7 +101,7 @@
                 focus-gained
                 focus-lost
                 close)
-              n))
+              (1- n)))
 
   (define types
     (list uint32  ; type
