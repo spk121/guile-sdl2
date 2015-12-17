@@ -49,6 +49,14 @@ SOURCES =					\
   sdl2/video.scm				\
   sdl2/events.scm
 
+if WITH_LIBSDL2_IMAGE
+
+SOURCES +=					\
+  sdl2/bindings/image.scm			\
+  sdl2/image.scm
+
+endif
+
 EXTRA_DIST +=					\
   pre-inst-env.in				\
   README					\
