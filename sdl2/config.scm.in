@@ -1,9 +1,13 @@
 (define-module (sdl2 config)
   #:export (%libsdl2
-            %libsdl2-image))
+            %libsdl2-image
+            %libsdl2-ttf))
 
 (define %libsdl2
   "@LIBSDL2@")
 
 (define %libsdl2-image
   "@LIBSDL2_IMAGE@")
+
+(define %libsdl2-ttf
+  "@LIBSDL2_TTF@")
