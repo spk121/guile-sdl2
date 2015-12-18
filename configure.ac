@@ -133,4 +133,42 @@ AC_SUBST([LIBSDL2_TTF])
 AC_SUBST([LIBSDL2_TTF_PREFIX])
 AC_SUBST([LIBSDL2_TTF_LIBDIR])
 
+# SDL2_mixer
+AC_ARG_WITH([libsdl2_mixer],
+  AS_HELP_STRING([--with-libsdl2-mixer],
+                 [Build with the SDL2_mixer library]),
+  [], [with_libsdl2_mixer=yes])
+
+if test "x$with_libsdl2_mixer" = "xyes"; then
+   PKG_CHECK_MODULES([SDL2_mixer], [SDL2_mixer])
+fi
+
+LIBSDL2_MIXER="libSDL2_mixer"
+LIBSDL2_MIXER_LIBDIR="no"
+LIBSDL2_MIXER_PREFIX="no"
+
+AC_ARG_WITH([libsdl2-mixer-prefix],
+  [AS_HELP_STRING([--with-libsdl2-mixer-prefix=DIR],
+                  [search for SDL2_mixer in DIR])],
+  [case "$withval" in
+    yes|no)
+      ;;
+    *)
+      LIBSDL2_MIXER="$withval/lib/libSDL2_mixer"
+      LIBSDL2_MIXER_PREFIX="$withval"
+      LIBSDL2_MIXER_LIBDIR="$withval/lib"
+      ;;
+   esac])
+
+AM_CONDITIONAL([WITH_LIBSDL2_MIXER], [test "x$with_libsdl2_mixer" = "xyes"])
+
+if test "x$with_libsdl2_mixer" = "xyes"; then
+   AC_MSG_CHECKING([for libSDL2_mixer shared library name])
+   AC_MSG_RESULT([$LIBSDL2_MIXER])
+fi
+
+AC_SUBST([LIBSDL2_MIXER])
+AC_SUBST([LIBSDL2_MIXER_PREFIX])
+AC_SUBST([LIBSDL2_MIXER_LIBDIR])
+
 AC_OUTPUT

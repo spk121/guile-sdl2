@@ -1,7 +1,8 @@
 (define-module (sdl2 config)
   #:export (%libsdl2
             %libsdl2-image
-            %libsdl2-ttf))
+            %libsdl2-ttf
+            %libsdl2-mixer))
 
 (define %libsdl2
   "@LIBSDL2@")
@@ -11,3 +12,6 @@
 
 (define %libsdl2-ttf
   "@LIBSDL2_TTF@")
+
+(define %libsdl2-mixer
+  "@LIBSDL2_MIXER@")
