@@ -1,15 +1,18 @@
 -*- mode: org -*-
 
-Guile-sdl2 provides Guile Scheme bindings for the SDL2 C shared
+Guile-SDL2 provides Guile Scheme bindings for the SDL2 C shared
 library.  The bindings are written in pure Scheme by using Guile's
 foreign function interface.
 
 * Requirements
 
-  Guile-sdl2 currently depends on the following packages:
+  Guile-SDL2 currently depends on the following packages:
 
   - GNU Guile >= 2.0.9
   - SDL2 >= 2.0.0
+  - SDL2_image >= 2.0.0
+  - SDL2_mixer >= 2.0.0
+  - SDL2_ttf >= 2.0.0
   - GNU Make
   - GNU pkg-config
 
@@ -37,6 +40,22 @@ foreign function interface.
   described in =guix.scm= with the following command:
 
   # guix package -f guix.scm
+
+* Usage
+
+  Guile-SDL2 provides modules in the '(sdl2 ...)' namespace, roughly
+  organized how the SDL2 C header files are organized.  See the
+  =examples= directory for practical examples.
+
+  Low-level bindings are available in the '(sdl2 bindings ...)'
+  namespace, but these are not recommended for normal usage.
+
+  Additionally, SDL2 extension library bindings are available in the
+  following modules:
+
+  - SDL2_image: (sdl2 image)
+  - SDL2_mixer: (sdl2 mixer)
+  - SDL2_ttf: (sdl2 ttf)
 
 * Developing
 
