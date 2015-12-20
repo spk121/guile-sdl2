@@ -46,15 +46,21 @@
             (method git-fetch)
             (uri (git-reference
                   (url "git://dthompson.us/guile-sdl2.git")
-                  (commit "9ce20c4")))
+                  (commit "2e70a73")))
             (sha256
              (base32
-              "067vbbl643cijnc45jd06w5wz7y8b9vfb3mcjrxbynz8vv5sl9kn"))))
+              "13sb039vcgidvk7p2ky8xcbymvm4pcbvql2ka90ws41ic2vg8x1w"))))
   (build-system gnu-build-system)
   (arguments
    '(#:configure-flags
      (list (string-append "--with-libsdl2-prefix="
-                          (assoc-ref %build-inputs "sdl2")))
+                          (assoc-ref %build-inputs "sdl2"))
+           (string-append "--with-libsdl2-image-prefix="
+                          (assoc-ref %build-inputs "sdl2-image"))
+           (string-append "--with-libsdl2-ttf-prefix="
+                          (assoc-ref %build-inputs "sdl2-ttf"))
+           (string-append "--with-libsdl2-mixer-prefix="
+                          (assoc-ref %build-inputs "sdl2-mixer")))
      #:make-flags '("GUILE_AUTO_COMPILE=0")
      #:phases
      (modify-phases %standard-phases
@@ -66,7 +72,10 @@
      ("pkg-config" ,pkg-config)))
   (inputs
    `(("guile" ,guile-2.0)
-     ("sdl2" ,sdl2)))
+     ("sdl2" ,sdl2)
+     ("sdl2-image" ,sdl2-image)
+     ("sdl2-mixer" ,sdl2-mixer)
+     ("sdl2-ttf" ,sdl2-ttf)))
   (synopsis "Guile bindings for SDL2")
   (description "Guile-sdl2 provides pure Guile Scheme bindings to the
 SDL2 C shared library via the foreign function interface.")
