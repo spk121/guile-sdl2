@@ -855,3 +855,23 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign sdl-load-bmp-rw
   '* "SDL_LoadBMP_RW" (list '* int))
+
+
+;;;
+;;; Audio
+;;;
+
+(define-public AUDIO_U8     #x0008)
+(define-public AUDIO_S8     #x8008)
+(define-public AUDIO_U16LSB #x0010)
+(define-public AUDIO_S16LSB #x8010)
+(define-public AUDIO_U16MSB #x1010)
+(define-public AUDIO_S16MSB #x9010)
+(define-public AUDIO_U16    AUDIO_U16LSB)
+(define-public AUDIO_S16    AUDIO_S16LSB)
+(define-public AUDIO_S32LSB #x8020)
+(define-public AUDIO_S32MSB #x9020)
+(define-public AUDIO_S32    AUDIO_S32LSB)
+(define-public AUDIO_F32LSB #x8120)
+(define-public AUDIO_F32MSB #x9120)
+(define-public AUDIO_F32    AUDIO_F32LSB)

@@ -65,6 +65,14 @@ SOURCES +=					\
 
 endif
 
+if WITH_LIBSDL2_MIXER
+
+SOURCES +=					\
+  sdl2/bindings/mixer.scm			\
+  sdl2/mixer.scm
+
+endif
+
 EXTRA_DIST +=					\
   pre-inst-env.in				\
   README					\
