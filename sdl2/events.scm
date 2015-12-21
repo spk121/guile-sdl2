@@ -39,6 +39,20 @@
 
             make-window-event
             window-event?
+            window-shown-event?
+            window-hidden-event?
+            window-exposed-event?
+            window-moved-event?
+            window-resized-event?
+            window-size-changed-event?
+            window-minimized-event?
+            window-maximized-event?
+            window-restored-event?
+            window-enter-event?
+            window-leave-event?
+            window-focus-gained-event?
+            window-focus-lost-event?
+            window-closed-event?
             window-event-timestamp
             window-event-window-id
             window-event-type
@@ -131,6 +145,76 @@
   (window-id window-event-window-id)
   (type window-event-type)
   (vector window-event-vector))
+
+(define (window-shown-event? e)
+  "Return #t if E is a window shown event."
+  (and (window-event? e)
+       (eq? 'shown (window-event-type e))))
+
+(define (window-hidden-event? e)
+  "Return #t if E is a window hidden event."
+  (and (window-event? e)
+       (eq? 'hidden (window-event-type e))))
+
+(define (window-exposed-event? e)
+  "Return #t if E is a window exposed event."
+  (and (window-event? e)
+       (eq? 'exposed (window-event-type e))))
+
+(define (window-moved-event? e)
+  "Return #t if E is a window moved event."
+  (and (window-event? e)
+       (eq? 'moved (window-event-type e))))
+
+(define (window-resized-event? e)
+  "Return #t if E is a window resized event."
+  (and (window-event? e)
+       (eq? 'resized (window-event-type e))))
+
+(define (window-size-changed-event? e)
+  "Return #t if E is a window size changed event."
+  (and (window-event? e)
+       (eq? 'size-changed (window-event-type e))))
+
+(define (window-minimized-event? e)
+  "Return #t if E is a window minimized event."
+  (and (window-event? e)
+       (eq? 'minimized (window-event-type e))))
+
+(define (window-maximized-event? e)
+  "Return #t if E is a window maximized event."
+  (and (window-event? e)
+       (eq? 'maximized (window-event-type e))))
+
+(define (window-restored-event? e)
+  "Return #t if E is a window restored event."
+  (and (window-event? e)
+       (eq? 'restored (window-event-type e))))
+
+(define (window-enter-event? e)
+  "Return #t if E is a window enter event."
+  (and (window-event? e)
+       (eq? 'enter (window-event-type e))))
+
+(define (window-leave-event? e)
+  "Return #t if E is a window leave event."
+  (and (window-event? e)
+       (eq? 'leave (window-event-type e))))
+
+(define (window-focus-gained-event? e)
+  "Return #t if E is a window focus gained event."
+  (and (window-event? e)
+       (eq? 'focus-gained (window-event-type e))))
+
+(define (window-focus-lost-event? e)
+  "Return #t if E is a window focus lost event."
+  (and (window-event? e)
+       (eq? 'focus-lost (window-event-type e))))
+
+(define (window-closed-event? e)
+  "Return #t if E is a window closed event."
+  (and (window-event? e)
+       (eq? 'close (window-event-type e))))
 
 (define (parse-window-event ptr)
   (define (type-symbol n)
