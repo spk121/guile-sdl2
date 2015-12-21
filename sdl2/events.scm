@@ -33,7 +33,11 @@
   #:use-module (system foreign)
   #:use-module ((sdl2 bindings) #:prefix ffi:)
   #:use-module (sdl2)
-  #:export (make-window-event
+  #:export (make-quit-event
+            quit-event?
+            quit-event-timestamp
+
+            make-window-event
             window-event?
             window-event-timestamp
             window-event-window-id
@@ -99,6 +103,21 @@
 
 (define (sdl-event-type event)
   (u32vector-ref event 0))
+
+
+;;;
+;;; Quit
+;;;
+
+(define-record-type <quit-event>
+  (make-quit-event timestamp)
+  quit-event?
+  (timestamp quit-event-timestamp))
+
+(define (parse-quit-event ptr)
+  (match (parse-c-struct ptr (list uint32 uint32))
+    ((_ timestamp)
+     (make-quit-event timestamp))))
 
 
 ;;;
@@ -881,6 +900,8 @@
     (and (= result 1)
          (let ((type (sdl-event-type e)))
            (cond
+            ((= type ffi:SDL_QUIT)
+             (parse-quit-event ptr))
             ((= type ffi:SDL_WINDOWEVENT)
              (parse-window-event ptr))
             ((or (= type ffi:SDL_KEYDOWN)
