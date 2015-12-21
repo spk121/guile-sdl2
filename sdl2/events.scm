@@ -247,8 +247,8 @@
           int32)) ; data2
 
   (match (parse-c-struct ptr types)
-    ((_ timestamp id event _ _ _ data1 data2)
-     (make-window-event timestamp id (type-symbol event) (cons data1 data2)))))
+    ((_ timestamp id event _ _ _ x y)
+     (make-window-event timestamp id (type-symbol event) (list x y)))))
 
 
 ;;;
