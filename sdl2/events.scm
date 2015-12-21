@@ -48,7 +48,9 @@
             keyboard-event-window-id
             keyboard-event-pressed?
             keyboard-event-repeat
-            keyboard-event-keysym
+            keyboard-event-key
+            keyboard-event-scancode
+            keyboard-event-modifiers
 
             make-mouse-button-event
             mouse-button-event?
