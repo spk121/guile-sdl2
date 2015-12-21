@@ -46,10 +46,10 @@
             (method git-fetch)
             (uri (git-reference
                   (url "git://dthompson.us/guile-sdl2.git")
-                  (commit "2e70a73")))
+                  (commit "9bad448")))
             (sha256
              (base32
-              "13sb039vcgidvk7p2ky8xcbymvm4pcbvql2ka90ws41ic2vg8x1w"))))
+              "00y9sh7ppsdcxm5bcxynqcbwinb8w1v7y8bgiprpf73gi6v4pipf"))))
   (build-system gnu-build-system)
   (arguments
    '(#:configure-flags
