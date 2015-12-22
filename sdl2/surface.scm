@@ -195,4 +195,4 @@ Valid format types are:
                                              0)))
     (if (null-pointer? ptr)
         (sdl-error "convert-surface-format" "failed to convert surface format")
-        (wrap-surface surface))))
+        (wrap-surface ptr))))
