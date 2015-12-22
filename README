@@ -4,6 +4,9 @@ Guile-SDL2 provides Guile Scheme bindings for the SDL2 C shared
 library.  The bindings are written in pure Scheme by using Guile's
 foreign function interface.
 
+In addition to the SDL2 core library, bindings are also provided for
+SDL2_image, SDL2_mixer, and SDL2_ttf.
+
 * Requirements
 
   Guile-SDL2 currently depends on the following packages:
@@ -27,53 +30,84 @@ foreign function interface.
   Guile-sdl2 uses the standard GNU build system, so installation
   requires the usual incantations:
 
-  # ./configure
-  # make
-  # make install
+  #+BEGIN_SRC sh
+    ./configure
+    make
+    make install
+  #+END_SRC
+
+  To turn off non-core library bindings, the following configure flags
+  may be used:
+
+  #+BEGIN_SRC sh
+    ./configure --with-libsdl2-image=no \
+                --with-libsdl2-mixer=no \
+                --with-libsdl2-ttf=no
+  #+END_SRC
 
   When building from a Git checkout, the following spell is necessary
-  before running the above commands:
+  before running any of the above commands:
 
-  # ./bootstrap
+  #+BEGIN_SRC sh
+    ./bootstrap
+  #+END_SRC
 
   GNU Guix users may install the current development snapshot
   described in =guix.scm= with the following command:
 
-  # guix package -f guix.scm
+  #+BEGIN_SRC sh
+    guix package -f guix.scm
+  #+END_SRC
 
 * Usage
 
-  Guile-SDL2 provides modules in the '(sdl2 ...)' namespace, roughly
+  Guile-SDL2 provides modules in the =(sdl2 ...)= namespace, roughly
   organized how the SDL2 C header files are organized.  See the
   =examples= directory for practical examples.
 
-  Low-level bindings are available in the '(sdl2 bindings ...)'
+  Low-level bindings are available in the =(sdl2 bindings ...)=
   namespace, but these are not recommended for normal usage.
 
   Additionally, SDL2 extension library bindings are available in the
   following modules:
 
-  - SDL2_image: (sdl2 image)
-  - SDL2_mixer: (sdl2 mixer)
-  - SDL2_ttf: (sdl2 ttf)
+  - SDL2_image: =(sdl2 image)=
+  - SDL2_mixer: =(sdl2 mixer)=
+  - SDL2_ttf: =(sdl2 ttf)=
 
 * Developing
 
   To build the source code from a Git checkout, run the following:
 
-  # ./bootstrap
-  # ./configure
-  # make
+  #+BEGIN_SRC sh
+    ./bootstrap
+    ./configure
+    make
+  #+END_SRC
 
   To start a Guile REPL with a pre-configured load path for using
   guile-sdl2, use the =pre-inst-env= script:
 
-  # ./pre-inst-env guile
+  #+BEGIN_SRC sh
+    ./pre-inst-env guile
+  #+END_SRC
 
   GNU Guix users may create a development environment with all of the
   necessary dependencies by running the following command:
 
-  # guix environment -l guix.scm
+  #+BEGIN_SRC sh
+    guix environment -l guix.scm
+  #+END_SRC
+
+  In order to configure the proper library locations for Guix-based
+  builds, the configure script should be invoked like so:
+
+  #+BEGIN_SRC sh
+    ./configure --with-libsdl2-prefix=$(guix build sdl2) \
+                --with-libsdl2-image-prefix=$(guix build sdl2-image) \
+                --with-libsdl2-ttf-prefix=$(guix build sdl2-ttf) \
+                --with-libsdl2-mixer-prefix=$(guix build sdl2-mixer)
+  #+END_SRC
 
 * Contact
 
