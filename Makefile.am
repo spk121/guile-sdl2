@@ -76,4 +76,6 @@ endif
 EXTRA_DIST +=					\
   pre-inst-env.in				\
   README					\
-  guix.scm
+  guix.scm					\
+  examples/hello.scm				\
+  examples/hello.bmp
