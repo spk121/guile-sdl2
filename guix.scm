@@ -41,7 +41,7 @@
 
 (package
   (name "guile-sdl2")
-  (version "0.1")
+  (version "0.1.0")
   (source (origin
             (method git-fetch)
             (uri (git-reference
