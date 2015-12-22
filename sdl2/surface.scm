@@ -37,7 +37,9 @@
             surface-width
             surface-height
             surface-pitch
-            surface-pixels))
+            surface-pixels
+
+            convert-surface-format))
 
 (define-wrapped-pointer-type <surface>
   surface?
@@ -108,3 +110,89 @@ PROC."
                                        (native-endianness)
                                        %pointer-size))))
     (pointer->bytevector pixels (* height pitch))))
+
+(define (symbol->sdl-pixel-format sym)
+  (match sym
+    ('index1lsb   ffi:SDL_PIXELFORMAT_INDEX1LSB)
+    ('index1msb   ffi:SDL_PIXELFORMAT_INDEX1MSB)
+    ('index4lsb   ffi:SDL_PIXELFORMAT_INDEX4LSB)
+    ('index4msb   ffi:SDL_PIXELFORMAT_INDEX4MSB)
+    ('index8      ffi:SDL_PIXELFORMAT_INDEX8)
+    ('rgb332      ffi:SDL_PIXELFORMAT_RGB332)
+    ('rgb444      ffi:SDL_PIXELFORMAT_RGB444)
+    ('rgb555      ffi:SDL_PIXELFORMAT_RGB555)
+    ('bgr555      ffi:SDL_PIXELFORMAT_BGR555)
+    ('argb4444    ffi:SDL_PIXELFORMAT_ARGB4444)
+    ('rgba4444    ffi:SDL_PIXELFORMAT_RGBA4444)
+    ('abgr4444    ffi:SDL_PIXELFORMAT_ABGR4444)
+    ('bgra4444    ffi:SDL_PIXELFORMAT_BGRA4444)
+    ('argb1555    ffi:SDL_PIXELFORMAT_ARGB1555)
+    ('rgba5551    ffi:SDL_PIXELFORMAT_RGBA5551)
+    ('abgr1555    ffi:SDL_PIXELFORMAT_ABGR1555)
+    ('bgra5551    ffi:SDL_PIXELFORMAT_BGRA5551)
+    ('rgb565      ffi:SDL_PIXELFORMAT_RGB565)
+    ('bgr565      ffi:SDL_PIXELFORMAT_BGR565)
+    ('rgb24       ffi:SDL_PIXELFORMAT_RGB24)
+    ('bgr24       ffi:SDL_PIXELFORMAT_BGR24)
+    ('rgb888      ffi:SDL_PIXELFORMAT_RGB888)
+    ('rgbx8888    ffi:SDL_PIXELFORMAT_RGBX8888)
+    ('bgr888      ffi:SDL_PIXELFORMAT_BGR888)
+    ('bgrx8888    ffi:SDL_PIXELFORMAT_BGRX8888)
+    ('argb8888    ffi:SDL_PIXELFORMAT_ARGB8888)
+    ('rgba8888    ffi:SDL_PIXELFORMAT_RGBA8888)
+    ('abgr8888    ffi:SDL_PIXELFORMAT_ABGR8888)
+    ('bgra8888    ffi:SDL_PIXELFORMAT_BGRA8888)
+    ('argb2101010 ffi:SDL_PIXELFORMAT_ARGB2101010)
+    ('yv12        ffi:SDL_PIXELFORMAT_YV12)
+    ('iyuv        ffi:SDL_PIXELFORMAT_IYUV)
+    ('yuy2        ffi:SDL_PIXELFORMAT_YUY2)
+    ('uyvy        ffi:SDL_PIXELFORMAT_UYVY)
+    ('yvyu        ffi:SDL_PIXELFORMAT_YVYU)))
+
+(define (convert-surface-format surface format)
+  "Convert the pixels in SURFACE to FORMAT, a symbol representing a
+specific pixel format, and return a new surface object.
+
+Valid format types are:
+
+- index1lsb
+- index1msb
+- index4lsb
+- index4msb
+- index8
+- rgb332
+- rgb444
+- rgb555
+- bgr555
+- argb4444
+- rgba4444
+- abgr4444
+- bgra4444
+- argb1555
+- rgba5551
+- abgr1555
+- bgra5551
+- rgb565
+- bgr565
+- rgb24
+- bgr24
+- rgb888
+- rgbx8888
+- bgr888
+- bgrx8888
+- argb8888
+- rgba8888
+- abgr8888
+- bgra8888
+- argb2101010
+- yv12
+- iyuv
+- yuy2
+- uyvy
+- yvyu"
+  (let ((ptr (ffi:sdl-convert-surface-format (unwrap-surface surface)
+                                             (symbol->sdl-pixel-format format)
+                                             0)))
+    (if (null-pointer? ptr)
+        (sdl-error "convert-surface-format" "failed to convert surface format")
+        (wrap-surface surface))))
