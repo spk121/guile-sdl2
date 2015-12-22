@@ -25,37 +25,7 @@
 
 (define-module (sdl2 bindings)
   #:use-module (system foreign)
-  #:use-module (sdl2 config)
-  #:export (boolean->sdl-bool
-
-            SDL_INIT_TIMER
-            SDL_INIT_AUDIO
-            SDL_INIT_VIDEO
-            SDL_INIT_HAPTIC
-            SDL_INIT_GAMECONTROLLER
-            SDL_INIT_EVENTS
-            SDL_INIT_NOPARACHUTE
-
-            SDL_WINDOW_FULLSCREEN
-            SDL_WINDOW_OPENGL
-            SDL_WINDOW_SHOWN
-            SDL_WINDOW_HIDDEN
-            SDL_WINDOW_BORDERLESS
-            SDL_WINDOW_RESIZABLE
-            SDL_WINDOW_MINIMIZED
-            SDL_WINDOW_MAXIMIZED
-            SDL_WINDOW_INPUT_GRABBED
-            SDL_WINDOW_INPUT_FOCUS
-            SDL_WINDOW_MOUSE_FOCUS
-            SDL_WINDOW_FULLSCREEN_DESKTOP
-            SDL_WINDOW_FOREIGN
-            SDL_WINDOW_ALLOW_HIGHDPI
-            SDL_WINDOW_MOUSE_CAPTURE
-
-            SDL_RENDERER_SOFTWARE
-            SDL_RENDERER_ACCELERATED
-            SDL_RENDERER_PRESENTVSYNC
-            SDL_RENDERER_TARGETTEXTURE))
+  #:use-module (sdl2 config))
 
 (define sdl-func
   (let ((lib (dynamic-link %libsdl2)))
@@ -81,7 +51,7 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define sdl-bool int)
 
-(define (boolean->sdl-bool b)
+(define-public (boolean->sdl-bool b)
   "Convert the boolean B to an SDL_bool."
   (if b 1 0))
 
@@ -98,12 +68,12 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 ;;; Initialization
 ;;;
 
-(define SDL_INIT_TIMER          #x00000001)
-(define SDL_INIT_AUDIO          #x00000010)
-(define SDL_INIT_VIDEO          #x00000020)
-(define SDL_INIT_HAPTIC         #x00001000)
-(define SDL_INIT_GAMECONTROLLER #x00002000)
-(define SDL_INIT_EVENTS         #x00004000)
+(define-public SDL_INIT_TIMER          #x00000001)
+(define-public SDL_INIT_AUDIO          #x00000010)
+(define-public SDL_INIT_VIDEO          #x00000020)
+(define-public SDL_INIT_HAPTIC         #x00001000)
+(define-public SDL_INIT_GAMECONTROLLER #x00002000)
+(define-public SDL_INIT_EVENTS         #x00004000)
 
 (define-foreign sdl-init
   int "SDL_Init" (list uint32))
@@ -124,22 +94,22 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 ;;; Video
 ;;;
 
-(define SDL_WINDOW_FULLSCREEN         #x00000001)
-(define SDL_WINDOW_OPENGL             #x00000002)
-(define SDL_WINDOW_SHOWN              #x00000004)
-(define SDL_WINDOW_HIDDEN             #x00000008)
-(define SDL_WINDOW_BORDERLESS         #x00000010)
-(define SDL_WINDOW_RESIZABLE          #x00000020)
-(define SDL_WINDOW_MINIMIZED          #x00000040)
-(define SDL_WINDOW_MAXIMIZED          #x00000080)
-(define SDL_WINDOW_INPUT_GRABBED      #x00000100)
-(define SDL_WINDOW_INPUT_FOCUS        #x00000200)
-(define SDL_WINDOW_MOUSE_FOCUS        #x00000400)
-(define SDL_WINDOW_FULLSCREEN_DESKTOP (logior SDL_WINDOW_FULLSCREEN
+(define-public SDL_WINDOW_FULLSCREEN         #x00000001)
+(define-public SDL_WINDOW_OPENGL             #x00000002)
+(define-public SDL_WINDOW_SHOWN              #x00000004)
+(define-public SDL_WINDOW_HIDDEN             #x00000008)
+(define-public SDL_WINDOW_BORDERLESS         #x00000010)
+(define-public SDL_WINDOW_RESIZABLE          #x00000020)
+(define-public SDL_WINDOW_MINIMIZED          #x00000040)
+(define-public SDL_WINDOW_MAXIMIZED          #x00000080)
+(define-public SDL_WINDOW_INPUT_GRABBED      #x00000100)
+(define-public SDL_WINDOW_INPUT_FOCUS        #x00000200)
+(define-public SDL_WINDOW_MOUSE_FOCUS        #x00000400)
+(define-public SDL_WINDOW_FULLSCREEN_DESKTOP (logior SDL_WINDOW_FULLSCREEN
                                               #x00001000))
-(define SDL_WINDOW_FOREIGN            #x00000800)
-(define SDL_WINDOW_ALLOW_HIGHDPI      #x00002000)
-(define SDL_WINDOW_MOUSE_CAPTURE      #x00004000)
+(define-public SDL_WINDOW_FOREIGN            #x00000800)
+(define-public SDL_WINDOW_ALLOW_HIGHDPI      #x00002000)
+(define-public SDL_WINDOW_MOUSE_CAPTURE      #x00004000)
 
 (define-public SDL_WINDOWPOS_CENTERED 805240832)
 (define-public SDL_WINDOWPOS_UNDEFINED 536805376)
@@ -204,10 +174,10 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-gl-swap-window
   void "SDL_GL_SwapWindow" '(*))
 
-(define SDL_RENDERER_SOFTWARE #x00000001)
-(define SDL_RENDERER_ACCELERATED #x00000002)
-(define SDL_RENDERER_PRESENTVSYNC #x00000004)
-(define SDL_RENDERER_TARGETTEXTURE #x00000008)
+(define-public SDL_RENDERER_SOFTWARE #x00000001)
+(define-public SDL_RENDERER_ACCELERATED #x00000002)
+(define-public SDL_RENDERER_PRESENTVSYNC #x00000004)
+(define-public SDL_RENDERER_TARGETTEXTURE #x00000008)
 
 (define-foreign sdl-create-renderer
   '* "SDL_CreateRenderer" (list '* int uint32))
