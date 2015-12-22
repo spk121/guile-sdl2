@@ -141,6 +141,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define SDL_WINDOW_ALLOW_HIGHDPI      #x00002000)
 (define SDL_WINDOW_MOUSE_CAPTURE      #x00004000)
 
+(define-public SDL_WINDOWPOS_CENTERED 805240832)
+(define-public SDL_WINDOWPOS_UNDEFINED 536805376)
+
 (define-foreign sdl-create-window
   '* "SDL_CreateWindow" (list '* int int int int uint32))
 

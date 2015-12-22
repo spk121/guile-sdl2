@@ -73,7 +73,7 @@
             (window-position window))))
 
 (define* (make-window #:key (title "Guile SDL2 Window")
-                          (position '(0 0)) (size '(640 480))
+                          (position '(#f #f)) (size '(640 480))
                           (maximize? #f) (minimize? #f)
                           (show? #t) (resizable? #f)
                           (opengl? #f) (border? #t)
@@ -81,7 +81,17 @@
                           (grab-input? #f) (high-dpi? #f))
   "Create a new window named TITLE with dimensions SIZE located at
 POSITION on the display.  POSITION and SIZE are two-element lists in
-the form '(x y)', where each coordinate is measured in pixels."
+the form '(x y)', where each coordinate is measured in pixels.  In the
+case of POSITION, a coordinate may use the special symbol 'center' to
+indicate that the window should be centered on that axis, or #f to
+indicate that it does not matter where the window is located on that
+axis."
+  (define coord->int
+    (match-lambda
+      (#f ffi:SDL_WINDOWPOS_UNDEFINED)
+      ('center ffi:SDL_WINDOWPOS_CENTERED)
+      (n n)))
+
   (define x (match-lambda ((x _) x)))
   (define y (match-lambda ((_ y) y)))
 
@@ -116,8 +126,10 @@ the form '(x y)', where each coordinate is measured in pixels."
                             ffi:SDL_WINDOW_ALLOW_HIGHDPI
                             0)))
          (ptr (ffi:sdl-create-window (string->pointer title)
-                                     (x position) (y position)
-                                     (x size) (y size)
+                                     (coord->int (x position))
+                                     (coord->int (y position))
+                                     (x size)
+                                     (y size)
                                      flags)))
     (if (null-pointer? ptr)
         (sdl-error "make-window" "failed to create window")
