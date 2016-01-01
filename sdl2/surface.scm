@@ -79,37 +79,40 @@ PROC."
   (bytevector-sint-ref (pointer->bytevector pointer %int-size offset)
                        0 (native-endianness) %int-size))
 
-;; The offsets below correspond to the SDL_Surface struct elements
-;; that come before the element in question.
-(define %width-offset (sizeof (list uint32 '*)))
-(define %height-offset (sizeof (list uint32 '* int)))
-(define %pitch-offset (sizeof (list uint32 '* int int)))
-(define %pixels-offset 32)
+;; A partial list of surface types so that we can parse the data we
+;; need out of the SDL_Surface struct pointer.
+(define %surface-types
+  (list uint32 ; flags
+        '*     ; format
+        int    ; width
+        int    ; height
+        int    ; pitch
+        '*))   ; pixels
+
+(define-syntax-rule (surface-parse-match surface matchers ...)
+  (match (parse-c-struct (unwrap-surface surface) %surface-types)
+    matchers ...))
 
 (define (surface-width surface)
   "Return the width of SURFACE in pixels."
-  (pointer-int-ref (unwrap-surface surface) %width-offset))
+  (surface-parse-match surface
+    ((_ _ width _ _ _) width)))
 
 (define (surface-height surface)
   "Return the height of SURFACE in pixels."
-  (pointer-int-ref (unwrap-surface surface) %height-offset))
+    (surface-parse-match surface
+      ((_ _ _ height _ _) height)))
 
 (define (surface-pitch surface)
   "Return the length of a row of pixels in SURFACE in bytes."
-  (pointer-int-ref (unwrap-surface surface) %pitch-offset))
+  (surface-parse-match surface
+    ((_ _ _ _ pitch _) pitch)))
 
 (define (surface-pixels surface)
   "Return a bytevector containing the raw pixel data in SURFACE."
-  (let* ((ptr (unwrap-surface surface))
-         (height (pointer-int-ref ptr %height-offset))
-         (pitch (pointer-int-ref ptr %pitch-offset))
-         (pixels-ptr (pointer->bytevector ptr %pointer-size %pixels-offset))
-         (pixels (make-pointer
-                  (bytevector-uint-ref pixels-ptr
-                                       0
-                                       (native-endianness)
-                                       %pointer-size))))
-    (pointer->bytevector pixels (* height pitch))))
+  (surface-parse-match surface
+    ((_ _ _ height pitch pixels)
+     (pointer->bytevector pixels (* height pitch)))))
 
 (define (symbol->sdl-pixel-format sym)
   (match sym
