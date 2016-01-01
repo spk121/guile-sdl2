@@ -79,3 +79,10 @@ EXTRA_DIST +=					\
   guix.scm					\
   examples/hello.scm				\
   examples/hello.bmp
+
+publish: dist
+	gpg2 --sign --armor --yes guile-sdl2-$(VERSION).tar.gz && \
+        scp guile-sdl2-$(VERSION).tar.gz guile-sdl2-$(VERSION).tar.gz.asc \
+	    blog@dthompson.us:/var/www/files/guile-sdl2/
+
+.PHONY: publish
