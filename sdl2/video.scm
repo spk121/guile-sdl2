@@ -55,7 +55,8 @@
             gl-context?
             delete-gl-context!
             call-with-gl-context
-            swap-gl-window))
+            swap-gl-window
+            set-gl-attribute!))
 
 
 ;;;
@@ -264,3 +265,56 @@ the context when PROC returns or otherwise exits.."
 (define (swap-gl-window window)
   "Update WINDOW with OpenGL rendering."
   (ffi:sdl-gl-swap-window (unwrap-window window)))
+
+(define (set-gl-attribute! attr value)
+  "Set the OpenGL attribute represented by the symbol ATTR to VALUE.
+Possible values for ATTR are:
+
+- red-size
+- green-size
+- blue-size
+- alpha-size
+- buffer-size
+- double-buffer
+- depth-size
+- stencil-size
+- accum-red-size
+- accum-green-size
+- accum-blue-size
+- stereo
+- multisample-buffers
+- multisample-samples
+- retained-backing
+- context-major-version
+- contet-minor-version
+- context-egl
+- context-flags
+- context-profile-mask
+- share-with-current-context
+- framebuffer-srgb-capable"
+  (let ((attr-enum
+         (match attr
+           ('red-size ffi:SDL_GL_RED_SIZE)
+           ('green-size ffi:SDL_GL_GREEN_SIZE)
+           ('blue-size ffi:SDL_GL_BLUE_SIZE)
+           ('alpha-size ffi:SDL_GL_ALPHA_SIZE)
+           ('buffer-size ffi:SDL_GL_BUFFER_SIZE)
+           ('double-buffer ffi:SDL_GL_DOUBLEBUFFER)
+           ('depth-size ffi:SDL_GL_DEPTH_SIZE)
+           ('stencil-size ffi:SDL_GL_STENCIL_SIZE)
+           ('accum-red-size ffi:SDL_GL_ACCUM_RED_SIZE)
+           ('accum-green-size ffi:SDL_GL_ACCUM_GREEN_SIZE)
+           ('accum-blue-size ffi:SDL_GL_ACCUM_BLUE_SIZE)
+           ('stereo ffi:SDL_GL_STEREO)
+           ('multisample-buffers ffi:SDL_GL_MULTISAMPLEBUFFERS)
+           ('multisample-samples ffi:SDL_GL_MULTISAMPLESAMPLES)
+           ('retained-backing ffi:SDL_GL_RETAINED_BACKING)
+           ('context-major-version ffi:SDL_GL_CONTEXT_MAJOR_VERSION)
+           ('contet-minor-version ffi:SDL_GL_CONTEXT_MINOR_VERSION)
+           ('context-egl ffi:SDL_GL_CONTEXT_EGL)
+           ('context-flags ffi:SDL_GL_CONTEXT_FLAGS)
+           ('context-profile-mask ffi:SDL_GL_CONTEXT_PROFILE_MASK)
+           ('share-with-current-context ffi:SDL_GL_SHARE_WITH_CURRENT_CONTEXT)
+           ('framebuffer-srgb-capable ffi:SDL_GL_FRAMEBUFFER_SRGB_CAPABLE))))
+    (unless (zero? (ffi:sdl-gl-set-attribute attr-enum value))
+      (sdl-error "set-gl-attribute!" "failed to set OpenGL attribute"))))
