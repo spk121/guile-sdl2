@@ -50,6 +50,7 @@
             set-window-title!
             set-window-position!
             set-window-size!
+            set-window-fullscreen!
 
             make-gl-context
             gl-context?
@@ -229,6 +230,20 @@ of (width,height) coordinates measured in pixels."
   (match size
     ((width height)
      (ffi:sdl-set-window-size (unwrap-window window) width height))))
+
+(define* (set-window-fullscreen! window fullscreen? #:key desktop?)
+  "Toggle fullscreen mode on/off for WINDOW.  If FULLSCREEN?,
+fullscreen mode is activated, otherwise it is deactivated.  If
+FULLSCREEN? and DESKTOP?, a special \"fake\" fullscreen mode is used
+that takes the size of the desktop."
+  (let ((flag (cond
+               ((and fullscreen? desktop?)
+                ffi:SDL_WINDOW_FULLSCREEN_DESKTOP)
+               (fullscreen?
+                ffi:SDL_WINDOW_FULLSCREEN)
+               (else 0))))
+    (unless (zero? (ffi:sdl-set-window-fullscreen (unwrap-window window) flag))
+      (sdl-error "set-window-fullscreen!" "failed to change fullscreen mode"))))
 
 
 ;;;

@@ -165,6 +165,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-set-window-size
   void "SDL_SetWindowSize" (list '* int int))
 
+(define-foreign sdl-set-window-fullscreen
+  int "SDL_SetWindowFullscreen" (list '* uint32))
+
 (define-foreign sdl-gl-create-context
   '* "SDL_GL_CreateContext" '(*))
 
