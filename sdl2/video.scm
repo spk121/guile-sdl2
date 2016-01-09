@@ -311,7 +311,7 @@ Possible values for ATTR are:
            ('multisample-samples ffi:SDL_GL_MULTISAMPLESAMPLES)
            ('retained-backing ffi:SDL_GL_RETAINED_BACKING)
            ('context-major-version ffi:SDL_GL_CONTEXT_MAJOR_VERSION)
-           ('contet-minor-version ffi:SDL_GL_CONTEXT_MINOR_VERSION)
+           ('context-minor-version ffi:SDL_GL_CONTEXT_MINOR_VERSION)
            ('context-egl ffi:SDL_GL_CONTEXT_EGL)
            ('context-flags ffi:SDL_GL_CONTEXT_FLAGS)
            ('context-profile-mask ffi:SDL_GL_CONTEXT_PROFILE_MASK)
