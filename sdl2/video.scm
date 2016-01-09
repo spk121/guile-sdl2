@@ -56,7 +56,8 @@
             delete-gl-context!
             call-with-gl-context
             swap-gl-window
-            set-gl-attribute!))
+            set-gl-attribute!
+            set-gl-swap-interval!))
 
 
 ;;;
@@ -318,3 +319,22 @@ Possible values for ATTR are:
            ('framebuffer-srgb-capable ffi:SDL_GL_FRAMEBUFFER_SRGB_CAPABLE))))
     (unless (zero? (ffi:sdl-gl-set-attribute attr-enum value))
       (sdl-error "set-gl-attribute!" "failed to set OpenGL attribute"))))
+
+(define (set-gl-swap-interval! interval)
+  "Set the framebuffer swap interval for the current OpenGL context to
+the type indicated by the symbol INTERVAL.  Possible values of INTERVAL are:
+
+- immediate, for immediate updates
+- vsync, for updates synchronized with the screen's vertical retrace
+- late-swap-tear, for late swap tearing
+
+Late swap tearing works the same as vsync, but if the vertical retrace
+has been missed for a given frame, buffers are swapped immediately,
+which might be less jarring for the user during occasional framerate
+drops."
+  (unless (zero? (ffi:sdl-gl-set-swap-interval
+                  (match interval
+                    ('immediate 0)
+                    ('vsync 1)
+                    ('late-swap-tear -1))))
+    (sdl-error "set-gl-swap-interval!" "failed to set OpenGL swap interval")))

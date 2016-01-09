@@ -202,6 +202,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-gl-set-attribute
   int "SDL_GL_SetAttribute" (list int int))
 
+(define-foreign sdl-gl-set-swap-interval
+  int "SDL_GL_SetSwapInterval" (list int))
+
 (define-public SDL_RENDERER_SOFTWARE #x00000001)
 (define-public SDL_RENDERER_ACCELERATED #x00000002)
 (define-public SDL_RENDERER_PRESENTVSYNC #x00000004)
