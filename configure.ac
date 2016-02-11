@@ -28,7 +28,8 @@ AM_SILENT_RULES([yes])
 AC_CONFIG_FILES([Makefile sdl2/config.scm])
 AC_CONFIG_FILES([pre-inst-env], [chmod +x pre-inst-env])
 
-GUILE_PROGS([2.0.9])
+GUILE_PKG([2.2 2.0])
+GUILE_PROGS
 
 # Core SDL2
 PKG_CHECK_MODULES([SDL2], [sdl2])
