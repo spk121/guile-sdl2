@@ -29,21 +29,46 @@
 ;;
 ;;; Code:
 
-(use-modules (guix gexp)
+(use-modules (ice-9 match)
+             (ice-9 popen)
+             (ice-9 rdelim)
+             (srfi srfi-1)
+             (srfi srfi-26)
+             (guix gexp)
              (guix packages)
              (guix licenses)
              (guix git-download)
              (guix build-system gnu)
+             ((guix build utils) #:select (with-directory-excursion))
              (gnu packages)
              (gnu packages autotools)
              (gnu packages guile)
              (gnu packages pkg-config)
              (gnu packages sdl))
 
+(define %source-dir (dirname (current-filename)))
+
+(define git-file?
+  (let* ((pipe (with-directory-excursion %source-dir
+                 (open-pipe* OPEN_READ "git" "ls-files")))
+         (files (let loop ((lines '()))
+                  (match (read-line pipe)
+                    ((? eof-object?)
+                     (reverse lines))
+                    (line
+                     (loop (cons line lines))))))
+         (status (close-pipe pipe)))
+    (lambda (file stat)
+      (match (stat:type stat)
+        ('directory #t)
+        ((or 'regular 'symlink)
+         (any (cut string-suffix? <> file) files))
+        (_ #f)))))
+
 (package
   (name "guile-sdl2")
   (version "0.1.2")
-  (source (local-file "." #:recursive? #t))
+  (source (local-file %source-dir  #:recursive? #t #:select? git-file?))
   (build-system gnu-build-system)
   (arguments
    '(#:configure-flags
