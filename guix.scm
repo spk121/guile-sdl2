@@ -29,7 +29,8 @@
 ;;
 ;;; Code:
 
-(use-modules (guix packages)
+(use-modules (guix gexp)
+             (guix packages)
              (guix licenses)
              (guix git-download)
              (guix build-system gnu)
@@ -39,46 +40,38 @@
              (gnu packages pkg-config)
              (gnu packages sdl))
 
-(let ((commit "539c41bc01d86649eb25004b22531bf773c0d7e8"))
-  (package
-    (name "guile-sdl2")
-    (version (string-append "0.1.2-1." (string-take commit 7)))
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "git://dthompson.us/guile-sdl2.git")
-                    (commit commit)))
-              (sha256
-               (base32
-                "077q4l8l750kr3j05zq3g2jmmav2mchpqvr6fgrqgcfjmcj64c7g"))))
-    (build-system gnu-build-system)
-    (arguments
-     '(#:configure-flags
-       (list (string-append "--with-libsdl2-prefix="
-                            (assoc-ref %build-inputs "sdl2"))
-             (string-append "--with-libsdl2-image-prefix="
-                            (assoc-ref %build-inputs "sdl2-image"))
-             (string-append "--with-libsdl2-ttf-prefix="
-                            (assoc-ref %build-inputs "sdl2-ttf"))
-             (string-append "--with-libsdl2-mixer-prefix="
-                            (assoc-ref %build-inputs "sdl2-mixer")))
-       #:make-flags '("GUILE_AUTO_COMPILE=0")
-       #:phases
-       (modify-phases %standard-phases
-         (add-after 'unpack 'bootstrap
-           (lambda _ (zero? (system* "sh" "bootstrap")))))))
-    (native-inputs
-     `(("autoconf" ,autoconf)
-       ("automake" ,automake)
-       ("pkg-config" ,pkg-config)))
-    (inputs
-     `(("guile" ,guile-2.0)
-       ("sdl2" ,sdl2)
-       ("sdl2-image" ,sdl2-image)
-       ("sdl2-mixer" ,sdl2-mixer)
-       ("sdl2-ttf" ,sdl2-ttf)))
-    (synopsis "Guile bindings for SDL2")
-    (description "Guile-sdl2 provides pure Guile Scheme bindings to the
+(package
+  (name "guile-sdl2")
+  (version "0.1.2")
+  (source (local-file "." #:recursive? #t))
+  (build-system gnu-build-system)
+  (arguments
+   '(#:configure-flags
+     (list (string-append "--with-libsdl2-prefix="
+                          (assoc-ref %build-inputs "sdl2"))
+           (string-append "--with-libsdl2-image-prefix="
+                          (assoc-ref %build-inputs "sdl2-image"))
+           (string-append "--with-libsdl2-ttf-prefix="
+                          (assoc-ref %build-inputs "sdl2-ttf"))
+           (string-append "--with-libsdl2-mixer-prefix="
+                          (assoc-ref %build-inputs "sdl2-mixer")))
+     #:make-flags '("GUILE_AUTO_COMPILE=0")
+     #:phases
+     (modify-phases %standard-phases
+       (add-after 'unpack 'bootstrap
+         (lambda _ (zero? (system* "sh" "bootstrap")))))))
+  (native-inputs
+   `(("autoconf" ,autoconf)
+     ("automake" ,automake)
+     ("pkg-config" ,pkg-config)))
+  (inputs
+   `(("guile" ,guile-2.0)
+     ("sdl2" ,sdl2)
+     ("sdl2-image" ,sdl2-image)
+     ("sdl2-mixer" ,sdl2-mixer)
+     ("sdl2-ttf" ,sdl2-ttf)))
+  (synopsis "Guile bindings for SDL2")
+  (description "Guile-sdl2 provides pure Guile Scheme bindings to the
 SDL2 C shared library via the foreign function interface.")
-    (home-page "https://git.dthompson.us/guile-sdl2.git")
-    (license lgpl3+)))
+  (home-page "https://git.dthompson.us/guile-sdl2.git")
+  (license lgpl3+))
