@@ -54,3 +54,6 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign img-load
   '* "IMG_Load" '(*))
+
+(define-foreign img-save-png
+  int "IMG_SavePNG" '(* *))

@@ -29,7 +29,8 @@
   #:use-module ((sdl2 bindings image) #:prefix ffi:)
   #:export (image-init
             image-quit
-            load-image))
+            load-image
+            save-png))
 
 (define (image-init)
   "Initialize dynamically loaded image libraries."
@@ -49,3 +50,9 @@
     (if (null-pointer? ptr)
         (sdl-error "load-image" "failed to load image: ~a" file)
         ((@@ (sdl2 surface) wrap-surface) ptr))))
+
+(define (save-png surface file)
+  "Save SURFACE to FILE as a PNG formatted image."
+  (unless (zero? (ffi:img-save-png ((@@ (sdl2 surface) unwrap-surface) surface)
+                                   (string->pointer file)))
+    (sdl-error "save-png" "failed to save surface as PNG: ~a" file)))
