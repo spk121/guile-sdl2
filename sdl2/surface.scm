@@ -30,7 +30,8 @@
   #:use-module (system foreign)
   #:use-module ((sdl2 bindings) #:prefix ffi:)
   #:use-module (sdl2)
-  #:export (surface?
+  #:export (make-rgb-surface
+            surface?
             delete-surface!
             call-with-surface
             load-bmp
@@ -47,6 +48,22 @@
   (lambda (surface port)
     (format port "#<surface ~x>"
             (pointer-address (unwrap-surface surface)))))
+
+(define (make-rgb-surface width height depth)
+  "Create a new SDL surface with the dimensions WIDTH and HEIGHT and
+DEPTH bits per pixel."
+  (wrap-surface
+   (if (eq? (native-endianness) 'big)
+       (ffi:sdl-create-rgb-surface 0 width height depth
+                                   #xff000000
+                                   #x00ff0000
+                                   #x0000ff00
+                                   #x000000ff)
+       (ffi:sdl-create-rgb-surface 0 width height depth
+                                   #x000000ff
+                                   #x0000ff00
+                                   #x00ff0000
+                                   #xff000000))))
 
 (define (delete-surface! surface)
   "Free the memory used by SURFACE."

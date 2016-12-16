@@ -899,6 +899,10 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 ;;; Surface
 ;;;
 
+(define-foreign sdl-create-rgb-surface
+  '* "SDL_CreateRGBSurface"
+  (list uint32 int int int uint32 uint32 uint32 uint32))
+
 (define-foreign sdl-free-surface
   void "SDL_FreeSurface" '(*))
 
