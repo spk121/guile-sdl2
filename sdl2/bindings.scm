@@ -903,6 +903,10 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
   '* "SDL_CreateRGBSurface"
   (list uint32 int int int uint32 uint32 uint32 uint32))
 
+(define-foreign sdl-create-rgb-surface-from
+  '* "SDL_CreateRGBSurfaceFrom"
+  (list '* int int int int uint32 uint32 uint32 uint32))
+
 (define-foreign sdl-free-surface
   void "SDL_FreeSurface" '(*))
 

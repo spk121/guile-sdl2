@@ -31,6 +31,7 @@
   #:use-module ((sdl2 bindings) #:prefix ffi:)
   #:use-module (sdl2)
   #:export (make-rgb-surface
+            bytevector->surface
             surface?
             delete-surface!
             call-with-surface
@@ -64,6 +65,25 @@ DEPTH bits per pixel."
                                    #x0000ff00
                                    #x00ff0000
                                    #xff000000))))
+
+(define (bytevector->surface bv width height depth pitch)
+  "Convert BV, a bytevector of pixel data with dimenions WIDTHxHEIGHT,
+to an SDL surface.  Each pixel is DEPTH bits in size, and each row of
+pixels is PITCH bytes in size."
+  (wrap-surface
+   (if (eq? (native-endianness) 'big)
+       (ffi:sdl-create-rgb-surface-from (bytevector->pointer bv)
+                                        width height depth pitch
+                                        #xff000000
+                                        #x00ff0000
+                                        #x0000ff00
+                                        #x000000ff)
+       (ffi:sdl-create-rgb-surface-from (bytevector->pointer bv)
+                                        width height depth pitch
+                                        #x000000ff
+                                        #x0000ff00
+                                        #x00ff0000
+                                        #xff000000))))
 
 (define (delete-surface! surface)
   "Free the memory used by SURFACE."
