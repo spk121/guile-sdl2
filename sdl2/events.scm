@@ -1,5 +1,5 @@
 ;;; guile-sdl2 --- FFI bindings for SDL2
-;;; Copyright © 2015 David Thompson <davet@gnu.org>
+;;; Copyright © 2015, 2016 David Thompson <davet@gnu.org>
 ;;;
 ;;; This file is part of guile-sdl2.
 ;;;
@@ -69,6 +69,12 @@
             keyboard-event-key
             keyboard-event-scancode
             keyboard-event-modifiers
+
+            make-text-input-event
+            text-input-event?
+            text-input-event-timestamp
+            text-input-event-window-id
+            text-input-event-text
 
             make-mouse-button-event
             mouse-button-event?
@@ -812,6 +818,28 @@
 
 
 ;;;
+;;; Text Input
+;;;
+
+(define-record-type <text-input-event>
+  (make-text-input-event timestamp window-id text)
+  text-input-event?
+  (timestamp text-input-event-timestamp)
+  (window-id text-input-event-window-id)
+  (text text-input-event-text))
+
+(define (parse-text-input-event ptr)
+  ;; Separate the first 3 struct fields which are all uint32s from the
+  ;; 32-byte UTF-8 encoded character buffer at the end of the struct.
+  (let* ((len (* (sizeof uint32) 3))
+         (bv (pointer->bytevector ptr len))
+         (timestamp (u32vector-ref bv 1))
+         (window-id (u32vector-ref bv 2))
+         (text (pointer->string (make-pointer (+ (pointer-address ptr) len)))))
+    (make-text-input-event timestamp window-id text)))
+
+
+;;;
 ;;; Mouse
 ;;;
 
@@ -991,6 +1019,8 @@
             ((or (= type ffi:SDL_KEYDOWN)
                  (= type ffi:SDL_KEYUP))
              (parse-keyboard-event ptr))
+            ((= type ffi:SDL_TEXTINPUT)
+             (parse-text-input-event ptr))
             ((or (= type ffi:SDL_MOUSEBUTTONDOWN)
                  (= type ffi:SDL_MOUSEBUTTONUP))
              (parse-mouse-button-event ptr))

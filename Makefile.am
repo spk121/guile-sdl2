@@ -1,5 +1,5 @@
 # guile-sdl2 --- FFI bindings for SDL2
-# Copyright © 2015 David Thompson <davet@gnu.org>
+# Copyright © 2015, 2016 David Thompson <davet@gnu.org>
 #
 # This file is part of guile-sdl2.
 #
@@ -47,7 +47,8 @@ SOURCES =					\
   sdl2/surface.scm				\
   sdl2/render.scm				\
   sdl2/video.scm				\
-  sdl2/events.scm
+  sdl2/events.scm				\
+  sdl2/input/text.scm
 
 if WITH_LIBSDL2_IMAGE
 

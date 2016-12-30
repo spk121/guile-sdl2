@@ -1,5 +1,5 @@
 ;;; guile-sdl2 --- FFI bindings for SDL2
-;;; Copyright © 2015 David Thompson <davet@gnu.org>
+;;; Copyright © 2015, 2016 David Thompson <davet@gnu.org>
 ;;;
 ;;; This file is part of guile-sdl2.
 ;;;
@@ -814,6 +814,20 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-public SDLK_KBDILLUMUP (scancode->keycode SDL_SCANCODE_KBDILLUMUP))
 (define-public SDLK_EJECT (scancode->keycode SDL_SCANCODE_EJECT))
 (define-public SDLK_SLEEP (scancode->keycode SDL_SCANCODE_SLEEP))
+
+
+;;;
+;;; Text Input
+;;;
+
+(define-foreign sdl-start-text-input
+  void "SDL_StartTextInput" '())
+
+(define-foreign sdl-stop-text-input
+  void "SDL_StopTextInput" '())
+
+(define-foreign sdl-is-text-input-active
+  sdl-bool "SDL_IsTextInputActive" '())
 
 
 ;;;
