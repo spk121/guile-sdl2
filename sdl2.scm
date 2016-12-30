@@ -45,7 +45,7 @@
             color-a))
 
 (define %default-init-flags
-  '(timer audio video haptic game-controller events))
+  '(timer audio video joystick haptic game-controller events))
 
 (define (sdl-error-string)
   "Return the current SDL error string."
@@ -77,6 +77,7 @@ The possible flags are 'timer', 'audio', 'video', 'haptic',
                             ('video ffi:SDL_INIT_VIDEO)
                             ('haptic ffi:SDL_INIT_HAPTIC)
                             ('game-controller ffi:SDL_INIT_GAMECONTROLLER)
+                            ('joystick ffi:SDL_INIT_JOYSTICK)
                             ('events ffi:SDL_INIT_EVENTS))
                            subsystems))))
     (unless (zero? (ffi:sdl-init flags))

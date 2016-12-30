@@ -116,6 +116,49 @@
             joystick-button-event-button
             joystick-button-event-pressed?
 
+            make-joystick-ball-event
+            joystick-ball-event?
+            joystick-ball-event-timestamp
+            joystick-ball-event-which
+            joystick-ball-event-ball
+            joystick-ball-event-x-rel
+            joystick-ball-event-y-rel
+
+            make-joystick-hat-event
+            joystick-hat-event?
+            joystick-hat-event-timestamp
+            joystick-hat-event-which
+            joystick-hat-event-hat
+            joystick-hat-event-value
+
+            make-joystick-device-event
+            joystick-device-event?
+            joystick-device-event-timestamp
+            joystick-device-event-which
+            joystick-device-event-action
+
+            make-controller-axis-event
+            controller-axis-event?
+            controller-axis-event-timestamp
+            controller-axis-event-which
+            controller-axis-event-axis
+            controller-axis-event-value
+
+            make-controller-button-event
+            controller-button-event?
+            controller-button-down-event?
+            controller-button-up-event?
+            controller-button-event-timestamp
+            controller-button-event-which
+            controller-button-event-button
+            controller-button-event-pressed?
+
+            make-controller-device-event
+            controller-device-event?
+            controller-device-event-timestamp
+            controller-device-event-which
+            controller-device-event-action
+
             poll-event))
 
 (define (make-sdl-event)
@@ -1000,6 +1043,186 @@
      (make-joystick-button-event timestamp which button
                                  (= state ffi:SDL_PRESSED)))))
 
+(define-record-type <joystick-ball-event>
+  (make-joystick-ball-event timestamp which ball x-rel y-rel)
+  joystick-ball-event?
+  (timestamp joystick-ball-event-timestamp)
+  (which joystick-ball-event-which)
+  (ball joystick-ball-event-ball)
+  (x-rel joystick-ball-event-x-rel)
+  (y-rel joystick-ball-event-y-rel))
+
+(define (parse-joystick-ball-event ptr)
+  (define types
+    (list uint32  ; type
+          uint32  ; timestamp
+          int32   ; which
+          uint8   ; ball
+          uint8   ; padding1
+          uint8   ; padding2
+          uint8   ; padding3
+          int16   ; xrel
+          int16)) ; yrel
+
+  (match (parse-c-struct ptr types)
+    ((_ timestamp which ball xrel yrel)
+     (make-joystick-ball-event timestamp which ball xrel yrel))))
+
+(define-record-type <joystick-hat-event>
+  (make-joystick-hat-event timestamp which hat value)
+  joystick-hat-event?
+  (timestamp joystick-hat-event-timestamp)
+  (which joystick-hat-event-which)
+  (hat joystick-hat-event-hat)
+  (value joystick-hat-event-value))
+
+(define (parse-joystick-hat-event ptr)
+  (define types
+    (list uint32  ; type
+          uint32  ; timestamp
+          int32   ; which
+          uint8   ; hat
+          uint8)) ; value
+
+  (match (parse-c-struct ptr types)
+    ((_ timestamp which hat value)
+     ;; TODO: Parse 'value' and convert to symbol.
+     (make-joystick-hat-event timestamp which hat value))))
+
+(define-record-type <joystick-device-event>
+  (make-joystick-device-event timestamp which action)
+  joystick-device-event?
+  (timestamp joystick-device-event-timestamp)
+  (which joystick-device-event-which)
+  (action joystick-device-event-action)) ; added or removed
+
+(define (parse-joystick-device-event ptr)
+  (define types
+    (list uint32  ; type
+          uint32  ; timestamp
+          int32)) ; which
+
+  (match (parse-c-struct ptr types)
+    ((type timestamp which)
+     (make-joystick-device-event timestamp which
+                                 (if (= type ffi:SDL_JOYDEVICEADDED)
+                                     'added
+                                     'removed)))))
+
+
+;;;
+;;; Game Controller
+;;;
+
+(define-record-type <controller-axis-event>
+  (make-controller-axis-event timestamp which axis value)
+  controller-axis-event?
+  (timestamp controller-axis-event-timestamp)
+  (which controller-axis-event-which)
+  (axis controller-axis-event-axis)
+  (value controller-axis-event-value))
+
+(define (parse-controller-axis-event ptr)
+  (define types
+    (list uint32  ; type
+          uint32  ; timestamp
+          int32   ; which
+          uint8   ; axis
+          uint8   ; padding1
+          uint8   ; padding2
+          uint8   ; padding3
+          int16)) ; value
+
+  (define (int->axis-symbol axis)
+    (cond
+      ((= axis ffi:SDL_CONTROLLER_AXIS_LEFTX) 'left-x)
+      ((= axis ffi:SDL_CONTROLLER_AXIS_LEFTY) 'left-y)
+      ((= axis ffi:SDL_CONTROLLER_AXIS_RIGHTX) 'right-x)
+      ((= axis ffi:SDL_CONTROLLER_AXIS_RIGHTY) 'right-y)
+      ((= axis ffi:SDL_CONTROLLER_AXIS_TRIGGERLEFT) 'trigger-left)
+      ((= axis ffi:SDL_CONTROLLER_AXIS_TRIGGERRIGHT) 'trigger-right)))
+
+  (match (parse-c-struct ptr types)
+    ((_ timestamp which axis _ _ _ value)
+     (make-controller-axis-event timestamp
+                                 which
+                                 (int->axis-symbol axis)
+                                 value))))
+
+(define-record-type <controller-button-event>
+  (make-controller-button-event timestamp which button pressed?)
+  controller-button-event?
+  (timestamp controller-button-event-timestamp)
+  (which controller-button-event-which)
+  (button controller-button-event-button)
+  (pressed? controller-button-event-pressed?))
+
+(define (controller-button-down-event? event)
+  (and (controller-button-event? event)
+       (controller-button-event-pressed? event)))
+
+(define (controller-button-up-event? event)
+  (and (controller-button-event? event)
+       (not (controller-button-event-pressed? event))))
+
+(define (parse-controller-button-event ptr)
+  (define types
+    (list uint32  ; type
+          uint32  ; timestamp
+          int32   ; which
+          uint8   ; button
+          uint8)) ; state
+
+  (define (int->button-symbol button)
+    (cond
+      ((= button ffi:SDL_CONTROLLER_BUTTON_A) 'a)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_B) 'b)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_X) 'x)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_Y) 'y)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_BACK) 'back)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_GUIDE) 'guide)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_START) 'start)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_LEFTSTICK) 'left-stick)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_RIGHTSTICK) 'right-stick)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_LEFTSHOULDER) 'left-shoulder)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) 'right-shoulder)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_DPAD_UP) 'dpad-up)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_DPAD_DOWN) 'dpad-down)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_DPAD_LEFT) 'dpad-left)
+      ((= button ffi:SDL_CONTROLLER_BUTTON_DPAD_RIGHT) 'dpad-right)))
+
+  (match (parse-c-struct ptr types)
+    ((_ timestamp which button state)
+     (make-controller-button-event timestamp
+                                   which
+                                   (int->button-symbol button)
+                                   (= state ffi:SDL_PRESSED)))))
+
+(define-record-type <controller-device-event>
+  (make-controller-device-event timestamp which action)
+  controller-device-event?
+  (timestamp controller-device-event-timestamp)
+  (which controller-device-event-which)
+  (action controller-device-event-action))
+
+(define (parse-controller-device-event ptr)
+  (define types
+    (list uint32  ; type
+          uint32  ; timestamp
+          int32)) ; which
+
+  (match (parse-c-struct ptr types)
+    ((type timestamp which)
+     (make-controller-device-event timestamp
+                                   which
+                                   (cond
+                                    ((= type ffi:SDL_CONTROLLERDEVICEADDED)
+                                     'added)
+                                    ((= type ffi:SDL_CONTROLLERDEVICEREMOVED)
+                                     'removed)
+                                    ((= type ffi:SDL_CONTROLLERDEVICEREMAPPED)
+                                     'remapped))))))
+
 
 ;;;
 ;;; Event management
@@ -1028,7 +1251,23 @@
              (parse-mouse-motion-event ptr))
             ((= type ffi:SDL_JOYAXISMOTION)
              (parse-joystick-axis-event ptr))
+            ((= type ffi:SDL_JOYBALLMOTION)
+             (parse-joystick-ball-event ptr))
+            ((= type ffi:SDL_JOYHATMOTION)
+             (parse-joystick-hat-event ptr))
             ((or (= type ffi:SDL_JOYBUTTONDOWN)
                  (= type ffi:SDL_JOYBUTTONUP))
              (parse-joystick-button-event ptr))
+            ((or (= type ffi:SDL_JOYDEVICEADDED)
+                 (= type ffi:SDL_JOYDEVICEREMOVED))
+             (parse-joystick-device-event ptr))
+            ((= type ffi:SDL_CONTROLLERAXISMOTION)
+             (parse-controller-axis-event ptr))
+            ((or (= type ffi:SDL_CONTROLLERBUTTONDOWN)
+                 (= type ffi:SDL_CONTROLLERBUTTONUP))
+             (parse-controller-button-event ptr))
+            ((or (= type ffi:SDL_CONTROLLERDEVICEADDED)
+                 (= type ffi:SDL_CONTROLLERDEVICEREMOVED)
+                 (= type ffi:SDL_CONTROLLERDEVICEREMAPPED))
+             (parse-controller-device-event ptr))
             (else 'fixme:unsupported-event))))))

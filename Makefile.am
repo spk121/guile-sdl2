@@ -48,6 +48,8 @@ SOURCES =					\
   sdl2/render.scm				\
   sdl2/video.scm				\
   sdl2/events.scm				\
+  sdl2/input/joystick.scm			\
+  sdl2/input/game-controller.scm		\
   sdl2/input/text.scm
 
 if WITH_LIBSDL2_IMAGE

@@ -71,6 +71,7 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-public SDL_INIT_TIMER          #x00000001)
 (define-public SDL_INIT_AUDIO          #x00000010)
 (define-public SDL_INIT_VIDEO          #x00000020)
+(define-public SDL_INIT_JOYSTICK       #x00000200)
 (define-public SDL_INIT_HAPTIC         #x00001000)
 (define-public SDL_INIT_GAMECONTROLLER #x00002000)
 (define-public SDL_INIT_EVENTS         #x00004000)
@@ -949,3 +950,174 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-public AUDIO_F32LSB #x8120)
 (define-public AUDIO_F32MSB #x9120)
 (define-public AUDIO_F32    AUDIO_F32LSB)
+
+
+;;;
+;;; Joystick
+;;;
+
+(define-public SDL_JOYSTICK_POWER_UNKNOWN -1)
+(define-public SDL_JOYSTICK_POWER_EMPTY 0)
+(define-public SDL_JOYSTICK_POWER_LOW 1)
+(define-public SDL_JOYSTICK_POWER_MEDIUM 2)
+(define-public SDL_JOYSTICK_POWER_FULL 3)
+(define-public SDL_JOYSTICK_POWER_WIRED 4)
+(define-public SDL_JOYSTICK_POWER_MAX 5)
+
+(define-foreign sdl-joystick-open
+  '* "SDL_JoystickOpen" (list int))
+
+(define-foreign sdl-joystick-close
+  void "SDL_JoystickClose" '(*))
+
+(define-foreign sdl-joystick-current-power-level
+  int "SDL_JoystickCurrentPowerLevel" '(*))
+
+(define-foreign sdl-joystick-event-state
+  int "SDL_JoystickEventState" (list int))
+
+(define-foreign sdl-joystick-from-instance-id
+  '* "SDL_JoystickFromInstanceID" (list int32))
+
+(define-foreign sdl-joystick-get-attached
+  sdl-bool "SDL_JoystickGetAttached" '(*))
+
+(define-foreign sdl-joystick-get-axis
+  int16 "SDL_JoystickGetAxis" (list '* int))
+
+(define-foreign sdl-joystick-get-ball
+  int "SDL_JoystickGetBall" (list '* int '* '*))
+
+(define-foreign sdl-joystick-get-button
+  uint8 "SDL_JoystickGetButton" (list '* int))
+
+(define-foreign sdl-joystick-get-device-guid
+  '* "SDL_JoystickGetDeviceGUID" (list int))
+
+(define-foreign sdl-joystick-get-guid
+  '* "SDL_JoystickGetGUID" (list int))
+
+(define-foreign sdl-joystick-get-guid-from-string
+  '* "SDL_JoystickGetGUIDFromString" '(*))
+
+(define-foreign sdl-joystick-get-guid-string
+  void "SDL_JoystickGetGUIDString" (list '* '* int))
+
+(define-foreign sdl-joystick-get-hat
+  uint8 "SDL_JoystickGetHat" (list '* int))
+
+(define-foreign sdl-joystick-instance-id
+  int32 "SDL_JoystickInstanceID" '(*))
+
+(define-foreign sdl-joystick-name
+  '* "SDL_JoystickName" '(*))
+
+(define-foreign sdl-joystick-name-for-index
+  '* "SDL_JoystickNameForIndex" (list int))
+
+(define-foreign sdl-joystick-num-axes
+  int "SDL_JoystickNumAxes" '(*))
+
+(define-foreign sdl-joystick-num-balls
+  int "SDL_JoystickNumBalls" '(*))
+
+(define-foreign sdl-joystick-num-buttons
+  int "SDL_JoystickNumButtons" '(*))
+
+(define-foreign sdl-joystick-num-hats
+  int "SDL_JoystickNumHats" '(*))
+
+(define-foreign sdl-num-joysticks
+  int "SDL_NumJoysticks" '())
+
+(define-foreign sdl-joystick-update
+  void "SDL_JoystickUpdate" '())
+
+
+;;;
+;;; Game Controllers
+;;;
+
+(define-public SDL_CONTROLLER_AXIS_INVALID -1)
+(define-public SDL_CONTROLLER_AXIS_LEFTX 0)
+(define-public SDL_CONTROLLER_AXIS_LEFTY 1)
+(define-public SDL_CONTROLLER_AXIS_RIGHTX 2)
+(define-public SDL_CONTROLLER_AXIS_RIGHTY 3)
+(define-public SDL_CONTROLLER_AXIS_TRIGGERLEFT 4)
+(define-public SDL_CONTROLLER_AXIS_TRIGGERRIGHT 5)
+(define-public SDL_CONTROLLER_AXIS_MAX 6)
+
+(define-public SDL_CONTROLLER_BUTTON_INVALID -1)
+(define-public SDL_CONTROLLER_BUTTON_A 0)
+(define-public SDL_CONTROLLER_BUTTON_B 1)
+(define-public SDL_CONTROLLER_BUTTON_X 2)
+(define-public SDL_CONTROLLER_BUTTON_Y 3)
+(define-public SDL_CONTROLLER_BUTTON_BACK 4)
+(define-public SDL_CONTROLLER_BUTTON_GUIDE 5)
+(define-public SDL_CONTROLLER_BUTTON_START 6)
+(define-public SDL_CONTROLLER_BUTTON_LEFTSTICK 7)
+(define-public SDL_CONTROLLER_BUTTON_RIGHTSTICK 8)
+(define-public SDL_CONTROLLER_BUTTON_LEFTSHOULDER 9)
+(define-public SDL_CONTROLLER_BUTTON_RIGHTSHOULDER 10)
+(define-public SDL_CONTROLLER_BUTTON_DPAD_UP 11)
+(define-public SDL_CONTROLLER_BUTTON_DPAD_DOWN 12)
+(define-public SDL_CONTROLLER_BUTTON_DPAD_LEFT 13)
+(define-public SDL_CONTROLLER_BUTTON_DPAD_RIGHT 14)
+(define-public SDL_CONTROLLER_BUTTON_MAX 15)
+
+(define-foreign sdl-game-controller-add-mapping
+  int "SDL_GameControllerAddMapping" '(*))
+
+(define-foreign sdl-game-controller-open
+  '* "SDL_GameControllerOpen" (list int))
+
+(define-foreign sdl-game-controller-close
+  void "SDL_GameControllerClose" '(*))
+
+(define-foreign sdl-game-controller-event-state
+  int "SDL_GameControllerEventState" (list int))
+
+(define-foreign sdl-game-controller-from-instance-id
+  '* "SDL_GameControllerFromInstanceID" (list int32))
+
+(define-foreign sdl-game-controller-get-attached
+  sdl-bool "SDL_GameControllerGetAttached" '(*))
+
+(define-foreign sdl-game-controller-get-axis
+  int16 "SDL_GameControllerGetAxis" (list '* int))
+
+(define-foreign sdl-game-controller-get-axis-from-string
+  int "SDL_GameControllerGetAxisFromString" '(*))
+
+(define-foreign sdl-game-controller-get-string-for-axis
+  '* "SDL_GameControllerGetStringForAxis" (list int))
+
+(define-foreign sdl-game-controller-get-button
+  uint8 "SDL_GameControllerGetButton" (list '* int))
+
+(define-foreign sdl-game-controller-get-button-from-string
+  int "SDL_GameControllerGetButtonFromString" '(*))
+
+(define-foreign sdl-game-controller-get-string-for-button
+  '* "SDL_GameControllerGetStringForButton" (list int))
+
+(define-foreign sdl-game-controller-get-joystick
+  '* "SDL_GameControllerGetJoystick" '(*))
+
+(define-foreign sdl-game-controller-mapping
+  '* "SDL_GameControllerMapping" '(*))
+
+(define-foreign sdl-game-controller-mapping-for-guid
+  '* "SDL_GameControllerMappingForGUID" '(*))
+
+(define-foreign sdl-game-controller-name
+  '* "SDL_GameControllerName" '(*))
+
+(define-foreign sdl-game-controller-name-for-index
+  '* "SDL_GameControllerNameForIndex" (list int))
+
+(define-foreign sdl-game-controller-update
+  void "SDL_GameControllerUpdate" '())
+
+(define-foreign sdl-is-game-controller
+  sdl-bool "SDL_IsGameController" (list int))
