@@ -90,8 +90,8 @@ upon all exit conditions."
   (ffi:sdl-quit))
 
 (define (sdl-ticks)
-  "Return the number of milliseconds since the SDL library
-initialization."
+  "Return the number of milliseconds since the SDL library was
+initialized."
   (ffi:sdl-get-ticks))
 
 ;; SDL_Color
