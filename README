@@ -13,11 +13,14 @@ SDL2_image, SDL2_mixer, and SDL2_ttf.
 
   - GNU Guile >= 2.0.9
   - SDL2 >= 2.0.0
+  - GNU Make
+  - GNU pkg-config
+
+  The following packages enable additional features:
+
   - SDL2_image >= 2.0.0
   - SDL2_mixer >= 2.0.0
   - SDL2_ttf >= 2.0.0
-  - GNU Make
-  - GNU pkg-config
 
   When building from a Git checkout, the following additional packages
   are required:
@@ -27,7 +30,7 @@ SDL2_image, SDL2_mixer, and SDL2_ttf.
 
 * Installing
 
-  Guile-sdl2 uses the standard GNU build system, so installation
+  Guile-SDL2 uses the standard GNU build system, so installation
   requires the usual incantations:
 
   #+BEGIN_SRC sh
@@ -83,6 +86,8 @@ SDL2_image, SDL2_mixer, and SDL2_ttf.
   - SDL2_image: =(sdl2 image)=
   - SDL2_mixer: =(sdl2 mixer)=
   - SDL2_ttf: =(sdl2 ttf)=
+
+  See the =examples= directory for code samples.
 
 * Developing
 
