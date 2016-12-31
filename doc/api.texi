@@ -1,0 +1,133 @@
+@menu
+* Basics::                      Initialization and other basic things.
+* Window Management::           Working with the window system.
+* Input::                       Keyboard, mouse, joystick input.
+* Events::                      Asynchronous event handling.
+* Surfaces::                    Software rendering.
+* Rendering::                   Hardware accelerated rendering.
+* Images::                      Loading and saving images.
+* Sound::                       Sound effects and music.
+* Fonts::                       Truetype and bitmap font rendering.
+@end menu
+
+@node Basics
+@section Basics
+
+@example
+(use-modules (sdl2))
+@end example
+
+@deffn {Scheme Procedure} sdl-init [@var{subsystems}]
+Initialize the SDL library.  This must be called before using any
+other SDL procedure.
+
+@var{subsystems} is an optional list of symbols that specifies the
+subsystems to initialize.  All subsystems are initialized by default.
+The possible flags are @code{timer}, @code{audio}, @code{video},
+@code{haptic}, @code{game-controller}, and @code{events}.
+@end deffn
+
+@deffn {Scheme Procedure} sdl-quit
+Quit all activated SDL subsystems.  This procedure should be called
+upon all exit conditions.
+@end deffn
+
+@deffn {Scheme Procedure} sdl-version
+Return a three element list containing the major, minor, and patch
+version of the linked SDL library.
+@end deffn
+
+@deffn {Scheme Procedure} sdl-ticks
+Return the number of milliseconds since the SDL library was
+initialized.
+@end deffn
+
+@node Window Management
+@section Window Management
+
+@menu
+* Windows::                     Window manipulation.
+* OpenGL::                      OpenGL contexts.
+@end menu
+
+@example
+(use-modules (sdl2 video))
+@end example
+
+@node Windows
+@subsection Windows
+
+@node OpenGL
+@subsection OpenGL
+
+@node Input
+@section Input
+
+@menu
+* Keyboard::                    Keyboard input.
+* Mouse::                       Mouse input.
+* Joysticks::                   Joystick input.
+* Game Controllers::            Game controller input.
+@end menu
+
+@node Keyboard
+@subsection Keyboard
+
+@node Mouse
+@subsection Mouse
+
+@node Joysticks
+@subsection Joysticks
+
+@example
+(use-modules (sdl2 input joystick))
+@end example
+
+@node Game Controllers
+@subsection Game Controllers
+
+@example
+(use-modules (sdl2 input game-controller))
+@end example
+
+@node Events
+@section Events
+
+@example
+(use-modules (sdl2 events))
+@end example
+
+@node Surfaces
+@section Surfaces
+
+@example
+(use-modules (sdl2 input surface))
+@end example
+
+@node Rendering
+@section Rendering
+
+@example
+(use-modules (sdl2 input render))
+@end example
+
+@node Images
+@section Images
+
+@example
+(use-modules (sdl2 input image))
+@end example
+
+@node Sound
+@section Sound
+
+@example
+(use-modules (sdl2 input mixer))
+@end example
+
+@node Fonts
+@section Fonts
+
+@example
+(use-modules (sdl2 input ttf))
+@end example

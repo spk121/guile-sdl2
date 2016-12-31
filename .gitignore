@@ -9,3 +9,4 @@
 /pre-inst-env
 *.go
 /sdl2/config.scm
+doc/guile-sdl2.info

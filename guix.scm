@@ -44,7 +44,8 @@
              (gnu packages autotools)
              (gnu packages guile)
              (gnu packages pkg-config)
-             (gnu packages sdl))
+             (gnu packages sdl)
+             (gnu packages texinfo))
 
 (define %source-dir (dirname (current-filename)))
 
@@ -88,7 +89,8 @@
   (native-inputs
    `(("autoconf" ,autoconf)
      ("automake" ,automake)
-     ("pkg-config" ,pkg-config)))
+     ("pkg-config" ,pkg-config)
+     ("texinfo" ,texinfo)))
   (inputs
    `(("guile" ,guile-2.0)
      ("sdl2" ,sdl2)

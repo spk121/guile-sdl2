@@ -76,6 +76,13 @@ SOURCES +=					\
 
 endif
 
+info_TEXINFOS = doc/guile-sdl2.texi
+
+chickadee_TEXINFOS =				\
+  doc/fdl.texi					\
+  doc/api.texi					\
+  doc/guile-sdl2.texi
+
 EXTRA_DIST +=					\
   pre-inst-env.in				\
   README					\
