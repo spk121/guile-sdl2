@@ -65,7 +65,7 @@
             keyboard-event-timestamp
             keyboard-event-window-id
             keyboard-event-pressed?
-            keyboard-event-repeat
+            keyboard-event-repeat?
             keyboard-event-key
             keyboard-event-scancode
             keyboard-event-modifiers
@@ -308,13 +308,13 @@
 ;;;
 
 (define-record-type <keyboard-event>
-  (make-keyboard-event timestamp window-id pressed? repeat
+  (make-keyboard-event timestamp window-id pressed? repeat?
                        key scancode modifiers)
   keyboard-event?
   (timestamp keyboard-event-timestamp)
   (window-id keyboard-event-window-id)
   (pressed? keyboard-event-pressed?)
-  (repeat keyboard-event-repeat)
+  (repeat? keyboard-event-repeat?)
   (key keyboard-event-key)
   (scancode keyboard-event-scancode)
   (modifiers keyboard-event-modifiers))
@@ -857,7 +857,7 @@
      (make-keyboard-event timestamp
                           window-id
                           (= state ffi:SDL_PRESSED)
-                          repeat
+                          (not (zero? repeat))
                           (keycode->symbol sym)
                           (scancode->symbol scancode)
                           (mod->list mod)))))
