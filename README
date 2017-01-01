@@ -27,6 +27,7 @@ SDL2_image, SDL2_mixer, and SDL2_ttf.
 
   - GNU Autoconf
   - GNU Automake
+  - GNU Texinfo
 
 * Installing
 
