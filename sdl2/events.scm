@@ -155,6 +155,9 @@
 
             make-controller-device-event
             controller-device-event?
+            controller-added-event?
+            controller-removed-event?
+            controller-remapped-event?
             controller-device-event-timestamp
             controller-device-event-which
             controller-device-event-action
@@ -1204,6 +1207,24 @@
   (timestamp controller-device-event-timestamp)
   (which controller-device-event-which)
   (action controller-device-event-action))
+
+(define (controller-added-event? event)
+  "Return #t if EVENT is a game controller device event with the
+'added' action."
+  (and (controller-device-event? event)
+       (eq? (controller-device-event-action event) 'added)))
+
+(define (controller-removed-event? event)
+  "Return #t if EVENT is a game controller device event with the
+'removed' action."
+  (and (controller-device-event? event)
+       (eq? (controller-device-event-action event) 'removed)))
+
+(define (controller-remapped-event? event)
+  "Return #t if EVENT is a game controller device event with the
+'remapped' action."
+  (and (controller-device-event? event)
+       (eq? (controller-device-event-action event) 'remapped)))
 
 (define (parse-controller-device-event ptr)
   (define types
