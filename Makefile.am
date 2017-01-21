@@ -88,7 +88,8 @@ EXTRA_DIST +=					\
   README					\
   guix.scm					\
   examples/hello.scm				\
-  examples/hello.bmp
+  examples/hello.bmp				\
+  examples/controller.scm
 
 publish: dist
 	gpg2 --sign --armor --yes guile-sdl2-$(VERSION).tar.gz && \
