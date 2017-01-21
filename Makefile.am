@@ -83,6 +83,8 @@ chickadee_TEXINFOS =				\
   doc/api.texi					\
   doc/guile-sdl2.texi
 
+dvi: # Don't build dvi docs
+
 EXTRA_DIST +=					\
   pre-inst-env.in				\
   README					\
