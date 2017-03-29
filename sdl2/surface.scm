@@ -43,6 +43,7 @@
             palette-colors
 
             pixel-format?
+            pixel-format-name
             pixel-format-palette
             pixel-format-bits-per-pixel
             pixel-format-bytes-per-pixel
