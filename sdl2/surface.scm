@@ -27,21 +27,212 @@
   #:use-module (ice-9 format)
   #:use-module (ice-9 match)
   #:use-module (rnrs bytevectors)
+  #:use-module (srfi srfi-4)
+  #:use-module (srfi srfi-9)
   #:use-module (system foreign)
   #:use-module ((sdl2 bindings) #:prefix ffi:)
   #:use-module (sdl2)
-  #:export (make-rgb-surface
+  #:export (color?
+            color-r
+            color-g
+            color-b
+            color-a
+
+            palette?
+            palette-length
+            palette-colors
+
+            pixel-format?
+            pixel-format-palette
+            pixel-format-bits-per-pixel
+            pixel-format-bytes-per-pixel
+            pixel-format-red-mask
+            pixel-format-green-mask
+            pixel-format-blue-mask
+            pixel-format-alpha-mask
+
+            make-rgb-surface
             bytevector->surface
             surface?
             delete-surface!
             call-with-surface
             load-bmp
+            surface-pixel-format
             surface-width
             surface-height
             surface-pitch
             surface-pixels
-
             convert-surface-format))
+
+
+;;;
+;;; Color
+;;;
+
+(define-record-type <color>
+  (make-color r g b a)
+  color?
+  (r color-r)
+  (g color-g)
+  (b color-b)
+  (a color-a))
+
+
+;;;
+;;; Palette
+;;;
+
+(define-wrapped-pointer-type <palette>
+  palette?
+  wrap-palette unwrap-palette
+  (lambda (palette port)
+    (format port "#<palette length: ~d>"
+            (palette-length palette))))
+
+(define %palette-types
+  (list int  ; number of colors
+        '*)) ; colors
+
+(define-syntax-rule (palette-parse-match palette matchers ...)
+  (match (parse-c-struct (unwrap-palette palette) %palette-types)
+    matchers ...))
+
+(define (palette-length palette)
+  "Return the number of colors in PALETTE."
+  (palette-parse-match palette
+    ((length _) length)))
+
+(define (palette-colors palette)
+  "Return the colors in PALETTE."
+  (palette-parse-match palette
+    ((length colors)
+     (let ((bv (pointer->bytevector colors (* length 4)))
+           (colors (make-vector length)))
+       (let loop ((i 0))
+         (if (< i length)
+             (let ((offset (* i 4)))
+               (vector-set! colors i
+                            (make-color (u8vector-ref bv offset)
+                                        (u8vector-ref bv (+ offset 1))
+                                        (u8vector-ref bv (+ offset 2))
+                                        (u8vector-ref bv (+ offset 3))))
+               (loop (1+ i)))
+             colors))))))
+
+
+;;;
+;;; Pixel Format
+;;;
+
+(define-wrapped-pointer-type <pixel-format>
+  pixel-format?
+  wrap-pixel-format unwrap-pixel-format
+  (lambda (pf port)
+    (format port "#<pixel-format name: ~s bpp: ~d>"
+            (pixel-format-name pf)
+            (pixel-format-bytes-per-pixel pf))))
+
+(define %pixel-format-types
+  (list uint32   ; format
+        '*       ; palette
+        uint8    ; bits per pixel
+        uint8    ; bytes per pixel
+        uint32   ; red mask
+        uint32   ; green mask
+        uint32   ; blue mask
+        uint32)) ; alpha mask
+
+(define-syntax-rule (pixel-format-parse-match pf matchers ...)
+  (match (parse-c-struct (unwrap-pixel-format pf) %pixel-format-types)
+    matchers ...))
+
+(define (pixel-format-name pf)
+  "Return the symbolic name of the pixel format PF."
+  (pixel-format-parse-match pf
+    ((format _ _ _ _ _ _ _)
+     (cond
+      ((= format ffi:SDL_PIXELFORMAT_INDEX1LSB) 'index1lsb)
+      ((= format ffi:SDL_PIXELFORMAT_INDEX1MSB) 'index1msb)
+      ((= format ffi:SDL_PIXELFORMAT_INDEX4LSB) 'index4lsb)
+      ((= format ffi:SDL_PIXELFORMAT_INDEX4MSB) 'index4msb)
+      ((= format ffi:SDL_PIXELFORMAT_INDEX8) 'index8)
+      ((= format ffi:SDL_PIXELFORMAT_RGB332) 'rgb332)
+      ((= format ffi:SDL_PIXELFORMAT_RGB444) 'rgb444)
+      ((= format ffi:SDL_PIXELFORMAT_RGB555) 'rgb555)
+      ((= format ffi:SDL_PIXELFORMAT_BGR555) 'bgr555)
+      ((= format ffi:SDL_PIXELFORMAT_ARGB4444) 'argb4444)
+      ((= format ffi:SDL_PIXELFORMAT_RGBA4444) 'rgba4444)
+      ((= format ffi:SDL_PIXELFORMAT_ABGR4444) 'abgr4444)
+      ((= format ffi:SDL_PIXELFORMAT_BGRA4444) 'bgra4444)
+      ((= format ffi:SDL_PIXELFORMAT_ARGB1555) 'argb1555)
+      ((= format ffi:SDL_PIXELFORMAT_RGBA5551) 'rgba5551)
+      ((= format ffi:SDL_PIXELFORMAT_ABGR1555) 'abgr1555)
+      ((= format ffi:SDL_PIXELFORMAT_BGRA5551) 'bgra5551)
+      ((= format ffi:SDL_PIXELFORMAT_RGB565) 'rgb565)
+      ((= format ffi:SDL_PIXELFORMAT_BGR565) 'bgr565)
+      ((= format ffi:SDL_PIXELFORMAT_RGB24) 'rgb24)
+      ((= format ffi:SDL_PIXELFORMAT_BGR24) 'bgr24)
+      ((= format ffi:SDL_PIXELFORMAT_RGB888) 'rgb888)
+      ((= format ffi:SDL_PIXELFORMAT_RGBX8888) 'rgbx8888)
+      ((= format ffi:SDL_PIXELFORMAT_BGR888) 'bgr888)
+      ((= format ffi:SDL_PIXELFORMAT_BGRX8888) 'bgrx8888)
+      ((= format ffi:SDL_PIXELFORMAT_ARGB8888) 'argb8888)
+      ((= format ffi:SDL_PIXELFORMAT_RGBA8888) 'rgba8888)
+      ((= format ffi:SDL_PIXELFORMAT_ABGR8888) 'abgr8888)
+      ((= format ffi:SDL_PIXELFORMAT_BGRA8888) 'bgra8888)
+      ((= format ffi:SDL_PIXELFORMAT_ARGB2101010) 'argb2101010)
+      ((= format ffi:SDL_PIXELFORMAT_YV12) 'yv12)
+      ((= format ffi:SDL_PIXELFORMAT_IYUV) 'iyuv)
+      ((= format ffi:SDL_PIXELFORMAT_YUY2) 'yuy2)
+      ((= format ffi:SDL_PIXELFORMAT_UYVY) 'uyvy)
+      ((= format ffi:SDL_PIXELFORMAT_YVYU) 'yvyu)))))
+
+(define (pixel-format-palette pf)
+  "Return the palette for the pixel format PF."
+  (pixel-format-parse-match pf
+    ((_ palette _ _ _ _ _ _)
+     (if (null-pointer? palette)
+         #f
+         (wrap-palette palette)))))
+
+(define (pixel-format-bits-per-pixel pf)
+  "Return the number of bits per pixel for the pixel format PF."
+  (pixel-format-parse-match pf
+    ((_ _ bits _ _ _ _ _) bits)))
+
+(define (pixel-format-bytes-per-pixel pf)
+  "Return the number of bytes per pixel for the pixel format PF."
+  (pixel-format-parse-match pf
+    ((_ _ _ bytes _ _ _ _) bytes)))
+
+(define (pixel-format-red-mask pf)
+  "Return the bitmask for the red component of a pixel in the pixel
+format PF."
+  (pixel-format-parse-match pf
+    ((_ _ _ _ red-mask _ _ _) red-mask)))
+
+(define (pixel-format-green-mask pf)
+  "Return the bitmask for the green component of a pixel in the pixel
+format PF."
+  (pixel-format-parse-match pf
+    ((_ _ _ _ _ green-mask _ _) green-mask)))
+
+(define (pixel-format-blue-mask pf)
+  "Return the bitmask for the blue component of a pixel in the pixel
+format PF."
+  (pixel-format-parse-match pf
+    ((_ _ _ _ _ _ blue-mask _) blue-mask)))
+
+(define (pixel-format-alpha-mask pf)
+  "Return the bitmask for the alpha component of a pixel in the pixel
+format PF."
+  (pixel-format-parse-match pf
+    ((_ _ _ _ _ _ _ alpha-mask) alpha-mask)))
+
+
+;;;
+;;; Surface
+;;;
 
 (define-wrapped-pointer-type <surface>
   surface?
@@ -150,6 +341,12 @@ PROC."
   (surface-parse-match surface
     ((_ _ _ height pitch pixels)
      (pointer->bytevector pixels (* height pitch)))))
+
+(define (surface-pixel-format surface)
+  "Return the pixel format for SURFACE."
+  (surface-parse-match surface
+    ((_ format _ _ _ _)
+     (wrap-pixel-format format))))
 
 (define (symbol->sdl-pixel-format sym)
   (match sym
