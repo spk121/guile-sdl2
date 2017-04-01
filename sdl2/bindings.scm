@@ -816,6 +816,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-public SDLK_EJECT (scancode->keycode SDL_SCANCODE_EJECT))
 (define-public SDLK_SLEEP (scancode->keycode SDL_SCANCODE_SLEEP))
 
+(define-foreign sdl-get-keyboard-state
+  '* "SDL_GetKeyboardState" '(*))
+
 
 ;;;
 ;;; Text Input
