@@ -49,6 +49,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-public sdl-color
   (list uint8 uint8 uint8 uint8))
 
+(define-public sdl-rect
+  (list int int int int))
+
 (define sdl-bool int)
 
 (define-public (boolean->sdl-bool b)
