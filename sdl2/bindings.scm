@@ -1130,3 +1130,17 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign sdl-is-game-controller
   sdl-bool "SDL_IsGameController" (list int))
+
+
+;;;
+;;; Clipboard
+;;;
+
+(define-foreign sdl-get-clipboard-text
+  '* "SDL_GetClipboardText" '())
+
+(define-foreign sdl-set-clipboard-text
+  int "SDL_SetClipboardText" '(*))
+
+(define-foreign sdl-has-clipboard-text
+  int "SDL_HasClipboardText" '())
