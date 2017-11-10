@@ -30,7 +30,8 @@
   #:use-module (system foreign)
   #:use-module ((sdl2 bindings) #:prefix ffi:)
   #:use-module (sdl2)
-  #:export (open-game-controller
+  #:export (load-game-controller-mappings!
+            open-game-controller
             close-game-controller
             game-controller?
             game-controller-attached?
@@ -59,6 +60,23 @@
                                     (game-controller-name game-controller))))
 
 (define wrap-joystick (@@ (sdl2 input joystick) wrap-joystick))
+
+(define (load-game-controller-mappings! file)
+  "Load game controller mappings from FILE and return the number of
+mappings added this way.
+
+See
+https://raw.github.com/gabomdq/SDL_GameControllerDB/master/gamecontrollerdb.txt
+for a community maintained controller mapping file."
+  (let ((count (ffi:sdl-game-controller-add-mappings-from-rw
+                (ffi:sdl-rw-from-file (string->pointer file)
+                                      (string->pointer "rb"))
+                1)))
+    (if (= count -1)
+        (sdl-error "load-game-controller-mappings!"
+                   (string-append "failed to load game controller mappings from file "
+                                  file))
+        count)))
 
 (define (open-game-controller joystick-index)
   "Return a game controller object for the physical joystick device

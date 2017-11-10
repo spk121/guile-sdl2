@@ -1071,6 +1071,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-public SDL_CONTROLLER_BUTTON_DPAD_RIGHT 14)
 (define-public SDL_CONTROLLER_BUTTON_MAX 15)
 
+(define-foreign sdl-game-controller-add-mappings-from-rw
+  int "SDL_GameControllerAddMappingsFromRW" (list '* int))
+
 (define-foreign sdl-game-controller-add-mapping
   int "SDL_GameControllerAddMapping" '(*))
 
