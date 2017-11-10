@@ -66,10 +66,10 @@ SDL2_image, SDL2_mixer, and SDL2_ttf.
   To configure the build properly, run the following:
 
   #+BEGIN_SRC sh
-    ./configure --with-libsdl2-prefix=$(guix build sdl2) \
-                --with-libsdl2-image-prefix=$(guix build sdl2-image) \
-                --with-libsdl2-ttf-prefix=$(guix build sdl2-ttf) \
-                --with-libsdl2-mixer-prefix=$(guix build sdl2-mixer)
+    ./configure --with-libsdl2-prefix=$(guix build sdl2 | tail -1) \
+                --with-libsdl2-image-prefix=$(guix build sdl2-image | tail -1) \
+                --with-libsdl2-ttf-prefix=$(guix build sdl2-ttf | tail -1) \
+                --with-libsdl2-mixer-prefix=$(guix build sdl2-mixer | tail -1)
   #+END_SRC
 
 * Usage
