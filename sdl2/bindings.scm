@@ -856,6 +856,8 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-public SDL_BUTTON_X1MASK (button-mask SDL_BUTTON_X1))
 (define-public SDL_BUTTON_X2MASK (button-mask SDL_BUTTON_X2))
 
+(define-foreign sdl-get-mouse-state
+  uint32 "SDL_GetMouseState" '(* *))
 
 
 ;;;
