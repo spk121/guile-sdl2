@@ -122,15 +122,15 @@ color."
         (sdl-error "surface->texture" "failed to convert surface to texture")
         (wrap-texture ptr))))
 
-(define (render-copy renderer texture srcrect dstrect)
+(define* (render-copy renderer texture #:key srcrect dstrect)
   "Copy TEXTURE to the rendering target of RENDERER."
   (let ((result (ffi:sdl-render-copy (unwrap-renderer renderer)
                                      (unwrap-texture texture)
-                                     (if (nil? srcrect)
-                                         %null-pointer
-                                         (make-c-struct ffi:sdl-rect srcrect))
-                                     (if (nil? dstrect)
-                                         %null-pointer
-                                         (make-c-struct ffi:sdl-rect dstrect)))))
+                                     (if srcrect
+                                         (make-c-struct ffi:sdl-rect srcrect)
+                                         %null-pointer)
+                                     (if dstrect
+                                         (make-c-struct ffi:sdl-rect dstrect)
+                                         %null-pointer))))
     (unless (zero? result)
       (sdl-error "render-copy" "failed to copy texture"))))
