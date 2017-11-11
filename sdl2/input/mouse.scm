@@ -31,7 +31,8 @@
   #:use-module (system foreign)
   #:export (mouse-x
             mouse-y
-            mouse-button-pressed?))
+            mouse-button-pressed?
+            mouse-button-released?))
 
 (define (make-int)
   (make-bytevector (sizeof int)))
@@ -65,3 +66,7 @@
                 ('x2 ffi:SDL_BUTTON_X2MASK)))
         (buttons (ffi:sdl-get-mouse-state %null-pointer %null-pointer)))
     (> (logand mask buttons) 0)))
+
+(define (mouse-button-released? button)
+  "Return #t if BUTTON is not currently being pressed."
+  (not (mouse-button-pressed? button)))
