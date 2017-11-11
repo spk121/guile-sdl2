@@ -52,6 +52,7 @@ SOURCES =					\
   sdl2/input/keyboard.scm			\
   sdl2/input/joystick.scm			\
   sdl2/input/game-controller.scm		\
+  sdl2/input/mouse.scm				\
   sdl2/input/text.scm
 
 if WITH_LIBSDL2_IMAGE
