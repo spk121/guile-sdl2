@@ -36,6 +36,7 @@
             clear-renderer
             present-renderer
             render-copy
+            set-render-draw-color
 
             surface->texture))
 
@@ -100,6 +101,10 @@ color."
 (define (present-renderer renderer)
   "Display RENDERER."
   (ffi:sdl-render-present (unwrap-renderer renderer)))
+
+(define (set-render-draw-color renderer r g b a)
+  "Set draw color of RENDERER."
+  (ffi:sdl-set-render-draw-color (unwrap-renderer renderer) r g b a))
 
 
 ;;;

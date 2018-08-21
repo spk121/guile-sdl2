@@ -1,5 +1,6 @@
 ;;; guile-sdl2 --- FFI bindings for SDL2
 ;;; Copyright © 2015, 2016 David Thompson <davet@gnu.org>
+;;; Copyright © 2018 Eero Leno <eero@leno.fi>
 ;;;
 ;;; This file is part of guile-sdl2.
 ;;;
@@ -234,6 +235,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign sdl-create-texture-from-surface
   '* "SDL_CreateTextureFromSurface" '(* *))
+
+(define-foreign sdl-set-render-draw-color
+  int "SDL_SetRenderDrawColor" (list '* uint8 uint8 uint8 uint8))
 
 
 ;;;
