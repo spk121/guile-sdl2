@@ -109,7 +109,7 @@ associated with ."
     ('left-x ffi:SDL_CONTROLLER_AXIS_LEFTX)
     ('left-y ffi:SDL_CONTROLLER_AXIS_LEFTY)
     ('right-x ffi:SDL_CONTROLLER_AXIS_RIGHTX)
-    ('right-x ffi:SDL_CONTROLLER_AXIS_RIGHTY)
+    ('right-y ffi:SDL_CONTROLLER_AXIS_RIGHTY)
     ('trigger-left ffi:SDL_CONTROLLER_AXIS_TRIGGERLEFT)
     ('trigger-right ffi:SDL_CONTROLLER_AXIS_TRIGGERRIGHT)))
 
