@@ -960,6 +960,11 @@ Valid format types are:
 @end itemize
 @end deffn
 
+@deffn {Procedure} blit-surface @var{src} @var{src-rect} @var{dst} @var{dst-rect}
+Blit the rectangle @var{src-rect} from the surface @var{src} to
+@var{dst-rect} of the surface @var{dst}.
+@end deffn
+
 @node Rendering
 @section Rendering
 
