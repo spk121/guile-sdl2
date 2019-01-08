@@ -3,6 +3,7 @@
 * Window Management::           Working with the window system.
 * Input::                       Keyboard, mouse, joystick input.
 * Events::                      Asynchronous event handling.
+* Rects::                       2D rectangles.
 * Surfaces::                    Software rendering.
 * Rendering::                   Hardware accelerated rendering.
 * Images::                      Loading and saving images.
@@ -794,6 +795,34 @@ Return @code{#t} if @var{event} is a game controller device event with the
 @end deffn
 
 @deffn {Scheme Procedure} poll-event
+@end deffn
+
+@node Rects
+@section Rects
+
+@example
+(use-modules (sdl2 rect))
+@end example
+
+@deffn {Procedure} make-rect @var{x} @var{y} @var{width} @var{height}
+Return a new rectangle whose upper-left corner is at (@var{x},
+@var{y}) and is @var{width} pixels wide and @var{height} pixels high.
+@end deffn
+
+@deffn {Procedure} rect-x @var{rect}
+Return the X coordinate of @var{rect}.
+@end deffn
+
+@deffn {Procedure} rect-y @var{rect}
+Return the Y coordinate of @var{rect}.
+@end deffn
+
+@deffn {Procedure} rect-width @var{rect}
+Return the width of @var{rect}.
+@end deffn
+
+@deffn {Procedure} rect-height @var{rect}
+Return the height of @var{rect}.
 @end deffn
 
 @node Surfaces
