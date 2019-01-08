@@ -943,6 +943,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-convert-surface-format
   '* "SDL_ConvertSurfaceFormat" (list '* uint32 uint32))
 
+(define-foreign sdl-blit-surface
+  int "SDL_UpperBlit" '(* * * *))
+
 
 ;;;
 ;;; Audio

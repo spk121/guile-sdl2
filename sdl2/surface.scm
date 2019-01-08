@@ -63,7 +63,8 @@
             surface-height
             surface-pitch
             surface-pixels
-            convert-surface-format))
+            convert-surface-format
+            blit-surface))
 
 
 ;;;
@@ -434,3 +435,17 @@ Valid format types are:
     (if (null-pointer? ptr)
         (sdl-error "convert-surface-format" "failed to convert surface format")
         (wrap-surface ptr))))
+
+(define (blit-surface src src-rect dst dst-rect)
+  "Blit the rectangle SRC-RECT from the surface SRC to DST-RECT of the
+surface DST."
+  (unless (zero?
+           (ffi:sdl-blit-surface (unwrap-surface src)
+                                 (if src-rect
+                                     ((@@ (sdl2 rect) unwrap-rect) src-rect)
+                                     %null-pointer)
+                                 (unwrap-surface dst)
+                                 (if dst-rect
+                                     ((@@ (sdl2 rect) unwrap-rect) dst-rect)
+                                     %null-pointer)))
+    (sdl-error "blit-surface" "failed to blit surface ~a to ~a" src dst)))
