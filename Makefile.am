@@ -45,6 +45,7 @@ SOURCES =					\
   sdl2/config.scm				\
   sdl2/bindings.scm				\
   sdl2/clipboard.scm				\
+  sdl2/rect.scm					\
   sdl2/surface.scm				\
   sdl2/render.scm				\
   sdl2/video.scm				\
