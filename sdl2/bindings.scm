@@ -949,6 +949,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-blit-scaled
   int "SDL_UpperBlitScaled" '(* * * *))
 
+(define-foreign sdl-fill-rect
+  int "SDL_FillRect" (list '* '* uint32))
+
 
 ;;;
 ;;; Audio

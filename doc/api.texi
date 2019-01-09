@@ -1000,6 +1000,10 @@ Blit the rectangle @var{src-rect} from the surface @var{src} to
 destination.
 @end deffn
 
+@deffn {Procedure} fill-rect @var{dst} @var{rect} @var{color}
+Fill @var{rect} with @var{color}, a 32-bit color encoded as an integer
+value, in the surface @var{dst}.
+@end deffn
 
 @node Rendering
 @section Rendering

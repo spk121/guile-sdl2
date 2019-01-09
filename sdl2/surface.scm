@@ -65,7 +65,8 @@
             surface-pixels
             convert-surface-format
             blit-surface
-            blit-scaled))
+            blit-scaled
+            fill-rect))
 
 
 ;;;
@@ -464,3 +465,13 @@ surface DST, scaling the source to fit the destination."
                                      ((@@ (sdl2 rect) unwrap-rect) dst-rect)
                                      %null-pointer)))
     (sdl-error "blit-scaled" "failed to blit surface ~a to ~a" src dst)))
+
+(define (fill-rect dst rect color)
+  "Fill RECT with COLOR in the surface DST."
+  (unless (zero?
+           (ffi:sdl-fill-rect (unwrap-surface dst)
+                              (if rect
+                                  ((@@ (sdl2 rect) unwrap-rect) rect)
+                                  %null-pointer)
+                              color))
+    (sdl-error "fill-rect" "failed to fill rect in ~a" dst)))
