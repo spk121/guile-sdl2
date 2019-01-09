@@ -946,6 +946,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-blit-surface
   int "SDL_UpperBlit" '(* * * *))
 
+(define-foreign sdl-blit-scaled
+  int "SDL_UpperBlitScaled" '(* * * *))
+
 
 ;;;
 ;;; Audio

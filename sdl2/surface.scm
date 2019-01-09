@@ -64,7 +64,8 @@
             surface-pitch
             surface-pixels
             convert-surface-format
-            blit-surface))
+            blit-surface
+            blit-scaled))
 
 
 ;;;
@@ -449,3 +450,17 @@ surface DST."
                                      ((@@ (sdl2 rect) unwrap-rect) dst-rect)
                                      %null-pointer)))
     (sdl-error "blit-surface" "failed to blit surface ~a to ~a" src dst)))
+
+(define (blit-scaled src src-rect dst dst-rect)
+  "Blit the rectangle SRC-RECT from the surface SRC to DST-RECT of the
+surface DST, scaling the source to fit the destination."
+  (unless (zero?
+           (ffi:sdl-blit-surface (unwrap-surface src)
+                                 (if src-rect
+                                     ((@@ (sdl2 rect) unwrap-rect) src-rect)
+                                     %null-pointer)
+                                 (unwrap-surface dst)
+                                 (if dst-rect
+                                     ((@@ (sdl2 rect) unwrap-rect) dst-rect)
+                                     %null-pointer)))
+    (sdl-error "blit-scaled" "failed to blit surface ~a to ~a" src dst)))
