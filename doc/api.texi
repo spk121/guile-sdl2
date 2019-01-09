@@ -18,7 +18,7 @@
 (use-modules (sdl2))
 @end example
 
-@deffn {Scheme Procedure} sdl-init [@var{subsystems}]
+@deffn {Procedure} sdl-init [@var{subsystems}]
 Initialize the SDL library.  This must be called before using any
 other SDL procedure.
 
@@ -28,17 +28,17 @@ The possible flags are @code{timer}, @code{audio}, @code{video},
 @code{haptic}, @code{game-controller}, and @code{events}.
 @end deffn
 
-@deffn {Scheme Procedure} sdl-quit
+@deffn {Procedure} sdl-quit
 Quit all activated SDL subsystems.  This procedure should be called
 upon all exit conditions.
 @end deffn
 
-@deffn {Scheme Procedure} sdl-version
+@deffn {Procedure} sdl-version
 Return a three element list containing the major, minor, and patch
 version of the linked SDL library.
 @end deffn
 
-@deffn {Scheme Procedure} sdl-ticks
+@deffn {Procedure} sdl-ticks
 Return the number of milliseconds since the SDL library was
 initialized.
 @end deffn
@@ -58,7 +58,7 @@ initialized.
 @node Windows
 @subsection Windows
 
-@deffn {Scheme Procedure} make-window [#:title "Guile SDL2 Window"] @
+@deffn {Procedure} make-window [#:title "Guile SDL2 Window"] @
                           [#:position (#f #f)] @
                           [#:size (640 480)] @
                           [#:maximize? #f] @
@@ -78,80 +78,80 @@ centered on that axis, or @code{#f} to indicate that it does not matter
 where the window is located on that axis.
 @end deffn
 
-@deffn {Scheme Procedure} close-window! window
+@deffn {Procedure} close-window! window
 Close @var{window}.
 @end deffn
 
-@deffn {Scheme Procedure} call-with-window window proc
+@deffn {Procedure} call-with-window window proc
 Call @var{proc} with @var{window}, an SDL window object, and close it
 when @var{proc} returns or otherwise exits.
 @end deffn
 
-@deffn {Scheme Procedure} window-title window
+@deffn {Procedure} window-title window
 Return the title for @var{window}.
 @end deffn
 
-@deffn {Scheme Procedure} window-size window
+@deffn {Procedure} window-size window
 Return the dimensions of @var{window}.
 @end deffn
 
-@deffn {Scheme Procedure} window-position window
+@deffn {Procedure} window-position window
 Return the position of @var{window} on the display.
 @end deffn
 
-@deffn {Scheme Procedure} window-id window
+@deffn {Procedure} window-id window
 Return the numeric ID of @var{window}.
 @end deffn
 
-@deffn {Scheme Procedure} id->window id
+@deffn {Procedure} id->window id
 Return the window corresponding to @var{ID}, a positive integer, or
 @code{#f} if there is no such window.
 @end deffn
 
-@deffn {Scheme Procedure} hide-window! window
+@deffn {Procedure} hide-window! window
 Hide @var{window}.
 @end deffn
 
-@deffn {Scheme Procedure} show-window! window
+@deffn {Procedure} show-window! window
 Show @var{window} and focus on it.
 @end deffn
 
-@deffn {Scheme Procedure} maximize-window! window
+@deffn {Procedure} maximize-window! window
 Make @var{window} as large as possible.
 @end deffn
 
-@deffn {Scheme Procedure} minimize-window! window
+@deffn {Procedure} minimize-window! window
 Shrink @var{window} to an iconic representation.
 @end deffn
 
-@deffn {Scheme Procedure} raise-window! window
+@deffn {Procedure} raise-window! window
 Raise @var{window} above all other windows and set input focus.
 @end deffn
 
-@deffn {Scheme Procedure} restore-window! window
+@deffn {Procedure} restore-window! window
 Restore the size and position of a minimized or maximized @var{window}.
 @end deffn
 
-@deffn {Scheme Procedure} set-window-border! window border?
+@deffn {Procedure} set-window-border! window border?
 When @var{border?}, draw the usual border around @var{window}, otherwise
 remove the border.
 @end deffn
 
-@deffn {Scheme Procedure} set-window-title! window title
+@deffn {Procedure} set-window-title! window title
 Set the title of @var{window} to the string @var{title}.
 @end deffn
 
-@deffn {Scheme Procedure} set-window-position! window position
+@deffn {Procedure} set-window-position! window position
 Set the position of @var{window} to @var{position}, a two-element list
 of (x,y) coordinates measured in pixels.
 @end deffn
 
-@deffn {Scheme Procedure} set-window-size! window size
+@deffn {Procedure} set-window-size! window size
 Set the dimensions of @var{window} to @var{size}, a two-element list of
 (width,height) coordinates measured in pixels.
 @end deffn
 
-@deffn {Scheme Procedure} set-window-fullscreen! window fullscreen? [#:desktop?]
+@deffn {Procedure} set-window-fullscreen! window fullscreen? [#:desktop?]
 Toggle fullscreen mode on/off for @var{window}.  If @var{fullscreen?},
 fullscreen mode is activated, otherwise it is deactivated.  If
 @var{fullscreen?} and @var{desktop?}, a special "fake" fullscreen mode
@@ -161,24 +161,24 @@ is used that takes the size of the desktop.
 @node OpenGL
 @subsection OpenGL
 
-@deffn {Scheme Procedure} make-gl-context window
+@deffn {Procedure} make-gl-context window
 Create an OpenGL context for @var{window}.
 @end deffn
 
-@deffn {Scheme Procedure} delete-gl-context! context
+@deffn {Procedure} delete-gl-context! context
 Delete @var{context}, an OpenGL context object.
 @end deffn
 
-@deffn {Scheme Procedure} call-with-gl-context window proc
+@deffn {Procedure} call-with-gl-context window proc
 Call @var{proc} with a new OpenGL context created for @var{window}, and
 close the context when @var{proc} returns or otherwise exits.
 @end deffn
 
-@deffn {Scheme Procedure} swap-gl-window window
+@deffn {Procedure} swap-gl-window window
 Update @var{window} with OpenGL rendering.
 @end deffn
 
-@deffn {Scheme Procedure} set-gl-attribute! attr value
+@deffn {Procedure} set-gl-attribute! attr value
 Set the OpenGL attribute represented by the symbol @var{attr} to
 @var{value}.  Possible values for @var{attr} are:
 
@@ -209,7 +209,7 @@ Set the OpenGL attribute represented by the symbol @var{attr} to
 
 @end deffn
 
-@deffn {Scheme Procedure} set-gl-swap-interval! interval
+@deffn {Procedure} set-gl-swap-interval! interval
 Set the framebuffer swap interval for the current OpenGL context to the
 type indicated by the symbol @var{interval}.  Possible values of
 @var{interval} are:
@@ -243,11 +243,11 @@ drops.
 (use-modules (sdl2 input keyboard))
 @end example
 
-@deffn {Scheme Procedure} key-pressed? key
+@deffn {Procedure} key-pressed? key
 Return @code{#t} if @var{key} is currently being pressed.
 @end deffn
 
-@deffn {Scheme Procedure} key-released? key
+@deffn {Procedure} key-released? key
 Return @code{#t} is @var{key} is not currently being pressed.
 @end deffn
 
@@ -258,19 +258,19 @@ Return @code{#t} is @var{key} is not currently being pressed.
 (use-modules (sdl2 input mouse))
 @end example
 
-@deffn {Scheme Procedure} mouse-x
+@deffn {Procedure} mouse-x
 Return the x coordinate of the mouse cursor.
 @end deffn
 
-@deffn {Scheme Procedure} mouse-y
+@deffn {Procedure} mouse-y
 Return the y coordinate of the mouse cursor.
 @end deffn
 
-@deffn {Scheme Procedure} mouse-button-pressed? button
+@deffn {Procedure} mouse-button-pressed? button
 Return @code{#t} if @var{button} is currently being pressed.
 @end deffn
 
-@deffn {Scheme Procedure} mouse-button-released? button
+@deffn {Procedure} mouse-button-released? button
 Return @code{#t} if @var{button} is not currently being pressed.
 @end deffn
 
@@ -281,42 +281,42 @@ Return @code{#t} if @var{button} is not currently being pressed.
 (use-modules (sdl2 input joystick))
 @end example
 
-@deffn {Scheme Procedure} num-joysticks
+@deffn {Procedure} num-joysticks
 Return the current number of connected joystick devices.
 @end deffn
 
-@deffn {Scheme Procedure} open-joystick device-index
+@deffn {Procedure} open-joystick device-index
 Return a joystick object for the physical joystick device associated
 with @var{device-index}.
 @end deffn
 
-@deffn {Scheme Procedure} close-joystick joystick
+@deffn {Procedure} close-joystick joystick
 Close @var{joystick}.
 @end deffn
 
-@deffn {Scheme Procedure} joystick-instance-id joystick
+@deffn {Procedure} joystick-instance-id joystick
 Return the instance id of @var{joystick}.
 @end deffn
 
-@deffn {Scheme Procedure} joystick-power-level joystick
+@deffn {Procedure} joystick-power-level joystick
 Return the symbolic battery power level for @var{joystick}, either
 @code{unknown}, @code{empty}, @code{low}, @code{medium}, @code{full},
 or @code{wired}.
 @end deffn
 
-@deffn {Scheme Procedure} joystick-num-axes joystick
+@deffn {Procedure} joystick-num-axes joystick
 Return the number of axes for @var{joystick}.
 @end deffn
 
-@deffn {Scheme Procedure} joystick-num-balls joystick
+@deffn {Procedure} joystick-num-balls joystick
 Return the number of balls for @var{joystick}.
 @end deffn
 
-@deffn {Scheme Procedure} joystick-num-buttons joystick
+@deffn {Procedure} joystick-num-buttons joystick
 Return the number of buttons for @var{joystick}.
 @end deffn
 
-@deffn {Scheme Procedure} joystick-num-hats joystick
+@deffn {Procedure} joystick-num-hats joystick
 Return the number of hats for @var{joystick}.
 @end deffn
 
@@ -327,7 +327,7 @@ Return the number of hats for @var{joystick}.
 (use-modules (sdl2 input game-controller))
 @end example
 
-@deffn {Scheme Procedure} load-game-controller-mappings! file
+@deffn {Procedure} load-game-controller-mappings! file
 Load game controller mapping from @var{file} and return the number of
 mappings added this way.
 
@@ -335,32 +335,32 @@ See @url{https://raw.github.com/gabomdq/SDL_GameControllerDB/master/gamecontroll
 for a community maintained controller mapping file.
 @end deffn
 
-@deffn {Scheme Procedure} open-game-controller joystick-index
+@deffn {Procedure} open-game-controller joystick-index
 Return a game controller object for the physical joystick device associated
 with the @var{joystick-index}.
 @end deffn
 
-@deffn {Scheme Procedure} close-game-controller controller
+@deffn {Procedure} close-game-controller controller
 Close @var{controller}.
 @end deffn
 
-@deffn {Scheme Procedure} game-controller? controller
+@deffn {Procedure} game-controller? controller
 Close @var{controller}.
 @end deffn
 
-@deffn {Scheme Procedure} game-controller-attached? controller
+@deffn {Procedure} game-controller-attached? controller
 Return @code{#t} if @var{controller} is currently in use.
 @end deffn
 
-@deffn {Scheme Procedure} game-controller-joystick controller
+@deffn {Procedure} game-controller-joystick controller
 Return the underlying joystick object associated with @var{controller}.
 @end deffn
 
-@deffn {Scheme Procedure} game-controller-name controller
+@deffn {Procedure} game-controller-name controller
 Return the human readable name for @var{controller}.
 @end deffn
 
-@deffn {Scheme Procedure} game-controller-axis controller axis
+@deffn {Procedure} game-controller-axis controller axis
 Return a number in the range [-32768, 32767] representing the
 current state of @var{axis} on @var{controller}.
 
@@ -375,7 +375,7 @@ current state of @var{axis} on @var{controller}.
 @end itemize
 @end deffn
 
-@deffn {Scheme Procedure} game-controller-button-pressed? controller button
+@deffn {Procedure} game-controller-button-pressed? controller button
 Return @code{#t} if @var{button} is pressed on @var{controller}.
 
 @var{button} may be one of the following symbols:
@@ -398,7 +398,7 @@ Return @code{#t} if @var{button} is pressed on @var{controller}.
 @end itemize
 @end deffn
 
-@deffn {Scheme Procedure} game-controller-index? joystick-index
+@deffn {Procedure} game-controller-index? joystick-index
 Return @code{#t} if @var{joystick-index} is a valid game controller index.
 @end deffn
 
@@ -409,92 +409,92 @@ Return @code{#t} if @var{joystick-index} is a valid game controller index.
 (use-modules (sdl2 events))
 @end example
 
-@deffn {Scheme Procedure} make-quit-event timestamp
+@deffn {Procedure} make-quit-event timestamp
 @end deffn
 
-@deffn {Scheme Procedure} quit-event? e
+@deffn {Procedure} quit-event? e
 Return @code{#t} if @var{e} is a quit event.
 @end deffn
 
-@deffn {Scheme Procedure} quit-event-timestamp e
+@deffn {Procedure} quit-event-timestamp e
 @end deffn
 
-@deffn {Scheme Procedure} make-window-event timestamp window-id type vector
+@deffn {Procedure} make-window-event timestamp window-id type vector
 @end deffn
 
-@deffn {Scheme Procedure} window-event? e
+@deffn {Procedure} window-event? e
 Return @code{#t} if @var{e} is a window event.
 @end deffn
 
-@deffn {Scheme Procedure} window-shown-event? e
+@deffn {Procedure} window-shown-event? e
 Return @code{#t} if @var{e} is a window shown event.
 @end deffn
 
-@deffn {Scheme Procedure} window-hidden-event? e
+@deffn {Procedure} window-hidden-event? e
 Return @code{#t} if @var{e} is a window hidden event.
 @end deffn
 
-@deffn {Scheme Procedure} window-exposed-event? e
+@deffn {Procedure} window-exposed-event? e
 Return @code{#t} if @var{e} is a window exposed event.
 @end deffn
 
-@deffn {Scheme Procedure} window-moved-event? e
+@deffn {Procedure} window-moved-event? e
 Return @code{#t} if @var{e} is a window moved event.
 @end deffn
 
-@deffn {Scheme Procedure} window-resized-event? e
+@deffn {Procedure} window-resized-event? e
 Return @code{#t} if @var{e} is a window resized event.
 @end deffn
 
-@deffn {Scheme Procedure} window-size-changed-event? e
+@deffn {Procedure} window-size-changed-event? e
 Return @code{#t} if @var{e} is a window size changed event.
 @end deffn
 
-@deffn {Scheme Procedure} window-minimized-event? e
+@deffn {Procedure} window-minimized-event? e
 Return @code{#t} if @var{e} is a window minimized event.
 @end deffn
 
-@deffn {Scheme Procedure} window-maximized-event? e
+@deffn {Procedure} window-maximized-event? e
 Return @code{#t} if @var{e} is a window maximized event.
 @end deffn
 
-@deffn {Scheme Procedure} window-restored-event? e
+@deffn {Procedure} window-restored-event? e
 Return @code{#t} if @var{e} is a window restored event.
 @end deffn
 
-@deffn {Scheme Procedure} window-enter-event? e
+@deffn {Procedure} window-enter-event? e
 Return @code{#t} if @var{e} is a window enter event.
 @end deffn
 
-@deffn {Scheme Procedure} window-leave-event? e
+@deffn {Procedure} window-leave-event? e
 Return @code{#t} if @var{e} is a window leave event.
 @end deffn
 
-@deffn {Scheme Procedure} window-focus-gained-event? e
+@deffn {Procedure} window-focus-gained-event? e
 Return @code{#t} if @var{e} is a window focus gained event.
 @end deffn
 
-@deffn {Scheme Procedure} window-focus-lost-event? e
+@deffn {Procedure} window-focus-lost-event? e
 Return @code{#t} if @var{e} is a window focus lost event.
 @end deffn
 
-@deffn {Scheme Procedure} window-closed-event? e
+@deffn {Procedure} window-closed-event? e
 Return @code{#t} if @var{e} is a window closed event.
 @end deffn
 
-@deffn {Scheme Procedure} window-event-timestamp e
+@deffn {Procedure} window-event-timestamp e
 @end deffn
 
-@deffn {Scheme Procedure} window-event-window-id e
+@deffn {Procedure} window-event-window-id e
 @end deffn
 
-@deffn {Scheme Procedure} window-event-type e
+@deffn {Procedure} window-event-type e
 @end deffn
 
-@deffn {Scheme Procedure} window-event-vector e
+@deffn {Procedure} window-event-vector e
 @end deffn
 
-@deffn {Scheme Procedure} make-keyboard-event timestamp @
+@deffn {Procedure} make-keyboard-event timestamp @
                                               window-id @
                                               pressed? @
                                               repeat? @
@@ -503,56 +503,56 @@ Return @code{#t} if @var{e} is a window closed event.
                                               modifiers
 @end deffn
 
-@deffn {Scheme Procedure} keyboard-event? e
+@deffn {Procedure} keyboard-event? e
 Return @code{#t} if @var{e} is a keyboard event.
 @end deffn
 
-@deffn {Scheme Procedure} keyboard-down-event? e
+@deffn {Procedure} keyboard-down-event? e
 Return @code{#t} if @var{e} is a key press event.
 @end deffn
 
-@deffn {Scheme Procedure} keyboard-up-event? e
+@deffn {Procedure} keyboard-up-event? e
 Return @code{#t} if @var{e} is a key release event.
 @end deffn
 
-@deffn {Scheme Procedure} keyboard-event-timestamp e
+@deffn {Procedure} keyboard-event-timestamp e
 @end deffn
 
-@deffn {Scheme Procedure} keyboard-event-window-id e
+@deffn {Procedure} keyboard-event-window-id e
 @end deffn
 
-@deffn {Scheme Procedure} keyboard-event-pressed? e
+@deffn {Procedure} keyboard-event-pressed? e
 @end deffn
 
-@deffn {Scheme Procedure} keyboard-event-repeat? e
+@deffn {Procedure} keyboard-event-repeat? e
 @end deffn
 
-@deffn {Scheme Procedure} keyboard-event-key e
+@deffn {Procedure} keyboard-event-key e
 @end deffn
 
-@deffn {Scheme Procedure} keyboard-event-scancode e
+@deffn {Procedure} keyboard-event-scancode e
 @end deffn
 
-@deffn {Scheme Procedure} keyboard-event-modifiers e
+@deffn {Procedure} keyboard-event-modifiers e
 @end deffn
 
-@deffn {Scheme Procedure} make-text-input-event timestamp window-id text
+@deffn {Procedure} make-text-input-event timestamp window-id text
 @end deffn
 
-@deffn {Scheme Procedure} text-input-event? e
+@deffn {Procedure} text-input-event? e
 Return @code{#t} if @var{e} is a text input event.
 @end deffn
 
-@deffn {Scheme Procedure} text-input-event-timestamp e
+@deffn {Procedure} text-input-event-timestamp e
 @end deffn
 
-@deffn {Scheme Procedure} text-input-event-window-id e
+@deffn {Procedure} text-input-event-window-id e
 @end deffn
 
-@deffn {Scheme Procedure} text-input-event-text e
+@deffn {Procedure} text-input-event-text e
 @end deffn
 
-@deffn {Scheme Procedure} make-mouse-button-event timestamp @
+@deffn {Procedure} make-mouse-button-event timestamp @
                                                   window-id @
                                                   which @
                                                   button @
@@ -562,43 +562,43 @@ Return @code{#t} if @var{e} is a text input event.
                                                   y
 @end deffn
 
-@deffn {Scheme Procedure} mouse-button-event? e
+@deffn {Procedure} mouse-button-event? e
 Return @code{#t} if @var{e} is a mouse button event.
 @end deffn
 
-@deffn {Scheme Procedure} mouse-button-down-event? e
+@deffn {Procedure} mouse-button-down-event? e
 Return @code{#t} if @var{e} is a mouse button down event.
 @end deffn
 
-@deffn {Scheme Procedure} mouse-button-up-event? e
+@deffn {Procedure} mouse-button-up-event? e
 Return @code{#t} if @var{e} is a mouse button up event.
 @end deffn
 
-@deffn {Scheme Procedure} mouse-button-event-timestamp e
+@deffn {Procedure} mouse-button-event-timestamp e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-button-event-window-id e
+@deffn {Procedure} mouse-button-event-window-id e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-button-event-which e
+@deffn {Procedure} mouse-button-event-which e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-button-event-button e
+@deffn {Procedure} mouse-button-event-button e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-button-event-pressed? e
+@deffn {Procedure} mouse-button-event-pressed? e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-button-event-clicks e
+@deffn {Procedure} mouse-button-event-clicks e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-button-event-x e
+@deffn {Procedure} mouse-button-event-x e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-button-event-y e
+@deffn {Procedure} mouse-button-event-y e
 @end deffn
 
-@deffn {Scheme Procedure} make-mouse-motion-event timestamp @
+@deffn {Procedure} make-mouse-motion-event timestamp @
                                                   window-id @
                                                   which @
                                                   buttons @
@@ -608,193 +608,193 @@ Return @code{#t} if @var{e} is a mouse button up event.
                                                   y-rel
 @end deffn
 
-@deffn {Scheme Procedure} mouse-motion-event? e
+@deffn {Procedure} mouse-motion-event? e
 Return @code{#t} if @var{e} is a mouse motion event.
 @end deffn
 
-@deffn {Scheme Procedure} mouse-motion-event-timestamp e
+@deffn {Procedure} mouse-motion-event-timestamp e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-motion-event-window-id e
+@deffn {Procedure} mouse-motion-event-window-id e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-motion-event-which e
+@deffn {Procedure} mouse-motion-event-which e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-motion-event-buttons e
+@deffn {Procedure} mouse-motion-event-buttons e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-motion-event-x e
+@deffn {Procedure} mouse-motion-event-x e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-motion-event-y e
+@deffn {Procedure} mouse-motion-event-y e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-motion-event-x-rel e
+@deffn {Procedure} mouse-motion-event-x-rel e
 @end deffn
 
-@deffn {Scheme Procedure} mouse-motion-event-y-rel e
+@deffn {Procedure} mouse-motion-event-y-rel e
 @end deffn
 
-@deffn {Scheme Procedure} make-joystick-axis-event timestamp which axis value
+@deffn {Procedure} make-joystick-axis-event timestamp which axis value
 @end deffn
 
-@deffn {Scheme Procedure} joystick-axis-event? e
+@deffn {Procedure} joystick-axis-event? e
 Return @code{#t} if @var{e} is a joystick axis event.
 @end deffn
 
-@deffn {Scheme Procedure} joystick-axis-event-timestamp e
+@deffn {Procedure} joystick-axis-event-timestamp e
 @end deffn
 
-@deffn {Scheme Procedure} joystick-axis-event-which e
+@deffn {Procedure} joystick-axis-event-which e
 @end deffn
 
-@deffn {Scheme Procedure} joystick-axis-event-button e
+@deffn {Procedure} joystick-axis-event-button e
 @end deffn
 
-@deffn {Scheme Procedure} joystick-axis-event-pressed? e
+@deffn {Procedure} joystick-axis-event-pressed? e
 @end deffn
 
-@deffn {Scheme Procedure} make-joystick-ball-event timestamp @
+@deffn {Procedure} make-joystick-ball-event timestamp @
                                                    which @
                                                    ball @
                                                    x-rel @
                                                    y-rel
 @end deffn
 
-@deffn {Scheme Procedure} joystick-ball-event? e
+@deffn {Procedure} joystick-ball-event? e
 Return @code{#t} if @var{e} is a joystick ball event.
 @end deffn
 
-@deffn {Scheme Procedure} joystick-ball-event-timestamp e
+@deffn {Procedure} joystick-ball-event-timestamp e
 @end deffn
 
-@deffn {Scheme Procedure} joystick-ball-event-which e
+@deffn {Procedure} joystick-ball-event-which e
 @end deffn
 
-@deffn {Scheme Procedure} joystick-ball-event-ball e
+@deffn {Procedure} joystick-ball-event-ball e
 @end deffn
 
-@deffn {Scheme Procedure} joystick-ball-event-x-rel e
+@deffn {Procedure} joystick-ball-event-x-rel e
 @end deffn
 
-@deffn {Scheme Procedure} joystick-ball-event-y-rel e
+@deffn {Procedure} joystick-ball-event-y-rel e
 @end deffn
 
-@deffn {Scheme Procedure} make-joystick-hat-event timestamp which hat value
+@deffn {Procedure} make-joystick-hat-event timestamp which hat value
 @end deffn
 
-@deffn {Scheme Procedure} joystick-hat-event? e
+@deffn {Procedure} joystick-hat-event? e
 Return @code{#t} if @var{e} is a joystick hat event.
 @end deffn
 
-@deffn {Scheme Procedure} joystick-hat-event-timestamp e
+@deffn {Procedure} joystick-hat-event-timestamp e
 @end deffn
 
-@deffn {Scheme Procedure} joystick-hat-event-which e
+@deffn {Procedure} joystick-hat-event-which e
 @end deffn
 
-@deffn {Scheme Procedure} joystick-hat-event-hat e
+@deffn {Procedure} joystick-hat-event-hat e
 @end deffn
 
-@deffn {Scheme Procedure} joystick-hat-event-value e
+@deffn {Procedure} joystick-hat-event-value e
 @end deffn
 
-@deffn {Scheme Procedure} make-joystick-device-event timestamp which action
+@deffn {Procedure} make-joystick-device-event timestamp which action
 @end deffn
 
-@deffn {Scheme Procedure} joystick-device-event? e
+@deffn {Procedure} joystick-device-event? e
 Return @code{#t} if @var{e} is a joystick device event.
 @end deffn
 
-@deffn {Scheme Procedure} joystick-device-event-timestamp e
+@deffn {Procedure} joystick-device-event-timestamp e
 @end deffn
 
-@deffn {Scheme Procedure} joystick-device-event-which e
+@deffn {Procedure} joystick-device-event-which e
 @end deffn
 
-@deffn {Scheme Procedure} joystick-device-event-action e
+@deffn {Procedure} joystick-device-event-action e
 @end deffn
 
-@deffn {Scheme Procedure} make-controller-axis-event timestamp which axis value
+@deffn {Procedure} make-controller-axis-event timestamp which axis value
 @end deffn
 
-@deffn {Scheme Procedure} controller-axis-event? e
+@deffn {Procedure} controller-axis-event? e
 Return @code{#t} if @var{e} is a game controller axis event.
 @end deffn
 
-@deffn {Scheme Procedure} controller-axis-event-timestamp e
+@deffn {Procedure} controller-axis-event-timestamp e
 @end deffn
 
-@deffn {Scheme Procedure} controller-axis-event-which e
+@deffn {Procedure} controller-axis-event-which e
 @end deffn
 
-@deffn {Scheme Procedure} controller-axis-event-axis e
+@deffn {Procedure} controller-axis-event-axis e
 @end deffn
 
-@deffn {Scheme Procedure} controller-axis-event-value e
+@deffn {Procedure} controller-axis-event-value e
 @end deffn
 
-@deffn {Scheme Procedure} make-controller-button-event timestamp @
+@deffn {Procedure} make-controller-button-event timestamp @
                                                        which @
                                                        button @
                                                        pressed?
 @end deffn
 
-@deffn {Scheme Procedure} controller-button-event? e
+@deffn {Procedure} controller-button-event? e
 Return @code{#t} if @var{event} is a game controller button event.
 @end deffn
 
-@deffn {Scheme Procedure} controller-button-down-event? e
+@deffn {Procedure} controller-button-down-event? e
 @end deffn
 
-@deffn {Scheme Procedure} controller-button-up-event? e
+@deffn {Procedure} controller-button-up-event? e
 @end deffn
 
-@deffn {Scheme Procedure} controller-button-event-timestamp e
+@deffn {Procedure} controller-button-event-timestamp e
 @end deffn
 
-@deffn {Scheme Procedure} controller-button-event-which e
+@deffn {Procedure} controller-button-event-which e
 @end deffn
 
-@deffn {Scheme Procedure} controller-button-event-button e
+@deffn {Procedure} controller-button-event-button e
 @end deffn
 
-@deffn {Scheme Procedure} controller-button-event-pressed? e
+@deffn {Procedure} controller-button-event-pressed? e
 @end deffn
 
-@deffn {Scheme Procedure} make-controller-device-event timestamp which action
+@deffn {Procedure} make-controller-device-event timestamp which action
 @end deffn
 
-@deffn {Scheme Procedure} controller-device-event? e
+@deffn {Procedure} controller-device-event? e
 Return @code{#t} if @var{event} is a game controller device event.
 @end deffn
 
-@deffn {Scheme Procedure} controller-added-event? e
+@deffn {Procedure} controller-added-event? e
 Return @code{#t} if @var{event} is a game controller device event with the
 'added' action.
 @end deffn
 
-@deffn {Scheme Procedure} controller-removed-event? e
+@deffn {Procedure} controller-removed-event? e
 Return @code{#t} if @var{event} is a game controller device event with the
 'removed' action.
 @end deffn
 
-@deffn {Scheme Procedure} controller-remapped-event? e
+@deffn {Procedure} controller-remapped-event? e
 Return @code{#t} if @var{event} is a game controller device event with the
 'remapped' action.
 @end deffn
 
-@deffn {Scheme Procedure} controller-device-event-timestamp e
+@deffn {Procedure} controller-device-event-timestamp e
 @end deffn
 
-@deffn {Scheme Procedure} controller-device-event-which e
+@deffn {Procedure} controller-device-event-which e
 @end deffn
 
-@deffn {Scheme Procedure} controller-device-event-action e
+@deffn {Procedure} controller-device-event-action e
 @end deffn
 
-@deffn {Scheme Procedure} poll-event
+@deffn {Procedure} poll-event
 @end deffn
 
 @node Rects
@@ -832,119 +832,119 @@ Return the height of @var{rect}.
 (use-modules (sdl2 surface))
 @end example
 
-@deffn {Scheme Procedure} color? c
+@deffn {Procedure} color? c
 Return @code{#t} if @var{c} is a color.
 @end deffn
 
-@deffn {Scheme Procedure} color-r c
+@deffn {Procedure} color-r c
 @end deffn
 
-@deffn {Scheme Procedure} color-g c
+@deffn {Procedure} color-g c
 @end deffn
 
-@deffn {Scheme Procedure} color-b c
+@deffn {Procedure} color-b c
 @end deffn
 
-@deffn {Scheme Procedure} color-a c
+@deffn {Procedure} color-a c
 @end deffn
 
-@deffn {Scheme Procedure} palette? p
+@deffn {Procedure} palette? p
 Return @code{#t} if @var{p} is a palette.
 @end deffn
 
-@deffn {Scheme Procedure} palette-length palette
+@deffn {Procedure} palette-length palette
 Return the number of colors in @var{palette}.
 @end deffn
 
-@deffn {Scheme Procedure} palette-colors palette
+@deffn {Procedure} palette-colors palette
 Return the colors in @var{palette}.
 @end deffn
 
-@deffn {Scheme Procedure} pixel-format? pf
+@deffn {Procedure} pixel-format? pf
 Return @code{#t} if @var{pf} is a pixel format.
 @end deffn
 
-@deffn {Scheme Procedure} pixel-format-name pf
+@deffn {Procedure} pixel-format-name pf
 Return the symbolic name of the pixel format @var{pf}.
 @end deffn
 
-@deffn {Scheme Procedure} pixel-format-palette pf
+@deffn {Procedure} pixel-format-palette pf
 Return the palette for the pixel format @var{pf}.
 @end deffn
 
-@deffn {Scheme Procedure} pixel-format-bits-per-pixel pf
+@deffn {Procedure} pixel-format-bits-per-pixel pf
 Return the number of bits per pixel for the pixel format @var{pf}.
 @end deffn
 
-@deffn {Scheme Procedure} pixel-format-bytes-per-pixel pf
+@deffn {Procedure} pixel-format-bytes-per-pixel pf
 Return the number of bytes per pixel for the pixel format @var{pf}.
 @end deffn
 
-@deffn {Scheme Procedure} pixel-format-red-mask pf
+@deffn {Procedure} pixel-format-red-mask pf
 Return the bitmask for the red component of a pixel in the pixel format
 @var{pf}.
 @end deffn
 
-@deffn {Scheme Procedure} pixel-format-green-mask pf
+@deffn {Procedure} pixel-format-green-mask pf
 Return the bitmask for the green component of a pixel in the pixel format
 @var{pf}.
 @end deffn
 
-@deffn {Scheme Procedure} pixel-format-blue-mask pf
+@deffn {Procedure} pixel-format-blue-mask pf
 Return the bitmask for the blue component of a pixel in the pixel format
 @var{pf}.
 @end deffn
 
-@deffn {Scheme Procedure} pixel-format-alpha-mask pf
+@deffn {Procedure} pixel-format-alpha-mask pf
 Return the bitmask for the alpha component of a pixel in the pixel format
 @var{pf}.
 @end deffn
 
-@deffn {Scheme Procedure} make-rgb-surface width height depth
+@deffn {Procedure} make-rgb-surface width height depth
 Create a new SDL surface with the dimensions @var{width} and @var{height} and
 @var{depth} bits per pixel.
 @end deffn
 
-@deffn {Scheme Procedure} bytevector->surface bv width height depth pitch
+@deffn {Procedure} bytevector->surface bv width height depth pitch
 Convert @var{bv}, a bytevector of pixel data with dimensions
 @var{width}x@var{height}, to an SDL surface.  Each pixel is @var{depth} bits in
 size, and each row of pixels is @var{pitch} bytes in size.
 @end deffn
 
-@deffn {Scheme Procedure} delete-surface! surface
+@deffn {Procedure} delete-surface! surface
 Free the memory used by @var{surface}.
 @end deffn
 
-@deffn {Scheme Procedure} call-with-surface surface proc
+@deffn {Procedure} call-with-surface surface proc
 Call @var{proc}, passing it @var{surface} and deleting @var{surface} upon exit
 of @var{proc}.
 @end deffn
 
-@deffn {Scheme Procedure} load-bmp file
+@deffn {Procedure} load-bmp file
 Create a new surface from the bitmap data in @var{file}.
 @end deffn
 
-@deffn {Scheme Procedure} surface-width surface
+@deffn {Procedure} surface-width surface
 Return the width of @var{surface} in pixels.
 @end deffn
 
-@deffn {Scheme Procedure} surface-height surface
+@deffn {Procedure} surface-height surface
 Return the height of @var{surface} in pixels.
 @end deffn
 
-@deffn {Scheme Procedure} surface-pitch surface
+@deffn {Procedure} surface-pitch surface
 Return the length of a row of pixels in @var{surface} in bytes.
 @end deffn
 
-@deffn {Scheme Procedure} surface-pixels surface
+@deffn {Procedure} surface-pixels surface
 Return a bytevector containing the raw pixel data in @var{surface}.
 @end deffn
 
-@deffn {Scheme Procedure} surface-pixel-format surface
+@deffn {Procedure} surface-pixel-format surface
 Return the pixel format for @var{surface}.
 @end deffn
 
-@deffn {Scheme Procedure} convert-surface-format surface format
+@deffn {Procedure} convert-surface-format surface format
 Convert the pixels in @var{surface} to @var{format}, a symbol representing a
 specific pixel format, and return a new surface object.
 
@@ -1001,7 +1001,7 @@ Blit the rectangle @var{src-rect} from the surface @var{src} to
 (use-modules (sdl2 render))
 @end example
 
-@deffn {Scheme Procedure} make-renderer window @
+@deffn {Procedure} make-renderer window @
                                         [#:optional flags='(accelerated vsync)]
 Return a new renderer for @var{window} created with the options specified
 in @var{flags}, a list of symbols.  The valid symbols that may appear in
@@ -1015,35 +1015,35 @@ in @var{flags}, a list of symbols.  The valid symbols that may appear in
 @end itemize
 @end deffn
 
-@deffn {Scheme Procedure} renderer? r
+@deffn {Procedure} renderer? r
 Return @code{#t} if @var{r} is a renderer.
 @end deffn
 
-@deffn {Scheme Procedure} delete-renderer! renderer
+@deffn {Procedure} delete-renderer! renderer
 Delete the rendering context @var{renderer}.
 @end deffn
 
-@deffn {Scheme Procedure} call-with-renderer renderer proc
+@deffn {Procedure} call-with-renderer renderer proc
 Call @var{proc}, passing it @var{renderer} and closing @var{renderer} upon exit
 of @var{proc}.
 @end deffn
 
-@deffn {Scheme Procedure} clear-renderer renderer
+@deffn {Procedure} clear-renderer renderer
 Clear the rendering target @var{renderer} with the current drawing color.
 @end deffn
 
-@deffn {Scheme Procedure} present-renderer renderer
+@deffn {Procedure} present-renderer renderer
 Display @var{renderer}.
 @end deffn
 
-@deffn {Scheme Procedure} render-copy renderer @
+@deffn {Procedure} render-copy renderer @
                                       texture @
                                       [#:srcrect]
                                       [#:dstrect]
 Copy @var{texture} to the rendering target of @var{renderer}.
 @end deffn
 
-@deffn {Scheme Procedure} surface->texture renderer surface
+@deffn {Procedure} surface->texture renderer surface
 Convert @var{surface} to a texture suitable for @var{renderer}.
 @end deffn
 
@@ -1054,19 +1054,19 @@ Convert @var{surface} to a texture suitable for @var{renderer}.
 (use-modules (sdl2 image))
 @end example
 
-@deffn {Scheme Procedure} image-init
+@deffn {Procedure} image-init
 Initialize dynamically loaded image libraries.
 @end deffn
 
-@deffn {Scheme Procedure} image-quit
+@deffn {Procedure} image-quit
 Clean up dynamically loaded image libraries.
 @end deffn
 
-@deffn {Scheme Procedure} load-image file
+@deffn {Procedure} load-image file
 Load the image in @var{file} and return an SDL surface.
 @end deffn
 
-@deffn {Scheme Procedure} save-png surface file
+@deffn {Procedure} save-png surface file
 Save @var{surface} to @var{file} as a PNG formatted image.
 @end deffn
 
@@ -1086,7 +1086,7 @@ Save @var{surface} to @var{file} as a PNG formatted image.
 @defvr {Scheme Variable} %default-chunk-size
 @end defvr
 
-@deffn {Scheme Procedure} mixer-init [#:optional formats='(flac mod modplug mp3 ogg fluidsynth)]
+@deffn {Procedure} mixer-init [#:optional formats='(flac mod modplug mp3 ogg fluidsynth)]
 Initialize mixer library with support for @var{formats}, a list of
 symbols representing audio file formats.  Possible formats are:
 
@@ -1100,11 +1100,11 @@ symbols representing audio file formats.  Possible formats are:
 @end itemize
 @end deffn
 
-@deffn {Scheme Procedure} mixer-quit
+@deffn {Procedure} mixer-quit
 Shutdown mixer library.
 @end deffn
 
-@deffn {Scheme Procedure} open-audio [#:frequency=%default-frequency] @
+@deffn {Procedure} open-audio [#:frequency=%default-frequency] @
                                      [#:format=%default-format] @
                                      [#:stereo?=#t] @
                                      [#:chunk-size=%default-chunk-size]
@@ -1132,28 +1132,28 @@ sample format.  Possible values are:
 @end itemize
 @end deffn
 
-@deffn {Scheme Procedure} close-audio
+@deffn {Procedure} close-audio
 Shut down the mixer API.
 @end deffn
 
-@deffn {Scheme Procedure} chunk? c
+@deffn {Procedure} chunk? c
 Return @code{#t} if @var{c} is a chunk.
 @end deffn
 
-@deffn {Scheme Procedure} load-chunk file
+@deffn {Procedure} load-chunk file
 Load the audio data in @var{file} and return an audio chunk.
 @end deffn
 
-@deffn {Scheme Procedure} delete-chunk! chunk
+@deffn {Procedure} delete-chunk! chunk
 Free the memory used for @var{chunk}.
 @end deffn
 
-@deffn {Scheme Procedure} set-chunk-volume! chunk volume
+@deffn {Procedure} set-chunk-volume! chunk volume
 Set the loudness of @var{chunk} to @var{volume}, an integer in the range
 [0,128].  Return the previous chunk volume setting.
 @end deffn
 
-@deffn {Scheme Procedure} play-chunk! chunk @
+@deffn {Procedure} play-chunk! chunk @
                                       [#:loops=0] @
                                       [#:channel]
 Play @var{chunk} on @var{channel}, an integer channel identifier or @code{#f}
@@ -1161,92 +1161,92 @@ to use the first unreserved audio channel.  @var{chunk} will play @var{loops} +
 1 times.  Return the channel identifier that @var{chunk} is played on.
 @end deffn
 
-@deffn {Scheme Procedure} set-channel-volume! channel volume
+@deffn {Procedure} set-channel-volume! channel volume
 Set the loudness of @var{channel}, an integer channel identifier or @code{#f}
 for all channels, to @var{volume}, an integer in the range [0,128].  Return
 the previous volume of @var{channel}, or the average of all channels if
 @var{channel} is @code{#f}.
 @end deffn
 
-@deffn {Scheme Procedure} pause-channel! channel
+@deffn {Procedure} pause-channel! channel
 Pause playback on @var{channel}, an integer channel identifier, or @code{#f} to
 pause all channels.
 @end deffn
 
-@deffn {Scheme Procedure} resume-channel! channel
+@deffn {Procedure} resume-channel! channel
 Resume playback on @var{channel}, an integer channel identifier, or @code{#f} to
 resume all channels.
 @end deffn
 
-@deffn {Scheme Procedure} stop-channel! channel
+@deffn {Procedure} stop-channel! channel
 Halt playback on @var{channel}, an integer channel identifier, or @code{#f} to
 halt all channels.
 @end deffn
 
-@deffn {Scheme Procedure} channel-playing? channel
+@deffn {Procedure} channel-playing? channel
 Return @code{#t} if @var{channel} is playing.
 @end deffn
 
-@deffn {Scheme Procedure} playing-channels-count
+@deffn {Procedure} playing-channels-count
 Return the number of channels currently playing.
 @end deffn
 
-@deffn {Scheme Procedure} channel-paused? channel
+@deffn {Procedure} channel-paused? channel
 Return @code{#t} if @var{channel} is paused.
 @end deffn
 
-@deffn {Scheme Procedure} paused-channels-count
+@deffn {Procedure} paused-channels-count
 Return the number of channels that are paused.
 @end deffn
 
-@deffn {Scheme Procedure} music? m
+@deffn {Procedure} music? m
 Return @code{#t} if @var{m} is music.
 @end deffn
 
-@deffn {Scheme Procedure} load-music file
+@deffn {Procedure} load-music file
 Load music from @var{file}.
 @end deffn
 
-@deffn {Scheme Procedure} delete-music! music
+@deffn {Procedure} delete-music! music
 Delete the memory used for @var{music}.
 @end deffn
 
-@deffn {Scheme Procedure} play-music! music [#:optional loops=1]
+@deffn {Procedure} play-music! music [#:optional loops=1]
 Play @var{music}, repeated @var{loops} times.  @var{loops} may be @code{#f}, in
 which case the music loops indefinitely.
 @end deffn
 
-@deffn {Scheme Procedure} set-music-volume! volume
+@deffn {Procedure} set-music-volume! volume
 Set music loudness to @var{volume}, an integer in the range [0,128].  Return the
 previous volume.
 @end deffn
 
-@deffn {Scheme Procedure} music-volume
+@deffn {Procedure} music-volume
 Return the music volume.
 @end deffn
 
-@deffn {Scheme Procedure} pause-music!
+@deffn {Procedure} pause-music!
 Puase the music.
 @end deffn
 
-@deffn {Scheme Procedure} resume-music!
+@deffn {Procedure} resume-music!
 Resume music playback.
 @end deffn
 
-@deffn {Scheme Procedure} rewind-music!
+@deffn {Procedure} rewind-music!
 Start music playback from the beginning.  Rewinding is only supported for MOD,
 OGG, MP3, and native MIDI music.
 @end deffn
 
-@deffn {Scheme Procedure} stop-music!
+@deffn {Procedure} stop-music!
 Halt music playback.
 @end deffn
 
-@deffn {Scheme Procedure} music-playing?
+@deffn {Procedure} music-playing?
 Return @code{#t} if music is currently playing.
 @end deffn
 
-@deffn {Scheme Procedure} music-paused?
+@deffn {Procedure} music-paused?
 Return @code{#t} if music is currently paused.
 @end deffn
 
@@ -1257,33 +1257,33 @@ Return @code{#t} if music is currently paused.
 (use-modules (sdl2 ttf))
 @end example
 
-@deffn {Scheme Procedure} ttf-init
+@deffn {Procedure} ttf-init
 Initialize the TTF system.
 @end deffn
 
-@deffn {Scheme Procedure} ttf-quit
+@deffn {Procedure} ttf-quit
 Shut down and clean up the TTF system.
 @end deffn
 
-@deffn {Scheme Procedure} load-font file point-size
+@deffn {Procedure} load-font file point-size
 Load TTF font from @var{file} and return a new font object whose glyph size is
 @var{point-size}.
 @end deffn
 
-@deffn {Scheme Procedure} delete-font! font
+@deffn {Procedure} delete-font! font
 Delete the memory allocated for @var{font}.
 @end deffn
 
-@deffn {Scheme Procedure} font-height font
+@deffn {Procedure} font-height font
 Return the maximum height of @var{font}.
 @end deffn
 
-@deffn {Scheme Procedure} render-font-solid font text color
+@deffn {Procedure} render-font-solid font text color
 Render @var{text}, a UTF-8 encoded string, using @var{font} and @var{color}, the
 foreground color, and return a surface containing the results.
 @end deffn
 
-@deffn {Scheme Procedure} render-font-blended font text color
+@deffn {Procedure} render-font-blended font text color
 Render @var{text}, a UTF-8 encoded string, using @var{font} and @var{color}, the
 foreground color, and return a high-quality alpha-blended surface containing the
 results.
