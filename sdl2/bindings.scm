@@ -53,6 +53,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-public sdl-rect
   (list int int int int))
 
+(define-public sdl-point
+  (list int int))
+
 (define sdl-bool int)
 
 (define-public (boolean->sdl-bool b)
@@ -232,6 +235,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign sdl-render-copy
   int "SDL_RenderCopy" '(* * * *))
+
+(define-foreign sdl-render-copy-ex
+  int "SDL_RenderCopyEx" (list '* '* '* '* double '* int))
 
 (define-foreign sdl-create-texture-from-surface
   '* "SDL_CreateTextureFromSurface" '(* *))

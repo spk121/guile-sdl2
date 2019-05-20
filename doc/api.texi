@@ -1049,8 +1049,10 @@ Display @var{renderer}.
 
 @deffn {Procedure} render-copy renderer @
                                       texture @
-                                      [#:srcrect]
-                                      [#:dstrect]
+                                      [#:angle 0] @
+                                      [#:srcrect] @
+                                      [#:dstrect] @
+                                      [#:center]
 Copy @var{texture} to the rendering target of @var{renderer}.
 @end deffn
 
