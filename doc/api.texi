@@ -1056,6 +1056,11 @@ Display @var{renderer}.
 Copy @var{texture} to the rendering target of @var{renderer}.
 @end deffn
 
+@deffn {Procedure} render-draw-line renderer x1 y1 x2 y2
+Draw a line from (@var{x1}, @var{y1}) to (@var{x2}, @var{y2}) on the
+current rendering target of @var{renderer}.
+@end deffn
+
 @deffn {Procedure} surface->texture renderer surface
 Convert @var{surface} to a texture suitable for @var{renderer}.
 @end deffn

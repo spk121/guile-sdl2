@@ -37,6 +37,7 @@
             present-renderer
             render-copy
             set-render-draw-color
+            render-draw-line
 
             surface->texture))
 
@@ -105,6 +106,10 @@ color."
 (define (set-render-draw-color renderer r g b a)
   "Set draw color of RENDERER."
   (ffi:sdl-set-render-draw-color (unwrap-renderer renderer) r g b a))
+
+(define (render-draw-line renderer x1 y1 x2 y2)
+  "Draw line on RENDERER."
+  (ffi:sdl-render-draw-line (unwrap-renderer renderer) x1 y1 x2 y2))
 
 
 ;;;

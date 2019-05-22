@@ -245,6 +245,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-set-render-draw-color
   int "SDL_SetRenderDrawColor" (list '* uint8 uint8 uint8 uint8))
 
+(define-foreign sdl-render-draw-line
+  int "SDL_RenderDrawLine" (list '* int int int int))
+
 
 ;;;
 ;;; Events
