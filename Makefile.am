@@ -82,7 +82,7 @@ endif
 
 info_TEXINFOS = doc/guile-sdl2.texi
 
-chickadee_TEXINFOS =				\
+doc_guile_sdl2_TEXINFOS =			\
   doc/fdl.texi					\
   doc/api.texi					\
   doc/guile-sdl2.texi
