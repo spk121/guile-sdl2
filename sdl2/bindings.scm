@@ -1,6 +1,7 @@
 ;;; guile-sdl2 --- FFI bindings for SDL2
 ;;; Copyright © 2015, 2016 David Thompson <davet@gnu.org>
 ;;; Copyright © 2018 Eero Leno <eero@leno.fi>
+;;; Copyright © 2019 Pierre-Antoine Rouby <contact@parouby.fr>
 ;;;
 ;;; This file is part of guile-sdl2.
 ;;;
@@ -247,6 +248,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign sdl-render-draw-line
   int "SDL_RenderDrawLine" (list '* int int int int))
+
+(define-foreign sdl-render-draw-point
+  int "SDL_RenderDrawPoint" (list '* int int))
 
 
 ;;;

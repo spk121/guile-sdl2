@@ -1,5 +1,6 @@
 ;;; guile-sdl2 --- FFI bindings for SDL2
 ;;; Copyright © 2015 David Thompson <davet@gnu.org>
+;;; Copyright © 2019 Pierre-Antoine Rouby <contact@parouby.fr>
 ;;;
 ;;; This file is part of guile-sdl2.
 ;;;
@@ -38,6 +39,7 @@
             render-copy
             set-render-draw-color
             render-draw-line
+            render-draw-point
 
             surface->texture))
 
@@ -110,6 +112,10 @@ color."
 (define (render-draw-line renderer x1 y1 x2 y2)
   "Draw line on RENDERER."
   (ffi:sdl-render-draw-line (unwrap-renderer renderer) x1 y1 x2 y2))
+
+(define (render-draw-point renderer x y)
+  "Draw point on RENDERER."
+  (ffi:sdl-render-draw-point (unwrap-renderer renderer) x y))
 
 
 ;;;
