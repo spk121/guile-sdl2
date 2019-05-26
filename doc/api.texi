@@ -1070,6 +1070,10 @@ of @var{renderer}.
 Convert @var{surface} to a texture suitable for @var{renderer}.
 @end deffn
 
+@deffn {Procedure} delete-texture! texture
+Free the memory used by @var{texture}.
+@end deffn
+
 @node Images
 @section Images
 

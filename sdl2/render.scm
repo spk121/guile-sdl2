@@ -41,6 +41,7 @@
             render-draw-line
             render-draw-point
 
+            destroy-texture!
             surface->texture))
 
 
@@ -138,6 +139,9 @@ color."
         (sdl-error "surface->texture" "failed to convert surface to texture")
         (wrap-texture ptr))))
 
+(define (delete-texture! texture)
+  "Free the memory used by TEXTURE."
+  (ffi:sdl-destroy-texture (unwrap-texture texture)))
 
 (define* (render-copy renderer texture
                       #:key (angle 0) srcrect dstrect center)
