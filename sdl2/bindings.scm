@@ -255,6 +255,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-render-draw-point
   int "SDL_RenderDrawPoint" (list '* int int))
 
+(define-foreign sdl-render-draw-points
+  int "SDL_RenderDrawPoints" (list '* '* int))
+
 
 ;;;
 ;;; Events

@@ -40,6 +40,7 @@
             set-render-draw-color
             render-draw-line
             render-draw-point
+            render-draw-points
 
             delete-texture!
             surface->texture))
@@ -117,6 +118,21 @@ color."
 (define (render-draw-point renderer x y)
   "Draw point on RENDERER."
   (ffi:sdl-render-draw-point (unwrap-renderer renderer) x y))
+
+(define (render-draw-points renderer points)
+  "Draw POINTS on RENDERER."
+  (define (fill-bv bv l n)
+    (match l
+      (() bv)
+      (((x y) . r)
+       (s32vector-set! bv n x)
+       (s32vector-set! bv (+ n 1) y)
+       (fill-bv bv r (+ 2 n)))))
+  (let* ((count (length points))
+         (bv (fill-bv (make-s32vector (* count 2)) points 0)))
+    (ffi:sdl-render-draw-points (unwrap-renderer renderer)
+                                (bytevector->pointer bv)
+                                count)))
 
 
 ;;;
