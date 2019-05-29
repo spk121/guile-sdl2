@@ -41,7 +41,7 @@
             render-draw-line
             render-draw-point
 
-            destroy-texture!
+            delete-texture!
             surface->texture))
 
 
