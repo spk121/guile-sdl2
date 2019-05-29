@@ -252,6 +252,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-render-draw-line
   int "SDL_RenderDrawLine" (list '* int int int int))
 
+(define-foreign sdl-render-draw-lines
+  int "SDL_RenderDrawLines" (list '* '* int))
+
 (define-foreign sdl-render-draw-point
   int "SDL_RenderDrawPoint" (list '* int int))
 

@@ -1061,6 +1061,11 @@ Draw a line from (@var{x1}, @var{y1}) to (@var{x2}, @var{y2}) on the
 current rendering target of @var{renderer}.
 @end deffn
 
+@deffn {Procedure} render-draw-lines renderer point
+Draw a series of connected lines from @var{points} on the current
+rendering target of @var{renderer}.
+@end deffn
+
 @deffn {Procedure} render-draw-point renderer x y
 Draw a point at (@var{x}, @var{y}) on the current rendering target
 of @var{renderer}.

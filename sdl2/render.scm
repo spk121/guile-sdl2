@@ -39,6 +39,7 @@
             render-copy
             set-render-draw-color
             render-draw-line
+            render-draw-lines
             render-draw-point
             render-draw-points
 
@@ -114,6 +115,21 @@ color."
 (define (render-draw-line renderer x1 y1 x2 y2)
   "Draw line on RENDERER."
   (ffi:sdl-render-draw-line (unwrap-renderer renderer) x1 y1 x2 y2))
+
+(define (render-draw-lines renderer points)
+  "Draw lines connecting POINTS on RENDERER."
+  (define (fill-bv bv l n)
+    (match l
+      (() bv)
+      (((x y) . r)
+       (s32vector-set! bv n x)
+       (s32vector-set! bv (+ n 1) y)
+       (fill-bv bv r (+ 2 n)))))
+  (let* ((count (length points))
+         (bv (fill-bv (make-s32vector (* count 2)) points 0)))
+    (ffi:sdl-render-draw-lines (unwrap-renderer renderer)
+                               (bytevector->pointer bv)
+                               count)))
 
 (define (render-draw-point renderer x y)
   "Draw point on RENDERER."
