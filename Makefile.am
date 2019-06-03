@@ -87,6 +87,9 @@ doc_guile_sdl2_TEXINFOS =			\
   doc/api.texi					\
   doc/guile-sdl2.texi
 
+AM_MAKEINFOHTMLFLAGS = --css-ref=https://dthompson.us/css/dthompson.css \
+  --css-include=doc/manual.css
+
 dvi: # Don't build dvi docs
 
 EXTRA_DIST +=					\
