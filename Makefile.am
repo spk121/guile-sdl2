@@ -98,7 +98,7 @@ EXTRA_DIST +=					\
   examples/controller.scm
 
 publish: dist
-	gpg --sign --armor --yes guile-sdl2-$(VERSION).tar.gz && \
+	gpg --sign --detach-sign --armor --yes guile-sdl2-$(VERSION).tar.gz && \
         scp guile-sdl2-$(VERSION).tar.gz guile-sdl2-$(VERSION).tar.gz.asc \
 	    blog@dthompson.us:/var/www/files/guile-sdl2/
 
