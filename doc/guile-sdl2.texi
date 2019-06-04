@@ -20,6 +20,11 @@ Foundation Web site at @url{http://www.gnu.org/licenses/fdl.html}.
 
 @end quotation
 
+@dircategory The Algorithmic Language Scheme
+@direntry
+* Guile-SDL2: (guile-sdl2).     SDL2 bindings for Guile.
+@end direntry
+
 The document was typeset with
 @uref{http://www.texinfo.org/, GNU Texinfo}.
 
