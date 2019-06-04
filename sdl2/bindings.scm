@@ -261,6 +261,18 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-render-draw-points
   int "SDL_RenderDrawPoints" (list '* '* int))
 
+(define-foreign sdl-render-draw-rect
+  int "SDL_RenderDrawRect" (list '* '*))
+
+(define-foreign sdl-render-draw-rects
+  int "SDL_RenderDrawRects" (list '* '* int))
+
+(define-foreign sdl-render-fill-rect
+  int "SDL_RenderFillRect" (list '* '*))
+
+(define-foreign sdl-render-fill-rects
+  int "SDL_RenderFillRects" (list '* '* int))
+
 
 ;;;
 ;;; Events

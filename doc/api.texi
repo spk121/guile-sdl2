@@ -1082,6 +1082,23 @@ Draw a multiple points from @var{points} on the current rendering
 target of @var{renderer}.
 @end deffn
 
+@deffn {Procedure} render-draw-rect renderer rectangle
+Draw the outline of @var{rectangle} onto renderer.
+@end deffn
+
+@deffn {Procedure} render-draw-rects renderer rectangles
+Draw the outline of the list @var{rectangles} onto @var{renderer}.
+@end deffn
+
+@deffn {Procedure} render-fill-rect renderer rectangle
+Fill @var{rectangle} onto @var{renderer}.
+@end deffn
+
+@deffn {Procedure} render-fill-rects renderer rectangles
+Fill the list @var{rectangles} onto @var{renderer}.
+@end deffn
+
+
 @deffn {Procedure} surface->texture renderer surface
 Convert @var{surface} to a texture suitable for @var{renderer}.
 @end deffn

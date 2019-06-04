@@ -28,6 +28,7 @@
   #:use-module (ice-9 format)
   #:use-module (ice-9 match)
   #:use-module (system foreign)
+  #:use-module (rnrs bytevectors)
   #:use-module (sdl2)
   #:use-module ((sdl2 bindings) #:prefix ffi:)
   #:export (make-renderer
@@ -42,6 +43,10 @@
             render-draw-lines
             render-draw-point
             render-draw-points
+            render-draw-rect
+            render-draw-rects
+            render-fill-rect
+            render-fill-rects
 
             delete-texture!
             surface->texture))
@@ -149,6 +154,42 @@ color."
     (ffi:sdl-render-draw-points (unwrap-renderer renderer)
                                 (bytevector->pointer bv)
                                 count)))
+
+(define (render-draw-rect renderer rect)
+  "Draw RECT on RENDERER."
+  (ffi:sdl-render-draw-rect
+   (unwrap-renderer renderer)
+   ((@@ (sdl2 rect) unwrap-rect) rect)))
+
+(define (render-draw-rects renderer rects)
+  "Draw RECTS on RENDERER."
+  (let* ((count (length rects))
+         (bv (make-s32vector (* count 4))))
+    (for-each (lambda (rect i)
+                (bytevector-copy! ((@@ (sdl2 rect) rect-bv) rect) 0
+                                  bv (* i 4 4) (* 4 4)))
+              rects (iota count))
+    (ffi:sdl-render-draw-rects (unwrap-renderer renderer)
+                               (bytevector->pointer bv)
+                               count)))
+
+(define (render-fill-rect renderer rect)
+  "Fill RECT on RENDERER."
+  (ffi:sdl-render-fill-rect
+   (unwrap-renderer renderer)
+   ((@@ (sdl2 rect) unwrap-rect) rect)))
+
+(define (render-fill-rects renderer rects)
+  "Fill RECTS on RENDERER."
+  (let* ((count (length rects))
+         (bv (make-s32vector (* count 4))))
+    (for-each (lambda (rect i)
+                (bytevector-copy! ((@@ (sdl2 rect) rect-bv) rect) 0
+                                  bv (* i 4 4) (* 4 4)))
+              rects (iota count))
+    (ffi:sdl-render-fill-rects (unwrap-renderer renderer)
+                               (bytevector->pointer bv)
+                               count)))
 
 
 ;;;
