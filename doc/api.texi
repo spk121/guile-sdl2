@@ -1056,12 +1056,18 @@ Display @var{renderer}.
 Copy @var{texture} to the rendering target of @var{renderer}.
 @end deffn
 
+@deffn {Procedure} set-render-draw-color renderer r g b a
+Set color of @var{renderer} to the 32-bit color defined by the 8-bit
+color channels @var{r}, @var{g}, @var{b}, @var{a}.  Each color channel
+value is in the range [0, 255].
+@end deffn
+
 @deffn {Procedure} render-draw-line renderer x1 y1 x2 y2
 Draw a line from (@var{x1}, @var{y1}) to (@var{x2}, @var{y2}) on the
 current rendering target of @var{renderer}.
 @end deffn
 
-@deffn {Procedure} render-draw-lines renderer point
+@deffn {Procedure} render-draw-lines renderer points
 Draw a series of connected lines from @var{points} on the current
 rendering target of @var{renderer}.
 @end deffn
