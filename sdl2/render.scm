@@ -38,6 +38,8 @@
             clear-renderer
             present-renderer
             render-copy
+            set-render-target!
+            get-render-target
             set-render-draw-color
             render-draw-line
             render-draw-lines
@@ -48,6 +50,7 @@
             render-fill-rect
             render-fill-rects
 
+            make-texture
             delete-texture!
             surface->texture))
 
@@ -203,6 +206,25 @@ color."
     (format port "#<texture ~x>"
             (pointer-address (unwrap-texture context)))))
 
+(define (make-texture renderer format access width height)
+  "Returns a new texture for RENDERER with pixel FORMAT.
+ACCESS is one of the symbols:
+
+* static: changes rarely, not lockable
+* streaming: changes frequently, lockable
+* target: can be used as a render target (requires that renderer was
+created with 'texture')"
+  (let ((ptr (ffi:sdl-create-texture (unwrap-renderer renderer)
+                                     ((@@ (sdl2 surface) symbol->sdl-pixel-format) format)
+                                     (match access
+                                       ('static    ffi:SDL_TEXTUREACCESS_STATIC)
+                                       ('streaming ffi:SDL_TEXTUREACCESS_STREAMING)
+                                       ('target    ffi:SDL_TEXTUREACCESS_TARGET))
+                                     width height)))
+    (if (null-pointer? ptr)
+        (sdl-error "make-texture" "Failed to create texture")
+        (wrap-texture ptr))))
+
 (define (surface->texture renderer surface)
   "Convert SURFACE to a texture suitable for RENDERER."
   (let ((ptr (ffi:sdl-create-texture-from-surface
@@ -235,3 +257,22 @@ color."
                  0)))
     (unless (zero? result)
       (sdl-error "render-copy" "failed to copy texture"))))
+
+(define (set-render-target! renderer texture)
+  "Sets the render target for RENDERER to TEXTURE, making all comming draw
+requests redirect to TEXTURE.
+
+Pass #f to reset it to the default target."
+  (let ((result (ffi:sdl-set-render-target
+          (unwrap-renderer renderer)
+          (if texture
+              (unwrap-texture texture)
+              %null-pointer))))
+    (unless (zero? result)
+      (sdl-error "set-render-target!" "failed to set render target"))))
+
+(define (get-render-target renderer)
+  "Returns the current render target of RENDERER. #f if it's a texture."
+  (let ((ptr (ffi:sdl-get-render-target (unwrap-renderer renderer))))
+    (if (null-pointer? ptr)
+        #f (wrap-texture ptr))))

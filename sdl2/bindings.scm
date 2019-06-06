@@ -240,6 +240,19 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-render-copy-ex
   int "SDL_RenderCopyEx" (list '* '* '* '* double '* int))
 
+(define-public SDL_TEXTUREACCESS_STATIC    0)
+(define-public SDL_TEXTUREACCESS_STREAMING 1)
+(define-public SDL_TEXTUREACCESS_TARGET    2)
+
+(define-foreign sdl-create-texture
+  '* "SDL_CreateTexture" (list '* uint32 int int int))
+
+(define-foreign sdl-set-render-target
+  int "SDL_SetRenderTarget" '(* *))
+
+(define-foreign sdl-get-render-target
+  '* "SDL_GetRenderTarget" '(*))
+
 (define-foreign sdl-create-texture-from-surface
   '* "SDL_CreateTextureFromSurface" '(* *))
 

@@ -1098,6 +1098,29 @@ Fill @var{rectangle} onto @var{renderer}.
 Fill the list @var{rectangles} onto @var{renderer}.
 @end deffn
 
+@deffn {Procedure} set-render-target! renderer texture
+Sets the render target for @var{renderer} to @var{texture}, making all
+comming draw requests redirect to @var{texture}.
+
+Pass @code{#f} to reset it to the default target.
+@end deffn
+
+@deffn {Procedure} get-render-target renderer
+Returns the current render target of @var{renderer} or @code{#f} if
+it's a texture.
+@end deffn
+
+@deffn {Procedure} make-texture format access width height
+Returns a new texture for @var{renderer} with pixel @var{format}.
+@var{access} is one of the symbols:
+
+@itemize
+@item static, changes rarely, not lockable
+@item streaming, changes frequently, lockable
+@item target, can be used as a render target
+requires that renderer was created with the @code{texture} flag.
+@end itemize
+@end deffn
 
 @deffn {Procedure} surface->texture renderer surface
 Convert @var{surface} to a texture suitable for @var{renderer}.
