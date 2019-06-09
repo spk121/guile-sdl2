@@ -1110,7 +1110,7 @@ Returns the current render target of @var{renderer} or @code{#f} if
 it's a texture.
 @end deffn
 
-@deffn {Procedure} make-texture format access width height
+@deffn {Procedure} make-texture renderer format access width height
 Returns a new texture for @var{renderer} with pixel @var{format}.
 @var{access} is one of the symbols:
 
