@@ -1130,6 +1130,22 @@ Convert @var{surface} to a texture suitable for @var{renderer}.
 Free the memory used by @var{texture}.
 @end deffn
 
+@deffn {Procedure} get-texture-color-mod texture
+Get color mod of @var{texture} as a list of the integers.
+@end deffn
+
+@deffn {Procedure} get-texture-alpha-mod texture
+Get alpha mod of @var{texture} as a single integer.
+@end deffn
+
+@deffn {Procedure} set-texture-color-mod! texture r g b
+Set the color mod of @var{texture}.
+@end deffn
+
+@deffn {Procedure} set-texture-alpha-mod! texture a
+Set the alpha mod of @var{texture}.
+@end deffn
+
 @node Images
 @section Images
 

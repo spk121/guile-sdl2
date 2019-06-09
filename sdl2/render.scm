@@ -50,6 +50,11 @@
             render-fill-rect
             render-fill-rects
 
+            set-texture-color-mod!
+            get-texture-color-mod
+            set-texture-alpha-mod!
+            get-texture-alpha-mod
+
             make-texture
             delete-texture!
             surface->texture))
@@ -237,6 +242,39 @@ created with 'texture')"
 (define (delete-texture! texture)
   "Free the memory used by TEXTURE."
   (ffi:sdl-destroy-texture (unwrap-texture texture)))
+
+(define (set-texture-color-mod! texture r g b)
+  "Get color mod of TEXTURE as a list of the integers."
+  (unless (zero? (ffi:sdl-set-texture-color-mod (unwrap-texture texture) r g b))
+    (sdl-error "set-texture-color-mod!" "Failed to set texture color mod")))
+
+(define (set-texture-alpha-mod! texture a)
+  "Sets alpha mod of TEXTURE."
+  (unless (zero? (ffi:sdl-set-texture-alpha-mod (unwrap-texture texture) a))
+    (sdl-error "set-texture-alpha-mod!" "Failed to set texture alpha mod")))
+
+(define (get-texture-alpha-mod texture)
+  "Get alpha mod of TEXTURE as a single integer."
+  (let ((bv (make-bytevector 1)))
+    (let ((result (ffi:sdl-get-texture-alpha-mod
+                   (unwrap-texture texture)
+                   (bytevector->pointer bv 0))))
+      (unless (zero? result)
+        (sdl-error "get-texture-alpha-mod" "Failed to get texture allpha mod"))
+
+      (bytevector-u8-ref bv 0))))
+
+(define (get-texture-color-mod texture)
+  "Get color mod of TEXTURE as a list of the integers."
+  (let ((bv (make-bytevector 3)))
+    (let ((result (ffi:sdl-get-texture-color-mod
+                   (unwrap-texture texture)
+                   (bytevector->pointer bv 0)
+                   (bytevector->pointer bv 1)
+                   (bytevector->pointer bv 2))))
+      (unless (zero? result)
+        (sdl-error "get-texture-color-mod" "Failed to get texture color mod"))
+      (bytevector->u8-list bv))))
 
 (define* (render-copy renderer texture
                       #:key (angle 0) srcrect dstrect center)
