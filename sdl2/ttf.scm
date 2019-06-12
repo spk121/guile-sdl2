@@ -89,5 +89,5 @@ containing the results."
                                           (string->pointer text)
                                           ((@@ (sdl2) color->struct) color))))
     (if (null-pointer? ptr)
-        (sdl-error "render-font-solid" "failed to render text")
+        (sdl-error "render-font-blended" "failed to render text")
         ((@@ (sdl2 surface) wrap-surface) ptr))))
