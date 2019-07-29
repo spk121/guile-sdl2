@@ -11,4 +11,4 @@
 (define %libsdl2 (if %windows? "SDL2" "@LIBSDL2@"))
 (define %libsdl2-image (if %windows? "SDL2_image" "@LIBSDL2_IMAGE@"))
 (define %libsdl2-ttf (if %windows? "SDL2_ttf" "@LIBSDL2_TTF@"))
-(define %libsdl2-mixer (if %windows? "SDL_mixer" "@LIBSDL2_MIXER@"))
+(define %libsdl2-mixer (if %windows? "SDL2_mixer" "@LIBSDL2_MIXER@"))
