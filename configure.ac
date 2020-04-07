@@ -1,7 +1,7 @@
 # -*- Autoconf -*-
 #
 # guile-sdl2 --- FFI bindings for SDL2
-# Copyright © 2015 David Thompson <davet@gnu.org>
+# Copyright © 2015, 2020 David Thompson <davet@gnu.org>
 #
 # This file is part of guile-sdl2.
 #
@@ -19,7 +19,7 @@
 # License along with guile-sdl2.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-AC_INIT(guile-sdl2, 0.4.0)
+AC_INIT(guile-sdl2, 0.5.0)
 AC_CONFIG_SRCDIR(sdl2)
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([color-tests -Wall -Wno-portability foreign])
