@@ -33,143 +33,52 @@ GUILE_PROGS
 
 # Core SDL2
 PKG_CHECK_MODULES([SDL2], [sdl2])
-
-LIBSDL2="libSDL2"
-LIBSDL2_LIBDIR="no"
-LIBSDL2_PREFIX="no"
-
-AC_ARG_WITH([libsdl2-prefix],
-  [AS_HELP_STRING([--with-libsdl2-prefix=DIR], [search for SDL2 in DIR])],
-  [case "$withval" in
-    yes|no)
-      ;;
-    *)
-      LIBSDL2="$withval/lib/libSDL2"
-      LIBSDL2_PREFIX="$withval"
-      LIBSDL2_LIBDIR="$withval/lib"
-      ;;
-   esac])
-
-dnl Library name suitable for `dynamic-link'.
-AC_MSG_CHECKING([for libSDL2 shared library name])
-AC_MSG_RESULT([$LIBSDL2])
-AC_SUBST([LIBSDL2])
-AC_SUBST([LIBSDL2_PREFIX])
-AC_SUBST([LIBSDL2_LIBDIR])
+PKG_CHECK_VAR([SDL2_LIBDIR], [sdl2], [libdir])
+AC_MSG_CHECKING([SDL2 library path])
+AS_IF([test "x$SDL2_LIBDIR" = "x"], [
+  AC_MSG_FAILURE([unable to find SDL2 library directory])
+], [
+  AC_MSG_RESULT([$SDL2_LIBDIR])
+])
+AC_SUBST([SDL2_LIBDIR])
 
 # SDL2_image
-AC_ARG_WITH([libsdl2_image],
-  AS_HELP_STRING([--with-libsdl2-image],
-                 [Build with the SDL2_image library]),
-  [], [with_libsdl2_image=yes])
-
-
-if test "x$with_libsdl2_image" = "xyes"; then
-   PKG_CHECK_MODULES([SDL2_image], [SDL2_image])
-fi
-
-LIBSDL2_IMAGE="libSDL2_image"
-LIBSDL2_IMAGE_LIBDIR="no"
-LIBSDL2_IMAGE_PREFIX="no"
-
-AC_ARG_WITH([libsdl2-image-prefix],
-  [AS_HELP_STRING([--with-libsdl2-image-prefix=DIR],
-                  [search for SDL2_image in DIR])],
-  [case "$withval" in
-    yes|no)
-      ;;
-    *)
-      LIBSDL2_IMAGE="$withval/lib/libSDL2_image"
-      LIBSDL2_IMAGE_PREFIX="$withval"
-      LIBSDL2_IMAGE_LIBDIR="$withval/lib"
-      ;;
-   esac])
-
-AM_CONDITIONAL([WITH_LIBSDL2_IMAGE], [test "x$with_libsdl2_image" = "xyes"])
-
-if test "x$with_libsdl2_image" = "xyes"; then
-   AC_MSG_CHECKING([for libSDL2_image shared library name])
-   AC_MSG_RESULT([$LIBSDL2_IMAGE])
-fi
-
-AC_SUBST([LIBSDL2_IMAGE])
-AC_SUBST([LIBSDL2_IMAGE_PREFIX])
-AC_SUBST([LIBSDL2_IMAGE_LIBDIR])
+PKG_CHECK_MODULES([SDL2_image], [SDL2_image], [
+  PKG_CHECK_VAR([SDL2_IMAGE_LIBDIR], [SDL2_image], [libdir])
+  AC_MSG_CHECKING([SDL2_image library path])
+  AS_IF([test "x$SDL2_IMAGE_LIBDIR" = "x"], [
+    AC_MSG_RESULT([none])
+  ], [
+    AC_MSG_RESULT([$SDL2_IMAGE_LIBDIR])
+  ])
+], [ ]) # do not throw an error if lib is not found
+AM_CONDITIONAL([HAVE_SDL2_IMAGE], [test "x$SDL2_IMAGE_LIBDIR" != "x"])
+AC_SUBST([SDL2_IMAGE_LIBDIR])
 
 # SDL2_ttf
-AC_ARG_WITH([libsdl2_ttf],
-  AS_HELP_STRING([--with-libsdl2-ttf],
-                 [Build with the SDL2_ttf library]),
-  [], [with_libsdl2_ttf=yes])
-
-if test "x$with_libsdl2_ttf" = "xyes"; then
-   PKG_CHECK_MODULES([SDL2_ttf], [SDL2_ttf])
-fi
-
-LIBSDL2_TTF="libSDL2_ttf"
-LIBSDL2_TTF_LIBDIR="no"
-LIBSDL2_TTF_PREFIX="no"
-
-AC_ARG_WITH([libsdl2-ttf-prefix],
-  [AS_HELP_STRING([--with-libsdl2-ttf-prefix=DIR],
-                  [search for SDL2_ttf in DIR])],
-  [case "$withval" in
-    yes|no)
-      ;;
-    *)
-      LIBSDL2_TTF="$withval/lib/libSDL2_ttf"
-      LIBSDL2_TTF_PREFIX="$withval"
-      LIBSDL2_TTF_LIBDIR="$withval/lib"
-      ;;
-   esac])
-
-AM_CONDITIONAL([WITH_LIBSDL2_TTF], [test "x$with_libsdl2_ttf" = "xyes"])
-
-if test "x$with_libsdl2_ttf" = "xyes"; then
-   AC_MSG_CHECKING([for libSDL2_ttf shared library name])
-   AC_MSG_RESULT([$LIBSDL2_TTF])
-fi
-
-AC_SUBST([LIBSDL2_TTF])
-AC_SUBST([LIBSDL2_TTF_PREFIX])
-AC_SUBST([LIBSDL2_TTF_LIBDIR])
+PKG_CHECK_MODULES([SDL2_ttf], [SDL2_ttf], [
+  PKG_CHECK_VAR([SDL2_TTF_LIBDIR], [SDL2_ttf], [libdir])
+  AC_MSG_CHECKING([SDL2_ttf library path])
+  AS_IF([test "x$SDL2_TTF_LIBDIR" = "x"], [
+    AC_MSG_RESULT([none])
+  ], [
+    AC_MSG_RESULT([$SDL2_TTF_LIBDIR])
+  ])
+], [ ]) # do not throw an error if lib is not found
+AM_CONDITIONAL([HAVE_SDL2_TTF], [test "x$SDL2_TTF_LIBDIR" != "x"])
+AC_SUBST([SDL2_TTF_LIBDIR])
 
 # SDL2_mixer
-AC_ARG_WITH([libsdl2_mixer],
-  AS_HELP_STRING([--with-libsdl2-mixer],
-                 [Build with the SDL2_mixer library]),
-  [], [with_libsdl2_mixer=yes])
-
-if test "x$with_libsdl2_mixer" = "xyes"; then
-   PKG_CHECK_MODULES([SDL2_mixer], [SDL2_mixer])
-fi
-
-LIBSDL2_MIXER="libSDL2_mixer"
-LIBSDL2_MIXER_LIBDIR="no"
-LIBSDL2_MIXER_PREFIX="no"
-
-AC_ARG_WITH([libsdl2-mixer-prefix],
-  [AS_HELP_STRING([--with-libsdl2-mixer-prefix=DIR],
-                  [search for SDL2_mixer in DIR])],
-  [case "$withval" in
-    yes|no)
-      ;;
-    *)
-      LIBSDL2_MIXER="$withval/lib/libSDL2_mixer"
-      LIBSDL2_MIXER_PREFIX="$withval"
-      LIBSDL2_MIXER_LIBDIR="$withval/lib"
-      ;;
-   esac])
-
-AM_CONDITIONAL([WITH_LIBSDL2_MIXER], [test "x$with_libsdl2_mixer" = "xyes"])
-
-if test "x$with_libsdl2_mixer" = "xyes"; then
-   AC_MSG_CHECKING([for libSDL2_mixer shared library name])
-   AC_MSG_RESULT([$LIBSDL2_MIXER])
-fi
-
-AC_SUBST([LIBSDL2_MIXER])
-AC_SUBST([LIBSDL2_MIXER_PREFIX])
-AC_SUBST([LIBSDL2_MIXER_LIBDIR])
+PKG_CHECK_MODULES([SDL2_mixer], [SDL2_mixer], [
+  PKG_CHECK_VAR([SDL2_MIXER_LIBDIR], [SDL2_mixer], [libdir])
+  AC_MSG_CHECKING([SDL2_mixer library path])
+  AS_IF([test "x$SDL2_MIXER_LIBDIR" = "x"], [
+    AC_MSG_RESULT([none])
+  ], [
+    AC_MSG_RESULT([$SDL2_MIXER_LIBDIR])
+  ])
+], [ ]) # do not throw an error if lib is not found
+AM_CONDITIONAL([HAVE_SDL2_MIXER], [test "x$SDL2_MIXER_LIBDIR" != "x"])
+AC_SUBST([SDL2_MIXER_LIBDIR])
 
 AC_OUTPUT

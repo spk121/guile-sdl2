@@ -68,20 +68,11 @@
 
 (package
   (name "guile-sdl2")
-  (version "0.1.2")
+  (version "0.4.0")
   (source (local-file %source-dir  #:recursive? #t #:select? git-file?))
   (build-system gnu-build-system)
   (arguments
-   '(#:configure-flags
-     (list (string-append "--with-libsdl2-prefix="
-                          (assoc-ref %build-inputs "sdl2"))
-           (string-append "--with-libsdl2-image-prefix="
-                          (assoc-ref %build-inputs "sdl2-image"))
-           (string-append "--with-libsdl2-ttf-prefix="
-                          (assoc-ref %build-inputs "sdl2-ttf"))
-           (string-append "--with-libsdl2-mixer-prefix="
-                          (assoc-ref %build-inputs "sdl2-mixer")))
-     #:make-flags '("GUILE_AUTO_COMPILE=0")
+   '(#:make-flags '("GUILE_AUTO_COMPILE=0")
      #:phases
      (modify-phases %standard-phases
        (add-after 'unpack 'bootstrap
@@ -92,7 +83,7 @@
      ("pkg-config" ,pkg-config)
      ("texinfo" ,texinfo)))
   (inputs
-   `(("guile" ,guile-2.2)
+   `(("guile" ,guile-3.0)
      ("sdl2" ,sdl2)
      ("sdl2-image" ,sdl2-image)
      ("sdl2-mixer" ,sdl2-mixer)

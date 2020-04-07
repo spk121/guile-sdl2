@@ -56,7 +56,7 @@ SOURCES =					\
   sdl2/input/mouse.scm				\
   sdl2/input/text.scm
 
-if WITH_LIBSDL2_IMAGE
+if HAVE_SDL2_IMAGE
 
 SOURCES +=					\
   sdl2/bindings/image.scm			\
@@ -64,7 +64,7 @@ SOURCES +=					\
 
 endif
 
-if WITH_LIBSDL2_TTF
+if HAVE_SDL2_TTF
 
 SOURCES +=					\
   sdl2/bindings/ttf.scm				\
@@ -72,7 +72,7 @@ SOURCES +=					\
 
 endif
 
-if WITH_LIBSDL2_MIXER
+if HAVE_SDL2_MIXER
 
 SOURCES +=					\
   sdl2/bindings/mixer.scm			\
@@ -90,7 +90,7 @@ doc_guile_sdl2_TEXINFOS =			\
 AM_MAKEINFOHTMLFLAGS = --css-ref=https://dthompson.us/css/dthompson.css \
   --css-include=doc/manual.css
 
-dvi: # Don't build dvi docs
+#dvi: # Don't build dvi docs
 
 EXTRA_DIST +=					\
   pre-inst-env.in				\
