@@ -81,8 +81,8 @@ the following format: (minx maxx miny maxy advance)"
                                       (bytevector->pointer bv)
                                       (bytevector->pointer bv 4)
                                       (bytevector->pointer bv 8)
-                                      (bytevector->pointer bv 16)
-                                      (bytevector->pointer bv 32)))
+                                      (bytevector->pointer bv 12)
+                                      (bytevector->pointer bv 16)))
         (s32vector->list bv)
         (sdl-error "font-glyph-metrics" "failed to get glyph metrics"))))
 
