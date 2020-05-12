@@ -1377,6 +1377,12 @@ Delete the memory allocated for @var{font}.
 Return the maximum height of @var{font}.
 @end deffn
 
+@deffn {Procedure} font-glyph-metrics font char
+Return a 5-element list containing the metrics of @var{char} in
+@var{font} in the following format: @code{(minx maxx miny maxy
+advance)}
+@end deffn
+
 @deffn {Procedure} render-font-solid font text color
 Render @var{text}, a UTF-8 encoded string, using @var{font} and @var{color}, the
 foreground color, and return a surface containing the results.
