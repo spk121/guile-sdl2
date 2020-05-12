@@ -35,6 +35,7 @@
             load-font
             delete-font!
             font-height
+            font-glyph-metrics
 
             render-font-solid
             render-font-blended))
