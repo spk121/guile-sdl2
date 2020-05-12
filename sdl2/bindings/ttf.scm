@@ -57,6 +57,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign ttf-font-height
   int "TTF_FontHeight" '(*))
 
+(define-foreign ttf-glyph-metrics
+  int "TTF_GlyphMetrics" (list '* uint16 '* '* '* '* '*))
+
 (define-foreign ttf-render-text-solid
   '* "TTF_RenderText_Solid" (list '* '* sdl-color))
 

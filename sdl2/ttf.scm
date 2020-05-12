@@ -71,6 +71,20 @@ size is POINT-SIZE."
   "Return the maximum height of FONT."
   (ffi:ttf-font-height (unwrap-font font)))
 
+(define (font-glyph-metrics font char)
+  "Return a 5-element list containing the metrics of CHAR in FONT in
+the following format: (minx maxx miny maxy advance)"
+  (let ((bv (make-s32vector 5)))
+    (if (zero? (ffi:ttf-glyph-metrics (unwrap-font font)
+                                      (char->integer char)
+                                      (bytevector->pointer bv)
+                                      (bytevector->pointer bv 4)
+                                      (bytevector->pointer bv 8)
+                                      (bytevector->pointer bv 16)
+                                      (bytevector->pointer bv 32)))
+        (s32vector->list bv)
+        (sdl-error "font-glyph-metrics" "failed to get glyph metrics"))))
+
 (define (render-font-solid font text color)
   "Render TEXT, a UTF-8 encoded string, using FONT and COLOR, the
 foreground color, and return a surface containing the results."
