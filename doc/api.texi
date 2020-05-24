@@ -1477,10 +1477,66 @@ Delete the memory allocated for @var{font}.
 Return the maximum height of @var{font}.
 @end deffn
 
+@deffn {Procedure} font-ascent font
+Return the maximum pixel ascent of all glyphs in @var{font}.  This can
+also be interpreted as the distance from the top of the font to the
+baseline.
+@end deffn
+
+@deffn {Procedure} font-descent font
+Return the maximum pixel descent of all glyphs in @var{font}.  This
+can also be interpreted as the distance from the baseline to the
+bottom of the font.
+@end deffn
+
+@deffn {Procedure} font-line-skip font
+Return the recommended pixel height of a line of text using
+@var{font}.
+@end deffn
+
+@deffn {Procedure} font-size-text font text
+Return a 2-element list containing the resulting surface size of the
+string @var{text} using @var{font} in the following format:
+@code{(width height)}.
+@end deffn
+
+@deffn {Procedure} font-glyph-index font char
+Return the index of the glyph for @var{char} in @var{font}, or
+@code{#f} if @var{char} is not present.
+@end deffn
+
 @deffn {Procedure} font-glyph-metrics font char
 Return a 5-element list containing the metrics of @var{char} in
 @var{font} in the following format: @code{(minx maxx miny maxy
 advance)}
+@end deffn
+
+@deffn font-style font
+Return the rendering style of @var{font} as a list that may contain
+any of the following symbols:
+
+@itemize
+@item @code{bold}
+@item @code{italic}
+@item @code{underline}
+@item @code{strikethrough}
+@end itemize
+
+The empty list is returned if none of the above styles are applied.
+@end deffn
+
+@deffn font-set-style! font style
+Set the rendering style of @var{font} to @var{style}, a list that may
+contain any of the following symbols:
+
+@itemize
+@item @code{bold}
+@item @code{italic}
+@item @code{underline}
+@item @code{strikethrough}
+@end itemize
+
+The empty list means that none of the above stylings will be used.
 @end deffn
 
 @deffn {Procedure} render-font-solid font text color

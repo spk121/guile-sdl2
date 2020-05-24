@@ -42,6 +42,13 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
   (define-public name
     (sdl-ttf-func return-type func-name arg-types)))
 
+;; Font style bitmask.
+;; If no bit is set in the mask, that means the style is "normal"
+(define-public SDL_TTF_STYLE_BOLD          #x01)
+(define-public SDL_TTF_STYLE_ITALIC        #x02)
+(define-public SDL_TTF_STYLE_UNDERLINE     #x04)
+(define-public SDL_TTF_STYLE_STRIKETHROUGH #x08)
+
 (define-foreign ttf-init
   int "TTF_Init" '())
 
@@ -57,8 +64,29 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign ttf-font-height
   int "TTF_FontHeight" '(*))
 
+(define-foreign ttf-font-ascent
+  int "TTF_FontAscent" '(*))
+
+(define-foreign ttf-font-descent
+  int "TTF_FontDescent" '(*))
+
+(define-foreign ttf-font-line-skip
+  int "TTF_FontLineSkip" '(*))
+
+(define-foreign ttf-size-utf8
+  int "TTF_SizeUTF8" '(* * * *))
+
+(define-foreign ttf-glyph-is-provided
+  int "TTF_GlyphIsProvided" (list '* uint16))
+
 (define-foreign ttf-glyph-metrics
   int "TTF_GlyphMetrics" (list '* uint16 '* '* '* '* '*))
+
+(define-foreign ttf-get-font-style
+  int "TTF_GetFontStyle" '(*))
+
+(define-foreign ttf-set-font-style
+  void "TTF_SetFontStyle" (list '* int))
 
 (define-foreign ttf-render-text-solid
   '* "TTF_RenderText_Solid" (list '* '* sdl-color))

@@ -25,6 +25,8 @@
 
 (define-module (sdl2 ttf)
   #:use-module (ice-9 format)
+  #:use-module (ice-9 match)
+  #:use-module (srfi srfi-1)
   #:use-module (system foreign)
   #:use-module (sdl2)
   #:use-module ((sdl2 bindings ttf) #:prefix ffi:)
@@ -35,7 +37,14 @@
             load-font
             delete-font!
             font-height
+            font-ascent
+            font-descent
+            font-line-skip
+            font-size
+            font-glyph-index
             font-glyph-metrics
+            font-style
+            set-font-style!
 
             render-font-solid
             render-font-blended))
@@ -72,6 +81,35 @@ size is POINT-SIZE."
   "Return the maximum height of FONT."
   (ffi:ttf-font-height (unwrap-font font)))
 
+(define (font-ascent font)
+  "Return the maximum pixel ascent of all glyphs in FONT."
+  (ffi:ttf-font-ascent (unwrap-font font)))
+
+(define (font-descent font)
+  "Return the maximum pixel descent of all glyphs in FONT."
+  (ffi:ttf-font-descent (unwrap-font font)))
+
+(define (font-line-skip font)
+  "Return the recommended pixel height of a line in FONT."
+  (ffi:ttf-font-line-skip (unwrap-font font)))
+
+(define (font-size font text)
+  "Return a 2-element list containing the resulting surface size of
+the string TEXT using FONT in the following format: (width height)."
+  (let ((bv (make-s32vector 2)))
+    (if (zero? (ffi:ttf-size-utf8 (unwrap-font font)
+                                  (string->pointer text)
+                                  (bytevector->pointer bv)
+                                  (bytevector->pointer bv 4)))
+        (s32vector->list bv)
+        (sdl-error "size-utf8" "failed to get size utf8"))))
+
+(define (font-glyph-index font char)
+  "Return the index of the glyph for CHAR in FONT, or #f if CHAR is
+not present."
+  (let ((result (ffi:ttf-glyph-is-provided (unwrap-font font) (char->integer char))))
+    (if (eq? result 0) #f result)))
+
 (define (font-glyph-metrics font char)
   "Return a 5-element list containing the metrics of CHAR in FONT in
 the following format: (minx maxx miny maxy advance)"
@@ -85,6 +123,47 @@ the following format: (minx maxx miny maxy advance)"
                                       (bytevector->pointer bv 16)))
         (s32vector->list bv)
         (sdl-error "font-glyph-metrics" "failed to get glyph metrics"))))
+
+(define (font-style font)
+  "Return the rendering style of FONT.  Return a list that may contain
+any of the following symbols:
+
+- bold
+- italic
+- underline
+- strikethrough
+
+The empty list returned if no there is no style applied."
+  (let ((bitmask (ffi:ttf-get-font-style (unwrap-font font))))
+    (filter-map (match-lambda
+                  ((sym . bit)
+                   (and (not (zero? (logand bitmask bit))) sym)))
+                `((bold          . ,ffi:SDL_TTF_STYLE_BOLD)
+                  (italic        . ,ffi:SDL_TTF_STYLE_ITALIC)
+                  (underline     . ,ffi:SDL_TTF_STYLE_UNDERLINE)
+                  (strikethrough . ,ffi:SDL_TTF_STYLE_STRIKETHROUGH)))))
+
+(define (set-font-style! font style)
+  "Set the rendering style of FONT to STYLE, a list that may contain
+any of the following symbols:
+
+- bold
+- italic
+- underline
+- strikethrough
+
+Use an empty list to set the normal style."
+  (let ((bitmask
+         (fold (lambda (flag prev)
+                 (logior prev
+                         (match flag
+                           ('bold          ffi:SDL_TTF_STYLE_BOLD)
+                           ('italic        ffi:SDL_TTF_STYLE_ITALIC)
+                           ('underline     ffi:SDL_TTF_STYLE_UNDERLINE)
+                           ('strikethrough ffi:SDL_TTF_STYLE_STRIKETHROUGH))))
+               0
+               style)))
+    (ffi:ttf-set-font-style (unwrap-font font) bitmask)))
 
 (define (render-font-solid font text color)
   "Render TEXT, a UTF-8 encoded string, using FONT and COLOR, the
