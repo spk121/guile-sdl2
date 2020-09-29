@@ -167,7 +167,9 @@ color."
   "Draw RECT on RENDERER."
   (ffi:sdl-render-draw-rect
    (unwrap-renderer renderer)
-   ((@@ (sdl2 rect) unwrap-rect) rect)))
+   (if rect
+       ((@@ (sdl2 rect) unwrap-rect) rect)
+       %null-pointer)))
 
 (define (render-draw-rects renderer rects)
   "Draw RECTS on RENDERER."
@@ -185,7 +187,9 @@ color."
   "Fill RECT on RENDERER."
   (ffi:sdl-render-fill-rect
    (unwrap-renderer renderer)
-   ((@@ (sdl2 rect) unwrap-rect) rect)))
+   (if rect
+       ((@@ (sdl2 rect) unwrap-rect) rect)
+       %null-pointer)))
 
 (define (render-fill-rects renderer rects)
   "Fill RECTS on RENDERER."
