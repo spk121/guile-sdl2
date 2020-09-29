@@ -44,6 +44,7 @@ SOURCES =					\
   sdl2.scm					\
   sdl2/config.scm				\
   sdl2/bindings.scm				\
+  sdl2/blend-mode.scm				\
   sdl2/clipboard.scm				\
   sdl2/rect.scm					\
   sdl2/surface.scm				\

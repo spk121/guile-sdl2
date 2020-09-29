@@ -6,6 +6,7 @@
 * Rects::                       2D rectangles.
 * Surfaces::                    Software rendering.
 * Rendering::                   Hardware accelerated rendering.
+* Blend Modes::                 Color blending.
 * Images::                      Loading and saving images.
 * Sound::                       Sound effects and music.
 * Fonts::                       Truetype and bitmap font rendering.
@@ -1062,6 +1063,11 @@ color channels @var{r}, @var{g}, @var{b}, @var{a}.  Each color channel
 value is in the range [0, 255].
 @end deffn
 
+@deffn {Procedure} set-render-draw-blend-mode renderer blend-mode
+Set blend mode of @var{renderer} to @var{blend-mode}. @xref{Blend
+Modes} for more information.
+@end deffn
+
 @deffn {Procedure} render-draw-line renderer x1 y1 x2 y2
 Draw a line from (@var{x1}, @var{y1}) to (@var{x2}, @var{y2}) on the
 current rendering target of @var{renderer}.
@@ -1144,6 +1150,100 @@ Set the color mod of @var{texture}.
 
 @deffn {Procedure} set-texture-alpha-mod! texture a
 Set the alpha mod of @var{texture}.
+@end deffn
+
+@node Blend Modes
+@section Blend Modes
+
+@example
+(use-modules (sdl2 blend-mode))
+@end example
+
+SDL2 provides several of the most commonly used blend modes:
+
+@defvar none
+No blending.
+@end defvar
+
+@defvar blend
+Alpha blending.
+@end defvar
+
+@defvar add
+Additive blending.
+@end defvar
+
+@defvar mul
+Multiplicative blending.
+@end defvar
+
+@defvar mod
+Color modulation.
+@end defvar
+
+Custom blend modes can be created using the @code{make-blend-mode}
+procedure.
+
+@deffn {Procedure} make-blend-mode src-color-factor dst-color-factor color-operation src-alpha-factor dst-alpha-factor alpha-operation
+Return a new custom blend mode for renderers.
+
+@var{src-color-factor} applies to the red, green, and blue components
+of the source pixels.
+
+@var{dst-color-factor} applies to the red, green, and blue components of the
+destination pixels.
+
+@var{color-operation} specifies how to combine the red, green, and blue
+components of the source and destination pixels.
+
+@var{src-alpha-factor} applies to the alpha component of the source pixels.
+
+@var{dst-alpha-factor} applies to the alpha component of the destination
+pixels.
+
+@var{alpha-operation} specifies how to combine the alpha component of the
+source and destination pixels.
+
+Possible values for factors are @code{zero}, @code{one},
+@code{src-color}, @code{one-minus-src-color}, @code{src-alpha},
+@code{one-minus-src-alpha}, @code{dst-color},
+@code{one-minus-dst-color}, @code{dst-alpha}, and @code{one-minus-dst
+alpha}.
+
+Possible values for operations are @code{add}, @code{subtract},
+@code{rev-subtract}, @code{minimum}, and @code{maximum}.
+@end deffn
+
+@deffn {Procedure} blend-mode? obj
+Return @code{#t} if @var{obj} is a blend mode object.
+@end deffn
+
+@deffn {Procedure} blend-mode-src-color-factor blend-mode
+Return the source red, green, and blue channel blend factor for
+@var{blend-mode}.
+@end deffn
+
+@deffn {Procedure} blend-mode-dst-color-factor blend-mode
+Return the destination red, green, and blue channel blend factor for
+@var{blend-mode}.
+@end deffn
+
+@deffn {Procedure} blend-mode-color-operation blend-mode
+Return the red, green, and blue channel blend operation for
+@var{blend-mode}.
+@end deffn
+
+@deffn {Procedure} blend-mode-src-alpha-factor blend-mode
+Return the source alpha channel blend factor for @var{blend-mode}.
+@end deffn
+
+@deffn {Procedure} blend-mode-dst-alpha-factor blend-mode
+Return the destination alpha channel blend factor for
+@var{blend-mode}.
+@end deffn
+
+@deffn {Procedure} blend-mode-alpha-operation blend-mode
+Return the alpha channel blend operation for @var{blend-mode}.
 @end deffn
 
 @node Images

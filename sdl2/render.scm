@@ -41,6 +41,7 @@
             set-render-target!
             get-render-target
             set-render-draw-color
+            set-render-draw-blend-mode
             render-draw-line
             render-draw-lines
             render-draw-point
@@ -120,6 +121,12 @@ color."
 (define (present-renderer renderer)
   "Display RENDERER."
   (ffi:sdl-render-present (unwrap-renderer renderer)))
+
+(define (set-render-draw-blend-mode renderer blend-mode)
+  "Set blend mode of RENDERER to BLEND-MODE."
+  (ffi:sdl-set-render-draw-blend-mode
+   (unwrap-renderer renderer)
+   ((@@ (sdl2 blend-mode) blend-mode-bitmask) blend-mode)))
 
 (define (set-render-draw-color renderer r g b a)
   "Set draw color of RENDERER."

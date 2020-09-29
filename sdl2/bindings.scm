@@ -100,6 +100,38 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 
 ;;;
+;;; Blend Mode
+;;;
+
+(define-public SDL_BLENDMODE_NONE    #x00000000)
+(define-public SDL_BLENDMODE_BLEND   #x00000001)
+(define-public SDL_BLENDMODE_ADD     #x00000002)
+(define-public SDL_BLENDMODE_MOD     #x00000004)
+(define-public SDL_BLENDMODE_MUL     #x00000008)
+(define-public SDL_BLENDMODE_INVALID #x7fffffff)
+
+(define-public SDL_BLENDOPERATION_ADD          #x1)
+(define-public SDL_BLENDOPERATION_SUBTRACT     #x2)
+(define-public SDL_BLENDOPERATION_REV_SUBTRACT #x3)
+(define-public SDL_BLENDOPERATION_MINIMUM      #x4)
+(define-public SDL_BLENDOPERATION_MAXIMUM      #x5)
+
+(define-public SDL_BLENDFACTOR_ZERO                #x1)
+(define-public SDL_BLENDFACTOR_ONE                 #x2)
+(define-public SDL_BLENDFACTOR_SRC_COLOR           #x3)
+(define-public SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR #x4)
+(define-public SDL_BLENDFACTOR_SRC_ALPHA           #x5)
+(define-public SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA #x6)
+(define-public SDL_BLENDFACTOR_DST_COLOR           #x7)
+(define-public SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR #x8)
+(define-public SDL_BLENDFACTOR_DST_ALPHA           #x9)
+(define-public SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA #xa)
+
+(define-foreign sdl-compose-custom-blend-mode
+  int "SDL_ComposeCustomBlendMode" (list int int int int int int))
+
+
+;;;
 ;;; Video
 ;;;
 
@@ -270,6 +302,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign sdl-get-texture-alpha-mod
   int "SDL_GetTextureAlphaMod" '(* *))
+
+(define-foreign sdl-set-render-draw-blend-mode
+  int "SDL_SetRenderDrawBlendMode" (list '* int))
 
 (define-foreign sdl-set-render-draw-color
   int "SDL_SetRenderDrawColor" (list '* uint8 uint8 uint8 uint8))
