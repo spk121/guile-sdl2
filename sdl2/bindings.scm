@@ -333,6 +333,30 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-render-fill-rects
   int "SDL_RenderFillRects" (list '* '* int))
 
+(define-foreign sdl-render-get-integer-scale
+  sdl-bool "SDL_RenderGetIntegerScale" (list '*))
+
+(define-foreign sdl-render-get-logical-size
+  void "SDL_RenderGetLogicalSize" (list '* '* '*))
+
+(define-foreign sdl-render-get-scale
+  void "SDL_RenderGetScale" (list '* '* '*))
+
+(define-foreign sdl-render-get-viewport
+  void "SDL_RenderGetViewport" (list '* '*))
+
+(define-foreign sdl-render-set-integer-scale
+  int "SDL_RenderSetIntegerScale" (list '* sdl-bool))
+
+(define-foreign sdl-render-set-logical-size
+  int "SDL_RenderSetLogicalSize" (list '* int int))
+
+(define-foreign sdl-render-set-scale
+  int "SDL_RenderSetScale" (list '* float float))
+
+(define-foreign sdl-render-set-viewport
+  int "SDL_RenderSetViewport" (list '* '*))
+
 
 ;;;
 ;;; Events

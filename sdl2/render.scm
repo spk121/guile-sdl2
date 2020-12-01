@@ -122,6 +122,68 @@ color."
   "Display RENDERER."
   (ffi:sdl-render-present (unwrap-renderer renderer)))
 
+(define (renderer-logical-size renderer)
+  "Return the logical size used by RENDERER."
+  (let ((bv (make-bytevector (* 2 (sizeof int)) 0)))
+    (ffi:sdl-render-get-logical-size (unwrap-renderer renderer)
+                                     (bytevector->pointer bv)
+                                     (bytevector->pointer (sizeof int)))
+    (bytevector->sint-list bv (native-endianness) (sizeof int))))
+
+(define (set-renderer-logical-size! renderer width height)
+  "Set the logical size of RENDERER to WIDTH x HEIGHT."
+  (unless (zero? (ffi:sdl-render-set-logical-size
+                  (unwrap-renderer renderer)
+                  width height))
+    (sdl-error "set-renderer-logical-size!" "Failed to set logical size")))
+
+(define (renderer-scale renderer)
+  "Return the scale used by RENDERER."
+  (let ((bv (make-bytevector (* 2 (sizeof float)) 0)))
+    (ffi:sdl-render-get-scale (unwrap-renderer renderer)
+                              (bytevector->pointer bv)
+                              (bytevector->pointer (sizeof float)))
+    (list (bytevector-ieee-single-native-ref bv 0)
+          (bytevector-ieee-single-native-ref bv 1))))
+
+(define (set-renderer-scale! renderer scale-x scale-y)
+  "Set the drawing scale of RENDERER according to SCALE-X and SCALE-Y
+scaling factors."
+  (unless (zero? (ffi:sdl-render-set-logical-size (unwrap-renderer renderer)
+                                                  scale-x scale-y))
+    (sdl-error "set-renderer-scale!" "Failed to set scale")))
+
+(define (renderer-integer-scale renderer)
+  "Returns #t if integer scaling is forced on RENDERER."
+  (not
+   (zero?
+    (ffi:sdl-render-get-integer-scale
+     (unwrap-renderer renderer)))))
+
+(define (set-renderer-integer-scale! renderer enabled?)
+  "If ENABLED? is #t, enable integer scaling for RENDERER, otherwise
+disable it."
+  (unless (zero? (ffi:sdl-render-set-integer-scale
+                  (unwrap-renderer renderer)
+                  (ffi:boolean->sdl-bool enabled?)))
+    (sdl-error "set-renderer-integer-scale!" "Failed to set integer scale")))
+
+(define (renderer-viewport renderer)
+  "Return the drawing area used by RENDERER."
+  (let ((rect ((@@ (sdl2 rect) make-rect) 0 0 0 0)))
+    (ffi:sdl-render-get-viewport (unwrap-renderer renderer)
+                                 ((@@ (sdl2 rect) unwrap-rect) rect))
+    rect))
+
+(define (set-renderer-viewport! renderer rect)
+  "Set the drawing area for RENDERER to RECT."
+  (unless (zero? (ffi:sdl-render-set-viewport
+                  (unwrap-renderer renderer)
+                  (if rect
+                      ((@@ (sdl2 rect) unwrap-rect) rect)
+                      %null-pointer)))
+    (sdl-error "set-renderer-viewport!" "Failed to set viewport")))
+
 (define (set-render-draw-blend-mode renderer blend-mode)
   "Set blend mode of RENDERER to BLEND-MODE."
   (ffi:sdl-set-render-draw-blend-mode

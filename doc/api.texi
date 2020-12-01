@@ -1048,6 +1048,45 @@ Clear the rendering target @var{renderer} with the current drawing color.
 Display @var{renderer}.
 @end deffn
 
+@deffn {Procedure} renderer-integer-scale renderer
+Returns @code{#t} if @var{renderer} currently uses integer scaling and
+@code{#f} otherwise.  Integer scaling can be used together with
+logical size to effectively restrict the drawing region to an area
+even if the window is larger than that.
+@end deffn
+
+@deffn {Procedure} set-renderer-integer-scale! renderer enable?
+If @var{enable?} is @code{#t}, enable integer scaling, otherwise
+disable it.
+@end deffn
+
+@deffn {Procedure} renderer-logical-size renderer
+Return the current logical size used by @var{renderer}.
+@end deffn
+
+@deffn {Procedure} set-renderer-logical-size! renderer width height
+Set the logical size of @var{renderer} to @var{width} x @var{height}.
+@end deffn
+
+@deffn {Procedure} renderer-scale renderer
+Return the scaling factors @code{(X Y)} used by @var{renderer} to
+scale coordinates.
+@end deffn
+
+@deffn {Procedure} set-renderer-scale! renderer scale-x scale-y
+Set the factors by which @var{renderer} scales coordinates according
+to the scaling factors @var{scale-x} and @var{scale-y}.
+@end deffn
+
+@deffn {Procedure} renderer-viewport renderer
+Return the rectangle that @var{renderer} currently draws on.  If the
+entire region is used, all values of that rectangle will be 0.
+@end deffn
+
+@deffn {Procedure} set-renderer-viewport! renderer rect
+Set the drawing area for @var{renderer} to @var{rect}.
+@end deffn
+
 @deffn {Procedure} render-copy renderer @
                                       texture @
                                       [#:angle 0] @
