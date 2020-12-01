@@ -166,6 +166,14 @@ returns or otherwise exits."
   "Return the dimensions of WINDOW."
   (%get-coords window ffi:sdl-get-window-size))
 
+(define (window-minimum-size window)
+  "Return the minimal dimensions, that WINDOW can take."
+  (%get-coords window ffi:sdl-get-window-minimum-size))
+
+(define (window-maximum-size window)
+  "Return the maximal dimensions, that WINDOW can take."
+  (%get-coords window ffi:sdl-get-window-maximum-size))
+
 (define (window-position window)
   "Return the position of WINDOW on the display."
   (%get-coords window ffi:sdl-get-window-position))
@@ -230,6 +238,19 @@ of (width,height) coordinates measured in pixels."
   (match size
     ((width height)
      (ffi:sdl-set-window-size (unwrap-window window) width height))))
+
+(define (set-window-minimum-size! window width height)
+  "Set the minimum dimensions of WINDOW to WIDTH x HEIGHT pixels."
+  (ffi:sdl-set-window-minimum-size (unwrap-window window) width height))
+
+(define (set-window-maximum-size! window width height)
+  "Set the maximum dimensions of WINDOW to WIDTH x HEIGHT pixels."
+  (ffi:sdl-set-window-maximum-size (unwrap-window window) width height))
+
+(define (set-window-resizable! window resizable?)
+  "If RESIZABLE?, make WINDOW resizable, otherwise disable resizing for WINDOW."
+  (ffi:sdl-set-window-resizable (unwrap-window window)
+                                (ffi:boolean->sdl-bool resizable?)))
 
 (define* (set-window-fullscreen! window fullscreen? #:key desktop?)
   "Toggle fullscreen mode on/off for WINDOW.  If FULLSCREEN?,

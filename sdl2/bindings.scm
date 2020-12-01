@@ -167,6 +167,12 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-get-window-size
   void "SDL_GetWindowSize" '(* * *))
 
+(define-foreign sdl-get-window-minimum-size
+  void "SDL_GetWindowMinimumSize" '(* * *))
+
+(define-foreign sdl-get-window-maximum-size
+  void "SDL_GetWindowMaximumSize" '(* * *))
+
 (define-foreign sdl-get-window-position
   void "SDL_GetWindowPosition" '(* * *))
 
@@ -205,6 +211,15 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign sdl-set-window-size
   void "SDL_SetWindowSize" (list '* int int))
+
+(define-foreign sdl-set-window-minimum-size
+  void "SDL_SetWindowMinimumSize" (list '* int int))
+
+(define-foreign sdl-set-window-maximum-size
+  void "SDL_SetWindowMaximumSize" (list '* int int))
+
+(define-foreign sdl-set-window-resizable
+  void "SDL_SetWindowResizable" (list '* sdl-bool))
 
 (define-foreign sdl-set-window-fullscreen
   int "SDL_SetWindowFullscreen" (list '* uint32))

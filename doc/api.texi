@@ -96,6 +96,20 @@ Return the title for @var{window}.
 Return the dimensions of @var{window}.
 @end deffn
 
+@deffn {Procedure} window-minimum-size window
+Return the minimal dimensions, that @var{window} should take.
+Note, that SDL does not always enforce this restriction, so you might end up
+with a window-size, that is actually smaller than the value returned by this
+function.
+@end deffn
+
+@deffn {Procedure} window-maximum-size window
+Return the maximal dimensions, that @var{window} should take.
+Note, that SDL does not always enforce this restriction, so you might end up
+with a window-size, that is actually larger than the value returned by this
+function.
+@end deffn
+
 @deffn {Procedure} window-position window
 Return the position of @var{window} on the display.
 @end deffn
@@ -150,6 +164,21 @@ of (x,y) coordinates measured in pixels.
 @deffn {Procedure} set-window-size! window size
 Set the dimensions of @var{window} to @var{size}, a two-element list of
 (width,height) coordinates measured in pixels.
+@end deffn
+
+@deffn {Procedure} set-window-minimum-size! window width height
+Set the minimum dimensions of @var{window} to @var{width} x
+@var{height} pixels.
+@end deffn
+
+@deffn {Procedure} set-window-maximum-size! window width height
+Set the maximum dimensions of @var{window} to @var{width} x
+@var{height} pixels.
+@end deffn
+
+@deffn {Procedure} set-window-resizable! window resizable?
+If @var{resizable} is @code{#t}, allow @var{window} to be resized,
+otherwise disable resizing.
 @end deffn
 
 @deffn {Procedure} set-window-fullscreen! window fullscreen? [#:desktop?]
