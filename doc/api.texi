@@ -1172,16 +1172,21 @@ target of @var{renderer}.
 Draw the outline of @var{rectangle} onto renderer.
 @end deffn
 
-@deffn {Procedure} render-draw-rects renderer rectangles
-Draw the outline of the list @var{rectangles} onto @var{renderer}.
+@deffn {Procedure} render-draw-rects renderer rects
+Draw the outline of all rects in the list @var{rects} onto
+@var{renderer}.  Optionally, for best performance, @var{rects} may
+instead be a bytevector packed with signed 32 bit integers, 4 per rect
+(x, y, width, height).
 @end deffn
 
 @deffn {Procedure} render-fill-rect renderer rectangle
 Fill @var{rectangle} onto @var{renderer}.
 @end deffn
 
-@deffn {Procedure} render-fill-rects renderer rectangles
-Fill the list @var{rectangles} onto @var{renderer}.
+@deffn {Procedure} render-fill-rects renderer rects
+Fill the list @var{rects} onto @var{renderer}.  Optionally, for best
+performance, @var{rects} may instead be a bytevector packed with
+signed 32 bit integers, 4 per rect (x, y, width, height).
 @end deffn
 
 @deffn {Procedure} set-render-target! renderer texture

@@ -198,6 +198,26 @@ disable it."
   "Draw line on RENDERER."
   (ffi:sdl-render-draw-line (unwrap-renderer renderer) x1 y1 x2 y2))
 
+(define (render-draw-rect renderer rect)
+  "Draw RECT on RENDERER."
+  (ffi:sdl-render-draw-rect
+   (unwrap-renderer renderer)
+   (if rect
+       ((@@ (sdl2 rect) unwrap-rect) rect)
+       %null-pointer)))
+
+(define (render-draw-point renderer x y)
+  "Draw point on RENDERER."
+  (ffi:sdl-render-draw-point (unwrap-renderer renderer) x y))
+
+(define *pointer-cache* (make-weak-key-hash-table))
+
+(define (bytevector->pointer/cached bv)
+  (or (hashq-ref *pointer-cache* bv)
+      (let ((ptr (bytevector->pointer bv)))
+        (hashq-set! *pointer-cache* bv ptr)
+        ptr)))
+
 (define (render-draw-lines renderer points)
   "Draw lines connecting POINTS on RENDERER."
   (define (fill-bv bv l n)
@@ -212,10 +232,6 @@ disable it."
     (ffi:sdl-render-draw-lines (unwrap-renderer renderer)
                                (bytevector->pointer bv)
                                count)))
-
-(define (render-draw-point renderer x y)
-  "Draw point on RENDERER."
-  (ffi:sdl-render-draw-point (unwrap-renderer renderer) x y))
 
 (define (render-draw-points renderer points)
   "Draw POINTS on RENDERER."
@@ -232,25 +248,25 @@ disable it."
                                 (bytevector->pointer bv)
                                 count)))
 
-(define (render-draw-rect renderer rect)
-  "Draw RECT on RENDERER."
-  (ffi:sdl-render-draw-rect
-   (unwrap-renderer renderer)
-   (if rect
-       ((@@ (sdl2 rect) unwrap-rect) rect)
-       %null-pointer)))
-
-(define (render-draw-rects renderer rects)
-  "Draw RECTS on RENDERER."
+(define (build-rect-bv rects)
   (let* ((count (length rects))
          (bv (make-s32vector (* count 4))))
     (for-each (lambda (rect i)
                 (bytevector-copy! ((@@ (sdl2 rect) rect-bv) rect) 0
                                   bv (* i 4 4) (* 4 4)))
               rects (iota count))
-    (ffi:sdl-render-draw-rects (unwrap-renderer renderer)
-                               (bytevector->pointer bv)
-                               count)))
+    bv))
+
+(define (render-draw-rects renderer rects)
+  "Draw RECTS on RENDERER."
+  (if (bytevector? rects)
+      (ffi:sdl-render-draw-rects (unwrap-renderer renderer)
+                                 (bytevector->pointer/cached rects)
+                                 (/ (bytevector-length rects) 16))
+      (let ((bv (build-rect-bv rects)))
+        (ffi:sdl-render-draw-rects (unwrap-renderer renderer)
+                                   (bytevector->pointer bv)
+                                   (length rects)))))
 
 (define (render-fill-rect renderer rect)
   "Fill RECT on RENDERER."
@@ -262,15 +278,14 @@ disable it."
 
 (define (render-fill-rects renderer rects)
   "Fill RECTS on RENDERER."
-  (let* ((count (length rects))
-         (bv (make-s32vector (* count 4))))
-    (for-each (lambda (rect i)
-                (bytevector-copy! ((@@ (sdl2 rect) rect-bv) rect) 0
-                                  bv (* i 4 4) (* 4 4)))
-              rects (iota count))
-    (ffi:sdl-render-fill-rects (unwrap-renderer renderer)
-                               (bytevector->pointer bv)
-                               count)))
+  (if (bytevector? rects)
+      (ffi:sdl-render-fill-rects (unwrap-renderer renderer)
+                                 (bytevector->pointer/cached rects)
+                                 (/ (bytevector-length rects) 16))
+      (let ((bv (build-rect-bv rects)))
+        (ffi:sdl-render-fill-rects (unwrap-renderer renderer)
+                                   (bytevector->pointer bv)
+                                   (length rects)))))
 
 
 ;;;
