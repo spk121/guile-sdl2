@@ -37,6 +37,16 @@
             call-with-renderer
             clear-renderer
             present-renderer
+
+            renderer-logical-size
+            set-renderer-logical-size!
+            renderer-scale
+            set-renderer-scale!
+            renderer-integer-scale
+            set-renderer-integer-scale!
+            renderer-viewport
+            set-renderer-viewport!
+
             render-copy
             set-render-target!
             get-render-target

@@ -37,6 +37,8 @@
             call-with-window
             window-title
             window-size
+            window-minimum-size
+            window-maximum-size
             window-position
             window-id
             id->window
@@ -50,6 +52,9 @@
             set-window-title!
             set-window-position!
             set-window-size!
+            set-window-minimum-size!
+            set-window-maximum-size!
+            set-window-resizable!
             set-window-fullscreen!
 
             make-gl-context
