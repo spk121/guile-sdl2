@@ -1,5 +1,5 @@
 ;;; guile-sdl2 --- FFI bindings for SDL2
-;;; Copyright © 2015 David Thompson <davet@gnu.org>
+;;; Copyright © 2015, 2020 David Thompson <davet@gnu.org>
 ;;;
 ;;; This file is part of guile-sdl2.
 ;;;
