@@ -194,11 +194,11 @@ disable it."
   "Set draw color of RENDERER."
   (ffi:sdl-set-render-draw-color (unwrap-renderer renderer) r g b a))
 
-(define (render-draw-line renderer x1 y1 x2 y2)
+(define (draw-line renderer x1 y1 x2 y2)
   "Draw line on RENDERER."
   (ffi:sdl-render-draw-line (unwrap-renderer renderer) x1 y1 x2 y2))
 
-(define (render-draw-rect renderer rect)
+(define (draw-rect renderer rect)
   "Draw RECT on RENDERER."
   (ffi:sdl-render-draw-rect
    (unwrap-renderer renderer)
@@ -206,7 +206,7 @@ disable it."
        ((@@ (sdl2 rect) unwrap-rect) rect)
        %null-pointer)))
 
-(define (render-draw-point renderer x y)
+(define (draw-point renderer x y)
   "Draw point on RENDERER."
   (ffi:sdl-render-draw-point (unwrap-renderer renderer) x y))
 
@@ -229,7 +229,7 @@ disable it."
          (s32vector-set! bv (+ (* i 1) 1) y)
          (loop rest (+ i 1)))))))
 
-(define (render-draw-lines renderer points)
+(define (draw-lines renderer points)
   "Draw lines connecting POINTS on RENDERER."
   (if (bytevector? points)
       (ffi:sdl-render-draw-lines (unwrap-renderer renderer)
@@ -240,7 +240,7 @@ disable it."
                                    (bytevector->pointer bv)
                                    (length points)))))
 
-(define (render-draw-points renderer points)
+(define (draw-points renderer points)
   "Draw POINTS on RENDERER."
   (if (bytevector? points)
       (ffi:sdl-render-draw-points (unwrap-renderer renderer)
@@ -260,7 +260,7 @@ disable it."
               rects (iota count))
     bv))
 
-(define (render-draw-rects renderer rects)
+(define (draw-rects renderer rects)
   "Draw RECTS on RENDERER."
   (if (bytevector? rects)
       (ffi:sdl-render-draw-rects (unwrap-renderer renderer)
@@ -271,7 +271,7 @@ disable it."
                                    (bytevector->pointer bv)
                                    (length rects)))))
 
-(define (render-fill-rect renderer rect)
+(define (fill-rect renderer rect)
   "Fill RECT on RENDERER."
   (ffi:sdl-render-fill-rect
    (unwrap-renderer renderer)
@@ -279,7 +279,7 @@ disable it."
        ((@@ (sdl2 rect) unwrap-rect) rect)
        %null-pointer)))
 
-(define (render-fill-rects renderer rects)
+(define (fill-rects renderer rects)
   "Fill RECTS on RENDERER."
   (if (bytevector? rects)
       (ffi:sdl-render-fill-rects (unwrap-renderer renderer)

@@ -1148,46 +1148,46 @@ Set blend mode of @var{renderer} to @var{blend-mode}. @xref{Blend
 Modes} for more information.
 @end deffn
 
-@deffn {Procedure} render-draw-line renderer x1 y1 x2 y2
+@deffn {Procedure} draw-line renderer x1 y1 x2 y2
 Draw a line from (@var{x1}, @var{y1}) to (@var{x2}, @var{y2}) on the
 current rendering target of @var{renderer}.
 @end deffn
 
-@deffn {Procedure} render-draw-lines renderer points
+@deffn {Procedure} draw-lines renderer points
 Draw a series of connected lines from @var{points} on the current
 rendering target of @var{renderer}.  Optionally, for best performance,
 @var{points} may instead be a bytevector packed with signed 32 bit
 integers, 2 per point (x and y).
 @end deffn
 
-@deffn {Procedure} render-draw-point renderer x y
+@deffn {Procedure} draw-point renderer x y
 Draw a point at (@var{x}, @var{y}) on the current rendering target
 of @var{renderer}.
 @end deffn
 
-@deffn {Procedure} render-draw-points renderer points
+@deffn {Procedure} draw-points renderer points
 Draw a multiple points from @var{points} on the current rendering
 target of @var{renderer}.  Optionally, for best performance,
 @var{points} may instead be a bytevector packed with signed 32 bit
 integers, 2 per point (x and y).
 @end deffn
 
-@deffn {Procedure} render-draw-rect renderer rectangle
+@deffn {Procedure} draw-rect renderer rectangle
 Draw the outline of @var{rectangle} onto renderer.
 @end deffn
 
-@deffn {Procedure} render-draw-rects renderer rects
+@deffn {Procedure} draw-rects renderer rects
 Draw the outline of all rects in the list @var{rects} onto
 @var{renderer}.  Optionally, for best performance, @var{rects} may
 instead be a bytevector packed with signed 32 bit integers, 4 per rect
 (x, y, width, height).
 @end deffn
 
-@deffn {Procedure} render-fill-rect renderer rectangle
+@deffn {Procedure} fill-rect renderer rectangle
 Fill @var{rectangle} onto @var{renderer}.
 @end deffn
 
-@deffn {Procedure} render-fill-rects renderer rects
+@deffn {Procedure} fill-rects renderer rects
 Fill the list @var{rects} onto @var{renderer}.  Optionally, for best
 performance, @var{rects} may instead be a bytevector packed with
 signed 32 bit integers, 4 per rect (x, y, width, height).
