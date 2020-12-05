@@ -225,12 +225,9 @@ the border."
   (ffi:sdl-set-window-title (unwrap-window window)
                             (string->pointer title)))
 
-(define (set-window-position! window position)
-  "Set the position of WINDOW to POSITION, a two-element list of (x,y)
-coordinates measured in pixels."
-  (match position
-    ((x y)
-     (ffi:sdl-set-window-position (unwrap-window window) x y))))
+(define (set-window-position! window x y)
+  "Set the position of WINDOW to (X, Y)."
+  (ffi:sdl-set-window-position (unwrap-window window) x y))
 
 (define (set-window-size! window size)
   "Set the dimensions of WINDOW to SIZE, a two-element list

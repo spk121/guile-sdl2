@@ -156,9 +156,8 @@ remove the border.
 Set the title of @var{window} to the string @var{title}.
 @end deffn
 
-@deffn {Procedure} set-window-position! window position
-Set the position of @var{window} to @var{position}, a two-element list
-of (x,y) coordinates measured in pixels.
+@deffn {Procedure} set-window-position! window x y
+Set the position of @var{window} to (@var{x}, @var{y}).
 @end deffn
 
 @deffn {Procedure} set-window-size! window size
