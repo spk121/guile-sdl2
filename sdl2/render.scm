@@ -37,34 +37,33 @@
             call-with-renderer
             clear-renderer
             present-renderer
-
             renderer-logical-size
-            set-renderer-logical-size!
             renderer-scale
-            set-renderer-scale!
             renderer-integer-scale
-            set-renderer-integer-scale!
             renderer-viewport
+            render-target
+            set-renderer-logical-size!
+            set-renderer-scale!
+            set-renderer-integer-scale!
             set-renderer-viewport!
+            set-render-target!
+            set-renderer-draw-color!
+            set-renderer-draw-blend-mode!
 
             render-copy
-            set-render-target!
-            get-render-target
-            set-render-draw-color
-            set-render-draw-blend-mode
-            render-draw-line
-            render-draw-lines
-            render-draw-point
-            render-draw-points
-            render-draw-rect
-            render-draw-rects
-            render-fill-rect
-            render-fill-rects
+            draw-line
+            draw-lines
+            draw-point
+            draw-points
+            draw-rect
+            draw-rects
+            fill-rect
+            fill-rects
 
+            texture-color-mod
+            texture-alpha-mod
             set-texture-color-mod!
-            get-texture-color-mod
             set-texture-alpha-mod!
-            get-texture-alpha-mod
 
             make-texture
             delete-texture!
