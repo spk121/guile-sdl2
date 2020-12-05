@@ -355,7 +355,7 @@ created with 'texture')"
 
       (bytevector-u8-ref bv 0))))
 
-(define (get-texture-color-mod texture)
+(define (texture-color-mod texture)
   "Get color mod of TEXTURE as a list of the integers."
   (let ((bv (make-bytevector 3)))
     (let ((result (ffi:sdl-get-texture-color-mod

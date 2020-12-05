@@ -1225,7 +1225,7 @@ Convert @var{surface} to a texture suitable for @var{renderer}.
 Free the memory used by @var{texture}.
 @end deffn
 
-@deffn {Procedure} get-texture-color-mod texture
+@deffn {Procedure} texture-color-mod texture
 Get color mod of @var{texture} as a list of the integers.
 @end deffn
 
