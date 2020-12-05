@@ -33,7 +33,11 @@
             rect-x
             rect-y
             rect-width
-            rect-height))
+            rect-height
+            set-rect-x!
+            set-rect-y!
+            set-rect-width!
+            set-rect-height!))
 
 (define-record-type <rect>
   (%make-rect bv ptr)
@@ -56,3 +60,15 @@
 
 (define-inlinable (rect-height rect)
   (s32vector-ref (rect-bv rect) 3))
+
+(define-inlinable (set-rect-x! rect x)
+  (s32vector-set! (rect-bv rect) 0 x))
+
+(define-inlinable (set-rect-y! rect y)
+  (s32vector-set! (rect-bv rect) 1 y))
+
+(define-inlinable (set-rect-width! rect w)
+  (s32vector-set! (rect-bv rect) 2 w))
+
+(define-inlinable (set-rect-height! rect h)
+  (s32vector-set! (rect-bv rect) 3 h))

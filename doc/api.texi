@@ -835,20 +835,36 @@ Return a new rectangle whose upper-left corner is at (@var{x},
 @var{y}) and is @var{width} pixels wide and @var{height} pixels high.
 @end deffn
 
-@deffn {Procedure} rect-x @var{rect}
+@deffn {Procedure} rect-x rect
 Return the X coordinate of @var{rect}.
 @end deffn
 
-@deffn {Procedure} rect-y @var{rect}
+@deffn {Procedure} rect-y rect
 Return the Y coordinate of @var{rect}.
 @end deffn
 
-@deffn {Procedure} rect-width @var{rect}
+@deffn {Procedure} rect-width rect
 Return the width of @var{rect}.
 @end deffn
 
-@deffn {Procedure} rect-height @var{rect}
+@deffn {Procedure} rect-height rect
 Return the height of @var{rect}.
+@end deffn
+
+@deffn {Procedure} set-rect-x! rect x
+Set the x coordinate of @var{rect} to @var{x}.
+@end deffn
+
+@deffn {Procedure} set-rect-y! rect y
+Set the y coordinate of @var{rect} to @var{y}.
+@end deffn
+
+@deffn {Procedure} set-rect-width! rect w
+Set the width of @var{rect} to @var{w}.
+@end deffn
+
+@deffn {Procedure} set-rect-height! rect h
+Set the height of @var{rect} to @var{h}.
 @end deffn
 
 @node Surfaces
