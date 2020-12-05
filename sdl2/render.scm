@@ -159,8 +159,8 @@ color."
 (define (set-renderer-scale! renderer scale-x scale-y)
   "Set the drawing scale of RENDERER according to SCALE-X and SCALE-Y
 scaling factors."
-  (unless (zero? (ffi:sdl-render-set-logical-size (unwrap-renderer renderer)
-                                                  scale-x scale-y))
+  (unless (zero? (ffi:sdl-render-set-scale (unwrap-renderer renderer)
+                                           scale-x scale-y))
     (sdl-error "set-renderer-scale!" "Failed to set scale")))
 
 (define (renderer-integer-scale renderer)
