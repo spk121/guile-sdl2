@@ -1155,7 +1155,9 @@ current rendering target of @var{renderer}.
 
 @deffn {Procedure} render-draw-lines renderer points
 Draw a series of connected lines from @var{points} on the current
-rendering target of @var{renderer}.
+rendering target of @var{renderer}.  Optionally, for best performance,
+@var{points} may instead be a bytevector packed with signed 32 bit
+integers, 2 per point (x and y).
 @end deffn
 
 @deffn {Procedure} render-draw-point renderer x y
@@ -1165,7 +1167,9 @@ of @var{renderer}.
 
 @deffn {Procedure} render-draw-points renderer points
 Draw a multiple points from @var{points} on the current rendering
-target of @var{renderer}.
+target of @var{renderer}.  Optionally, for best performance,
+@var{points} may instead be a bytevector packed with signed 32 bit
+integers, 2 per point (x and y).
 @end deffn
 
 @deffn {Procedure} render-draw-rect renderer rectangle
