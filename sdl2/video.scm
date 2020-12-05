@@ -229,12 +229,9 @@ the border."
   "Set the position of WINDOW to (X, Y)."
   (ffi:sdl-set-window-position (unwrap-window window) x y))
 
-(define (set-window-size! window size)
-  "Set the dimensions of WINDOW to SIZE, a two-element list
-of (width,height) coordinates measured in pixels."
-  (match size
-    ((width height)
-     (ffi:sdl-set-window-size (unwrap-window window) width height))))
+(define (set-window-size! window width height)
+  "Set the dimensions of WINDOW to WIDTH x HEIGHT pixels."
+  (ffi:sdl-set-window-size (unwrap-window window) width height))
 
 (define (set-window-minimum-size! window width height)
   "Set the minimum dimensions of WINDOW to WIDTH x HEIGHT pixels."
