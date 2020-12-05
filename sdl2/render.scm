@@ -184,7 +184,7 @@ disable it."
                       %null-pointer)))
     (sdl-error "set-renderer-viewport!" "Failed to set viewport")))
 
-(define (set-render-draw-blend-mode renderer blend-mode)
+(define (set-renderer-draw-blend-mode! renderer blend-mode)
   "Set blend mode of RENDERER to BLEND-MODE."
   (ffi:sdl-set-render-draw-blend-mode
    (unwrap-renderer renderer)

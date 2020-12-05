@@ -1143,7 +1143,7 @@ color channels @var{r}, @var{g}, @var{b}, @var{a}.  Each color channel
 value is in the range [0, 255].
 @end deffn
 
-@deffn {Procedure} set-render-draw-blend-mode renderer blend-mode
+@deffn {Procedure} set-renderer-draw-blend-mode! renderer blend-mode
 Set blend mode of @var{renderer} to @var{blend-mode}. @xref{Blend
 Modes} for more information.
 @end deffn
