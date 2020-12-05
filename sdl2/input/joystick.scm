@@ -25,7 +25,6 @@
 
 (define-module (sdl2 input joystick)
   #:use-module (ice-9 format)
-  #:use-module (ice-9 match)
   #:use-module (system foreign)
   #:use-module ((sdl2 bindings) #:prefix ffi:)
   #:use-module (sdl2)
