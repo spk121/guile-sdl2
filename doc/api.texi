@@ -1137,7 +1137,7 @@ Set the drawing area for @var{renderer} to @var{rect}.
 Copy @var{texture} to the rendering target of @var{renderer}.
 @end deffn
 
-@deffn {Procedure} set-render-draw-color renderer r g b a
+@deffn {Procedure} set-renderer-draw-color! renderer r g b a
 Set color of @var{renderer} to the 32-bit color defined by the 8-bit
 color channels @var{r}, @var{g}, @var{b}, @var{a}.  Each color channel
 value is in the range [0, 255].

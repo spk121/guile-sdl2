@@ -190,7 +190,7 @@ disable it."
    (unwrap-renderer renderer)
    ((@@ (sdl2 blend-mode) blend-mode-bitmask) blend-mode)))
 
-(define (set-render-draw-color renderer r g b a)
+(define (set-renderer-draw-color! renderer r g b a)
   "Set draw color of RENDERER."
   (ffi:sdl-set-render-draw-color (unwrap-renderer renderer) r g b a))
 
