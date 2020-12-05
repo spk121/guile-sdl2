@@ -1229,7 +1229,7 @@ Free the memory used by @var{texture}.
 Get color mod of @var{texture} as a list of the integers.
 @end deffn
 
-@deffn {Procedure} get-texture-alpha-mod texture
+@deffn {Procedure} texture-alpha-mod texture
 Get alpha mod of @var{texture} as a single integer.
 @end deffn
 

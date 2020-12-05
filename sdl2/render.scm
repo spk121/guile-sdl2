@@ -344,7 +344,7 @@ created with 'texture')"
   (unless (zero? (ffi:sdl-set-texture-alpha-mod (unwrap-texture texture) a))
     (sdl-error "set-texture-alpha-mod!" "Failed to set texture alpha mod")))
 
-(define (get-texture-alpha-mod texture)
+(define (texture-alpha-mod texture)
   "Get alpha mod of TEXTURE as a single integer."
   (let ((bv (make-bytevector 1)))
     (let ((result (ffi:sdl-get-texture-alpha-mod
