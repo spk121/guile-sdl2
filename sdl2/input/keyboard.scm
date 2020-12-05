@@ -25,7 +25,6 @@
 
 (define-module (sdl2 input keyboard)
   #:use-module (ice-9 hash-table)
-  #:use-module (ice-9 match)
   #:use-module (srfi srfi-4)
   #:use-module (system foreign)
   #:use-module ((sdl2 bindings) #:prefix ffi:)
