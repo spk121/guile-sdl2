@@ -45,14 +45,14 @@
   (let ((bv (s32vector x y width height)))
     (%make-rect bv (bytevector->pointer bv))))
 
-(define (rect-x rect)
+(define-inlinable (rect-x rect)
   (s32vector-ref (rect-bv rect) 0))
 
-(define (rect-y rect)
+(define-inlinable (rect-y rect)
   (s32vector-ref (rect-bv rect) 1))
 
-(define (rect-width rect)
+(define-inlinable (rect-width rect)
   (s32vector-ref (rect-bv rect) 2))
 
-(define (rect-height rect)
+(define-inlinable (rect-height rect)
   (s32vector-ref (rect-bv rect) 3))
