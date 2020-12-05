@@ -94,14 +94,14 @@ size is POINT-SIZE."
   (ffi:ttf-font-line-skip (unwrap-font font)))
 
 (define (font-size font text)
-  "Return a 2-element list containing the resulting surface size of
-the string TEXT using FONT in the following format: (width height)."
+  "Return 2 values for the resulting surface size of the string TEXT
+using FONT."
   (let ((bv (make-s32vector 2)))
     (if (zero? (ffi:ttf-size-utf8 (unwrap-font font)
                                   (string->pointer text)
                                   (bytevector->pointer bv)
                                   (bytevector->pointer bv 4)))
-        (s32vector->list bv)
+        (values (s32vector-ref bv 0) (s32vector-ref bv 1))
         (sdl-error "size-utf8" "failed to get size utf8"))))
 
 (define (font-glyph-index font char)

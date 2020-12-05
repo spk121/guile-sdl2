@@ -1559,9 +1559,8 @@ Return the recommended pixel height of a line of text using
 @end deffn
 
 @deffn {Procedure} font-size-text font text
-Return a 2-element list containing the resulting surface size of the
-string @var{text} using @var{font} in the following format:
-@code{(width height)}.
+Return 2 values for the resulting surface size of the string
+@var{text} using @var{font}.
 @end deffn
 
 @deffn {Procedure} font-glyph-index font char
