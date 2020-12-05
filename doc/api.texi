@@ -1569,9 +1569,8 @@ Return the index of the glyph for @var{char} in @var{font}, or
 @end deffn
 
 @deffn {Procedure} font-glyph-metrics font char
-Return a 5-element list containing the metrics of @var{char} in
-@var{font} in the following format: @code{(minx maxx miny maxy
-advance)}
+Return values for the metrics of @var{char} in @var{font}: min x, max
+x, min y, max y, and advance.
 @end deffn
 
 @deffn font-style font

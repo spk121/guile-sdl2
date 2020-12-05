@@ -111,8 +111,8 @@ not present."
     (if (eq? result 0) #f result)))
 
 (define (font-glyph-metrics font char)
-  "Return a 5-element list containing the metrics of CHAR in FONT in
-the following format: (minx maxx miny maxy advance)"
+  "Return 5 values for the metrics of CHAR in FONT: min x, max x, min y,
+max y, and advance."
   (let ((bv (make-s32vector 5)))
     (if (zero? (ffi:ttf-glyph-metrics (unwrap-font font)
                                       (char->integer char)
@@ -121,7 +121,11 @@ the following format: (minx maxx miny maxy advance)"
                                       (bytevector->pointer bv 8)
                                       (bytevector->pointer bv 12)
                                       (bytevector->pointer bv 16)))
-        (s32vector->list bv)
+        (values (s32vector-ref bv 0)
+                (s32vector-ref bv 1)
+                (s32vector-ref bv 2)
+                (s32vector-ref bv 3)
+                (s32vector-ref bv 4))
         (sdl-error "font-glyph-metrics" "failed to get glyph metrics"))))
 
 (define (font-style font)
