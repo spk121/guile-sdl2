@@ -41,12 +41,12 @@
             renderer-scale
             renderer-integer-scale
             renderer-viewport
-            render-target
+            renderer-target
             set-renderer-logical-size!
             set-renderer-scale!
             set-renderer-integer-scale!
             set-renderer-viewport!
-            set-render-target!
+            set-renderer-target!
             set-renderer-draw-color!
             set-renderer-draw-blend-mode!
 
@@ -396,7 +396,7 @@ created with 'texture')"
     (unless (zero? result)
       (sdl-error "render-copy" "failed to copy texture"))))
 
-(define (set-render-target! renderer texture)
+(define (set-renderer-target! renderer texture)
   "Sets the render target for RENDERER to TEXTURE, making all comming draw
 requests redirect to TEXTURE.
 
@@ -409,7 +409,7 @@ Pass #f to reset it to the default target."
     (unless (zero? result)
       (sdl-error "set-render-target!" "failed to set render target"))))
 
-(define (render-target renderer)
+(define (renderer-target renderer)
   "Returns the current render target of RENDERER. #f if it's a texture."
   (let ((ptr (ffi:sdl-get-render-target (unwrap-renderer renderer))))
     (if (null-pointer? ptr)

@@ -1148,6 +1148,18 @@ Set blend mode of @var{renderer} to @var{blend-mode}. @xref{Blend
 Modes} for more information.
 @end deffn
 
+@deffn {Procedure} set-renderer-target! renderer texture
+Sets the render target for @var{renderer} to @var{texture}, making all
+comming draw requests redirect to @var{texture}.
+
+Pass @code{#f} to reset it to the default target.
+@end deffn
+
+@deffn {Procedure} renderer-target renderer
+Returns the current render target of @var{renderer} or @code{#f} if
+it's a texture.
+@end deffn
+
 @deffn {Procedure} draw-line renderer x1 y1 x2 y2
 Draw a line from (@var{x1}, @var{y1}) to (@var{x2}, @var{y2}) on the
 current rendering target of @var{renderer}.
@@ -1191,18 +1203,6 @@ Fill @var{rectangle} onto @var{renderer}.
 Fill the list @var{rects} onto @var{renderer}.  Optionally, for best
 performance, @var{rects} may instead be a bytevector packed with
 signed 32 bit integers, 4 per rect (x, y, width, height).
-@end deffn
-
-@deffn {Procedure} set-render-target! renderer texture
-Sets the render target for @var{renderer} to @var{texture}, making all
-comming draw requests redirect to @var{texture}.
-
-Pass @code{#f} to reset it to the default target.
-@end deffn
-
-@deffn {Procedure} render-target renderer
-Returns the current render target of @var{renderer} or @code{#f} if
-it's a texture.
 @end deffn
 
 @deffn {Procedure} make-texture renderer format access width height
