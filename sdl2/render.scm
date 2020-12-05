@@ -400,7 +400,7 @@ Pass #f to reset it to the default target."
     (unless (zero? result)
       (sdl-error "set-render-target!" "failed to set render target"))))
 
-(define (get-render-target renderer)
+(define (render-target renderer)
   "Returns the current render target of RENDERER. #f if it's a texture."
   (let ((ptr (ffi:sdl-get-render-target (unwrap-renderer renderer))))
     (if (null-pointer? ptr)

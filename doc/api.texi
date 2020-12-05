@@ -1200,7 +1200,7 @@ comming draw requests redirect to @var{texture}.
 Pass @code{#f} to reset it to the default target.
 @end deffn
 
-@deffn {Procedure} get-render-target renderer
+@deffn {Procedure} render-target renderer
 Returns the current render target of @var{renderer} or @code{#f} if
 it's a texture.
 @end deffn
