@@ -93,25 +93,22 @@ Return the title for @var{window}.
 @end deffn
 
 @deffn {Procedure} window-size window
-Return the dimensions of @var{window}.
+Return 2 values for the dimensions of @var{window}.
 @end deffn
 
 @deffn {Procedure} window-minimum-size window
-Return the minimal dimensions, that @var{window} should take.
-Note, that SDL does not always enforce this restriction, so you might end up
-with a window-size, that is actually smaller than the value returned by this
-function.
+Return 2 values for the minimal dimensions that @var{window} can be.
+Note that SDL does not always enforce this restriction, so you might
+end up with a window size that is actually smaller than the value
+returned by this procedure.
 @end deffn
 
 @deffn {Procedure} window-maximum-size window
-Return the maximal dimensions, that @var{window} should take.
-Note, that SDL does not always enforce this restriction, so you might end up
-with a window-size, that is actually larger than the value returned by this
-function.
+Return 2 values for the maximum dimensions that @var{window} can be.
 @end deffn
 
 @deffn {Procedure} window-position window
-Return the position of @var{window} on the display.
+Return 2 values for the position of @var{window} on the display.
 @end deffn
 
 @deffn {Procedure} window-id window

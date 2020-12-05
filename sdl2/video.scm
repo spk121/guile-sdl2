@@ -160,7 +160,8 @@ returns or otherwise exits."
     (proc (unwrap-window window)
           (bytevector->pointer bv)
           (bytevector->pointer bv (sizeof int)))
-    (bytevector->sint-list bv (native-endianness) (sizeof int))))
+    (values (bytevector-sint-ref bv 0 (native-endianness) (sizeof int))
+            (bytevector-sint-ref bv (sizeof int) (native-endianness) (sizeof int)))))
 
 (define (window-size window)
   "Return the dimensions of WINDOW."
