@@ -67,7 +67,8 @@
 
             make-texture
             delete-texture!
-            surface->texture))
+            surface->texture
+            query-texture))
 
 
 ;;;
@@ -343,6 +344,64 @@ created with 'texture')"
 (define (delete-texture! texture)
   "Free the memory used by TEXTURE."
   (ffi:sdl-destroy-texture (unwrap-texture texture)))
+
+(define (query-texture texture)
+  "Return 4 values for the format, access, width and height of
+TEXTURE."
+  (let ((bv (make-bytevector (+ (sizeof uint32)
+                                (* 3 (sizeof int)))
+                             0)))
+    (unless (zero?
+             (ffi:sdl-query-texture
+              (unwrap-texture texture)
+              (bytevector->pointer bv)
+              (bytevector->pointer bv (sizeof uint32))
+              (bytevector->pointer bv (+ (sizeof uint32) (sizeof int)))
+              (bytevector->pointer bv (+ (sizeof uint32) (* 2 (sizeof int))))))
+      (sdl-error "query-texture" "Failed to query texture"))
+    (values
+     (match (bytevector-uint-ref bv 0 (native-endianness) (sizeof uint32))
+       (ffi:SDL_PIXELFORMAT_INDEX1LSB 'index1lsb)
+       (ffi:SDL_PIXELFORMAT_INDEX1MSB 'index1msb)
+       (ffi:SDL_PIXELFORMAT_INDEX4LSB 'index4lsb)
+       (ffi:SDL_PIXELFORMAT_INDEX4MSB 'index4msb)
+       (ffi:SDL_PIXELFORMAT_INDEX8 'index8)
+       (ffi:SDL_PIXELFORMAT_RGB332 'rgb332)
+       (ffi:SDL_PIXELFORMAT_RGB444 'rgb444)
+       (ffi:SDL_PIXELFORMAT_RGB555 'rgb555)
+       (ffi:SDL_PIXELFORMAT_BGR555 'bgr555)
+       (ffi:SDL_PIXELFORMAT_ARGB4444 'argb4444)
+       (ffi:SDL_PIXELFORMAT_RGBA4444 'rgba4444)
+       (ffi:SDL_PIXELFORMAT_ABGR4444 'abgr4444)
+       (ffi:SDL_PIXELFORMAT_BGRA4444 'bgra4444)
+       (ffi:SDL_PIXELFORMAT_ARGB1555 'argb1555)
+       (ffi:SDL_PIXELFORMAT_RGBA5551 'rgba5551)
+       (ffi:SDL_PIXELFORMAT_ABGR1555 'abgr1555)
+       (ffi:SDL_PIXELFORMAT_BGRA5551 'bgra5551)
+       (ffi:SDL_PIXELFORMAT_RGB565 'rgb565)
+       (ffi:SDL_PIXELFORMAT_BGR565 'bgr565)
+       (ffi:SDL_PIXELFORMAT_RGB24 'rgb24)
+       (ffi:SDL_PIXELFORMAT_BGR24 'bgr24)
+       (ffi:SDL_PIXELFORMAT_RGB888 'rgb888)
+       (ffi:SDL_PIXELFORMAT_RGBX8888 'rgbx8888)
+       (ffi:SDL_PIXELFORMAT_BGR888 'bgr888)
+       (ffi:SDL_PIXELFORMAT_BGRX8888 'bgrx8888)
+       (ffi:SDL_PIXELFORMAT_ARGB8888 'argb8888)
+       (ffi:SDL_PIXELFORMAT_RGBA8888 'rgba8888)
+       (ffi:SDL_PIXELFORMAT_ABGR8888 'abgr8888)
+       (ffi:SDL_PIXELFORMAT_BGRA8888 'bgra8888)
+       (ffi:SDL_PIXELFORMAT_ARGB2101010 'argb2101010)
+       (ffi:SDL_PIXELFORMAT_YV12 'yv12)
+       (ffi:SDL_PIXELFORMAT_IYUV 'iyuv)
+       (ffi:SDL_PIXELFORMAT_YUY2 'yuy2)
+       (ffi:SDL_PIXELFORMAT_UYVY 'uyvy)
+       (ffi:SDL_PIXELFORMAT_YVYU 'yvyu))
+     (match (bytevector-uint-ref bv (sizeof int) (native-endianness) (sizeof int))
+       (ffi:SDL_TEXTUREACCESS_STATIC    'static)
+       (ffi:SDL_TEXTUREACCESS_STREAMING 'streaming)
+       (ffi:SDL_TEXTUREACCESS_TARGET    'target))
+     (bytevector-uint-ref bv (* 2 (sizeof int)) (native-endianness) (sizeof int))
+     (bytevector-uint-ref bv (* 3 (sizeof int)) (native-endianness) (sizeof int)))))
 
 (define (set-texture-color-mod! texture r g b)
   "Get color mod of TEXTURE as a list of the integers."

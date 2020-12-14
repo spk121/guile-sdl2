@@ -1217,6 +1217,10 @@ requires that renderer was created with the @code{texture} flag.
 @end itemize
 @end deffn
 
+@deffn {Procedure} query-texture texture
+Return 4 values for the format, access, width and height of a texture.
+@end deffn
+
 @deffn {Procedure} surface->texture renderer surface
 Convert @var{surface} to a texture suitable for @var{renderer}.
 @end deffn

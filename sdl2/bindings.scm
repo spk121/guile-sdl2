@@ -306,6 +306,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-destroy-texture
   void "SDL_DestroyTexture" '(*))
 
+(define-foreign sdl-query-texture
+  int "SDL_QueryTexture" '(* * * * *))
+
 (define-foreign sdl-set-texture-color-mod
   int "SDL_SetTextureColorMod" (list '* uint8 uint8 uint8))
 
