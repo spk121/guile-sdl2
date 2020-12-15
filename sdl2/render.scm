@@ -137,7 +137,8 @@ color."
     (ffi:sdl-render-get-logical-size (unwrap-renderer renderer)
                                      (bytevector->pointer bv)
                                      (bytevector->pointer (sizeof int)))
-    (bytevector->sint-list bv (native-endianness) (sizeof int))))
+    (values (bytevector-sint-ref bv 0 (native-endianness) (sizeof int))
+            (bytevector-sint-ref bv (sizeof int) (native-endianness) (sizeof int)))))
 
 (define (set-renderer-logical-size! renderer width height)
   "Set the logical size of RENDERER to WIDTH x HEIGHT."
