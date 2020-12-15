@@ -35,6 +35,8 @@
             sdl-init
             sdl-quit
             sdl-ticks
+            sdl-performance-counter
+            sdl-performance-frequency
 
             <color>
             make-color
@@ -93,6 +95,14 @@ upon all exit conditions."
   "Return the number of milliseconds since the SDL library was
 initialized."
   (ffi:sdl-get-ticks))
+
+(define (sdl-performance-counter)
+  "Return the current value of the high resolution counter."
+  (ffi:sdl-get-performance-counter))
+
+(define (sdl-performance-frequency)
+  "Return the count per second of the high resolution counter."
+  (ffi:sdl-get-performance-frequency))
 
 ;; SDL_Color
 (define-record-type <color>

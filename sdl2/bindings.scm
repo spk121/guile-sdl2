@@ -1007,6 +1007,12 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-get-ticks
   uint32 "SDL_GetTicks" '())
 
+(define-foreign sdl-get-performance-counter
+  uint64 "SDL_GetPerformanceCounter" '())
+
+(define-foreign sdl-get-performance-frequency
+  uint64 "SDL_GetPerformanceFrequency" '())
+
 
 ;;;
 ;;; File I/O

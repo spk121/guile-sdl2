@@ -44,6 +44,14 @@ Return the number of milliseconds since the SDL library was
 initialized.
 @end deffn
 
+@deffn {Procedure} sdl-performance-counter
+Return the current value of the high resolution counter.
+@end deffn
+
+@deffn {Procedure} sdl-performance-frequency
+Return the count per second of the high resolution counter.
+@end deffn
+
 @node Window Management
 @section Window Management
 
