@@ -151,9 +151,9 @@ color."
   (let ((bv (make-bytevector (* 2 (sizeof float)) 0)))
     (ffi:sdl-render-get-scale (unwrap-renderer renderer)
                               (bytevector->pointer bv)
-                              (bytevector->pointer (sizeof float)))
-    (list (bytevector-ieee-single-native-ref bv 0)
-          (bytevector-ieee-single-native-ref bv 1))))
+                              (bytevector->pointer bv (sizeof float)))
+    (values (bytevector-ieee-single-native-ref bv 0)
+            (bytevector-ieee-single-native-ref bv (sizeof float)))))
 
 (define (set-renderer-scale! renderer scale-x scale-y)
   "Set the drawing scale of RENDERER according to SCALE-X and SCALE-Y
