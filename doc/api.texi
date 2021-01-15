@@ -10,6 +10,7 @@
 * Images::                      Loading and saving images.
 * Sound::                       Sound effects and music.
 * Fonts::                       Truetype and bitmap font rendering.
+* Hints::                       Getting and setting configuration hints.
 @end menu
 
 @node Basics
@@ -1648,3 +1649,26 @@ Render @var{text}, a UTF-8 encoded string, using @var{font} and @var{color}, the
 foreground color, and return a high-quality alpha-blended surface containing the
 results.
 @end deffn
+
+@node Hints
+@section Hints
+
+@example
+(use-modules (sdl2 hints))
+@end example
+
+@deffn {Procedure} get-hint hint
+Get the string value of @var{hint} or @code{#f} if if @var{hint} is unset.
+@end deffn
+
+@deffn {Procedure} set-hint! hint value [priority]
+Set @var{hint} to @var{value} at priority level @var{priority}.
+@var{priority} can be one of the symbols @code{default}, @code{normal} or
+@code{override} and defaults to @code{normal}.
+@var{value} will automatically be converted to a string if it is a boolean
+or a number.
+@end deffn
+
+Inside SDL2, the macro @code{SDL_HINT_SOME_HINT} corresponds to the
+environment variable @env{SDL_SOME_HINT}.  In Guile-SDL2, this hint would be
+represented by the symbol @code{some-symbol.}

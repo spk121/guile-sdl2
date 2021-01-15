@@ -1301,3 +1301,17 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign sdl-has-clipboard-text
   int "SDL_HasClipboardText" '())
+
+;;;
+;;; Hints
+;;;
+
+(define-public SDL_HINT_DEFAULT 0)
+(define-public SDL_HINT_NORMAL 1)
+(define-public SDL_HINT_OVERRIDE 2)
+
+(define-foreign sdl-set-hint-with-priority
+  sdl-bool "SDL_SetHintWithPriority" (list '* '* int))
+
+(define-foreign sdl-get-hint
+  '* "SDL_GetHint" (list '*))
