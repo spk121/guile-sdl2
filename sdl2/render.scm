@@ -237,7 +237,7 @@ disable it."
         (() bv)
         (((x y) . rest)
          (s32vector-set! bv (* i 2) x)
-         (s32vector-set! bv (+ (* i 1) 1) y)
+         (s32vector-set! bv (+ (* i 2) 1) y)
          (loop rest (+ i 1)))))))
 
 (define (draw-lines renderer points)
