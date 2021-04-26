@@ -105,6 +105,6 @@ EXTRA_DIST +=					\
 publish: dist
 	gpg --sign --detach-sign --armor --yes guile-sdl2-$(VERSION).tar.gz && \
         scp guile-sdl2-$(VERSION).tar.gz guile-sdl2-$(VERSION).tar.gz.asc \
-	    blog@dthompson.us:/var/www/files/guile-sdl2/
+	    publish@dthompson.us:/var/www/files/guile-sdl2/
 
 .PHONY: publish
