@@ -28,7 +28,7 @@
   #:use-module (sdl2 config))
 
 (define sdl-image-func
-  (let ((lib (dynamic-link %libsdl2-image)))
+  (let ((lib (dynamic-link* %libsdl2-image)))
     (lambda (return-type function-name arg-types)
       "Return a procedure for the foreign function FUNCTION-NAME in
 the SDL2_image shared library.  That function must return a value of

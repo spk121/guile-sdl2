@@ -29,7 +29,7 @@
   #:use-module (sdl2 bindings))
 
 (define sdl-ttf-func
-  (let ((lib (dynamic-link %libsdl2-ttf)))
+  (let ((lib (dynamic-link* %libsdl2-ttf)))
     (lambda (return-type function-name arg-types)
       "Return a procedure for the foreign function FUNCTION-NAME in
 the SDL2_ttf shared library.  That function must return a value of

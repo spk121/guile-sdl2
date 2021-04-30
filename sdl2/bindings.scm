@@ -30,7 +30,7 @@
   #:use-module (sdl2 config))
 
 (define sdl-func
-  (let ((lib (dynamic-link %libsdl2)))
+  (let ((lib (dynamic-link* %libsdl2)))
     (lambda (return-type function-name arg-types)
       "Return a procedure for the foreign function FUNCTION-NAME in
 the SDL2 shared library.  That function must return a value of

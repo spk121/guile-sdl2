@@ -1,14 +1,42 @@
 (define-module (sdl2 config)
-  #:export (%libsdl2
+  #:use-module (ice-9 match)
+  #:use-module (system foreign)
+  #:export (dynamic-link*
+            %libsdl2
             %libsdl2-image
             %libsdl2-ttf
             %libsdl2-mixer))
+
+;; Try to link against multiple library possibilities, such as the
+;; absolute file name discovered by ./configure or by searching the
+;; library load path as a fallback method.  Useful when restributing
+;; relocatable builds.
+(define (dynamic-link* names)
+  (let loop ((names names))
+    (match names
+      (()
+       (error "could not find library" names))
+      ((name . rest)
+       (or (false-if-exception (dynamic-link name))
+           (loop rest))))))
 
 ;; Special case Windows since the DLL names are different.  Performing
 ;; this check at runtime allows a Linux machine to cross-compile
 ;; guile-sdl2 for a Windows target.
 (define %windows? (string-prefix? "Windows" (utsname:sysname (uname))))
-(define %libsdl2 (if %windows? "SDL2" "@SDL2_LIBDIR@/libSDL2"))
-(define %libsdl2-image (if %windows? "SDL2_image" "@SDL2_IMAGE_LIBDIR@/libSDL2_image"))
-(define %libsdl2-ttf (if %windows? "SDL2_ttf" "@SDL2_TTF_LIBDIR@/libSDL2_ttf"))
-(define %libsdl2-mixer (if %windows? "SDL2_mixer" "@SDL2_MIXER_LIBDIR@/libSDL2_mixer"))
+(define %libsdl2
+  (if %windows?
+      '("SDL2")
+      '("@SDL2_LIBDIR@/libSDL2" "libSDL2")))
+(define %libsdl2-image
+  (if %windows?
+      '("SDL2_image")
+      '("@SDL2_IMAGE_LIBDIR@/libSDL2_image" "libSDL2_image")))
+(define %libsdl2-ttf
+  (if %windows?
+      '("SDL2_ttf")
+      '("@SDL2_TTF_LIBDIR@/libSDL2_ttf" "libSDL2_ttf")))
+(define %libsdl2-mixer
+  (if %windows?
+      '("SDL2_mixer")
+      '("@SDL2_MIXER_LIBDIR@/libSDL2_mixer" "libSDL2_mixer")))

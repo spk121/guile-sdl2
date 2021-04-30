@@ -30,7 +30,7 @@
   #:use-module (sdl2 bindings))
 
 (define sdl-mixer-func
-  (let ((lib (dynamic-link %libsdl2-mixer)))
+  (let ((lib (dynamic-link* %libsdl2-mixer)))
     (lambda (return-type function-name arg-types)
       "Return a procedure for the foreign function FUNCTION-NAME in
 the SDL2_mixer shared library.  That function must return a value of
