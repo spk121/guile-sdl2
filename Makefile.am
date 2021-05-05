@@ -98,6 +98,7 @@ EXTRA_DIST +=					\
   pre-inst-env.in				\
   README					\
   guix.scm					\
+  run-example					\
   examples/hello.scm				\
   examples/hello.bmp				\
   examples/controller.scm
