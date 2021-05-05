@@ -10,3 +10,5 @@
 *.go
 /sdl2/config.scm
 doc/guile-sdl2.info
+/doc/.dirstamp
+/doc/guile-sdl2.html
