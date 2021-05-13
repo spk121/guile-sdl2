@@ -1,5 +1,5 @@
 ;;; guile-sdl2 --- FFI bindings for SDL2
-;;; Copyright © 2015, 2016 David Thompson <davet@gnu.org>
+;;; Copyright © 2015, 2016, 2021 David Thompson <dthompson2@worcester.edu>
 ;;; Copyright © 2018 Eero Leno <eero@leno.fi>
 ;;; Copyright © 2019 Pierre-Antoine Rouby <contact@parouby.fr>
 ;;;
@@ -379,6 +379,11 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 ;;;
 ;;; Events
 ;;;
+
+(define-public SDL_QUERY -1)
+(define-public SDL_IGNORE 0)
+(define-public SDL_DISABLE 0)
+(define-public SDL_ENABLE 1)
 
 (define-public SDL_QUIT #x100)
 (define-public SDL_APP_TERMINATING #x101)
@@ -1001,6 +1006,15 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign sdl-get-mouse-state
   uint32 "SDL_GetMouseState" '(* *))
+
+(define-foreign sdl-show-cursor
+  int "SDL_ShowCursor" (list int))
+
+(define-foreign sdl-warp-mouse-in-window
+  void "SDL_WarpMouseInWindow" (list '* int int))
+
+(define-foreign sdl-warp-mouse-global
+  int "SDL_WarpMouseGlobal" (list int int))
 
 
 ;;;

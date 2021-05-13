@@ -1,5 +1,5 @@
 ;;; guile-sdl2 --- FFI bindings for SDL2
-;;; Copyright © 2017 David Thompson <davet@gnu.org>
+;;; Copyright © 2017, 2021 David Thompson <dthompson2@worcester.edu>
 ;;;
 ;;; This file is part of guile-sdl2.
 ;;;
@@ -32,7 +32,10 @@
   #:export (mouse-x
             mouse-y
             mouse-button-pressed?
-            mouse-button-released?))
+            mouse-button-released?
+            set-show-cursor!
+            cursor-visible?
+            warp-mouse))
 
 (define (make-int)
   (make-bytevector (sizeof int)))
@@ -70,3 +73,22 @@
 (define (mouse-button-released? button)
   "Return #t if BUTTON is not currently being pressed."
   (not (mouse-button-pressed? button)))
+
+(define (set-show-cursor! show?)
+  "If SHOW? is #t, show the mouse cursor.  Otherwise, hide it."
+  (when (< (ffi:sdl-show-cursor (if show? ffi:SDL_ENABLE ffi:SDL_DISABLE)) 0)
+    (sdl-error "set-show-cursor!" "failed to modify cursor visibility")))
+
+(define (cursor-visible?)
+  "Return #t if the mouse cursor is currently visible."
+  (= (ffi:sdl-show-cursor ffi:SDL_QUERY) ffi:SDL_ENABLE))
+
+(define* (warp-mouse x y #:optional window)
+  "Warp mouse cursor to (X, Y) relative to WINDOW.  If WINDOW is not
+provided, the mouse cursor is moved to the global screen
+coordinates (X, Y)."
+  (if window
+      (ffi:sdl-warp-mouse-in-window ((@@ (sdl2 video) unwrap-window) window)
+                                    x y)
+      (unless (= (ffi:sdl-warp-mouse-global x y) 0)
+        (sdl-error "warp-mouse" "failed to warp mouse globally"))))
