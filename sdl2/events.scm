@@ -100,6 +100,15 @@
             mouse-motion-event-x-rel
             mouse-motion-event-y-rel
 
+            make-mouse-wheel-event
+            mouse-wheel-event?
+            mouse-wheel-event-timestamp
+            mouse-wheel-event-window-id
+            mouse-wheel-event-which
+            mouse-wheel-event-x
+            mouse-wheel-event-y
+            mouse-wheel-event-direction
+
             make-joystick-axis-event
             joystick-axis-event?
             joystick-axis-event-timestamp
@@ -984,6 +993,35 @@
                               (button-mask->list state)
                               x y xrel yrel))))
 
+(define-record-type <mouse-wheel-event>
+  (make-mouse-wheel-event timestamp window-id which x y direction)
+  mouse-wheel-event?
+  (timestamp mouse-wheel-event-timestamp)
+  (window-id mouse-wheel-event-window-id)
+  (which mouse-wheel-event-which)
+  (x mouse-wheel-event-x)
+  (y mouse-wheel-event-y)
+  (direction mouse-wheel-direction))
+
+(define (parse-mouse-wheel-event ptr)
+  (define types
+    (list uint32   ; type
+          uint32   ; timestamp
+          uint32   ; windowID
+          uint32   ; which
+          int32    ; x
+          int32    ; y
+          uint32)) ; direction
+  (match (parse-c-struct ptr types)
+    ((_ timestamp window-id which x y direction)
+     (make-mouse-wheel-event timestamp
+                             window-id
+                             which
+                             x y
+                             (if (= direction ffi:SDL_MOUSEWHEEL_NORMAL)
+                                 'normal
+                                 'flipped)))))
+
 
 ;;;
 ;;; Joystick
@@ -1275,6 +1313,8 @@
                  (parse-mouse-button-event ptr))
                 ((= type ffi:SDL_MOUSEMOTION)
                  (parse-mouse-motion-event ptr))
+                ((= type ffi:SDL_MOUSEWHEEL)
+                 (parse-mouse-wheel-event ptr))
                 ((= type ffi:SDL_JOYAXISMOTION)
                  (parse-joystick-axis-event ptr))
                 ((= type ffi:SDL_JOYBALLMOTION)
