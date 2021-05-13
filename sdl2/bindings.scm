@@ -987,6 +987,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-public SDL_BUTTON_X1     4)
 (define-public SDL_BUTTON_X2     5)
 
+(define-public SDL_MOUSEWHEEL_NORMAL 0)
+(define-public SDL_MOUSEWHEEL_FLIPPED 1)
+
 (define (button-mask n)
   (ash 1 (1- n)))
 
