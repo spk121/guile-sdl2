@@ -129,5 +129,5 @@ SDL2_image, SDL2_mixer, and SDL2_ttf.
   Bug reports and patches may be sent to <davet@gnu.org>.
 
   The maintainer of this library hangs out in the #guile channel on
-  irc.freenode.net, so help and general discussion may also be found
+  irc.libera.chat, so help and general discussion may also be found
   there.
