@@ -321,6 +321,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-get-texture-alpha-mod
   int "SDL_GetTextureAlphaMod" '(* *))
 
+(define-foreign sdl-set-texture-blend-mode
+  int "SDL_SetTextureBlendMode" (list '* int))
+
 (define-foreign sdl-set-render-draw-blend-mode
   int "SDL_SetRenderDrawBlendMode" (list '* int))
 

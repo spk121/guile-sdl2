@@ -403,6 +403,12 @@ TEXTURE."
      (bytevector-uint-ref bv (* 2 (sizeof int)) (native-endianness) (sizeof int))
      (bytevector-uint-ref bv (* 3 (sizeof int)) (native-endianness) (sizeof int)))))
 
+(define (set-texture-blend-mode! texture blend-mode)
+  (unless (zero? (ffi:sdl-set-texture-blend-mode
+                  (unwrap-texture texture)
+                  ((@@ (sdl2 blend-mode) blend-mode-bitmask) blend-mode)))
+    (sdl-error "set-texure-blend-mode!" "Failed to set texture blend mode")))
+
 (define (set-texture-color-mod! texture r g b)
   "Get color mod of TEXTURE as a list of the integers."
   (unless (zero? (ffi:sdl-set-texture-color-mod (unwrap-texture texture) r g b))

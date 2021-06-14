@@ -1254,6 +1254,11 @@ Set the color mod of @var{texture}.
 Set the alpha mod of @var{texture}.
 @end deffn
 
+@deffn {Procedure} set-texture-blend-mode! texture blend-mode
+Set the blend of @var{texture} to @var{blend-mode}.  @xref{Blend
+Modes} for more information.
+@end deffn
+
 @node Blend Modes
 @section Blend Modes
 
