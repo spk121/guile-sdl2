@@ -162,6 +162,10 @@ remove the border.
 Set the title of @var{window} to the string @var{title}.
 @end deffn
 
+@deffn {Procedure} set-window-icon! window icon
+Set the icon of @var{window} to the surface @var{icon}.
+@end deffn
+
 @deffn {Procedure} set-window-position! window x y
 Set the position of @var{window} to (@var{x}, @var{y}).
 @end deffn

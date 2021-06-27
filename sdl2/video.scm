@@ -50,6 +50,7 @@
             restore-window!
             set-window-border!
             set-window-title!
+            set-window-icon!
             set-window-position!
             set-window-size!
             set-window-minimum-size!
@@ -230,6 +231,12 @@ the border."
   "Set the title of WINDOW to the string TITLE."
   (ffi:sdl-set-window-title (unwrap-window window)
                             (string->pointer title)))
+
+(define (set-window-icon! window icon)
+  "Set the icon of WINDOW to the surface ICON."
+  (ffi:sdl-set-window-icon (unwrap-window window)
+                           ((@@ (sdl2 surface) unwrap-surface) icon)))
+
 
 (define (set-window-position! window x y)
   "Set the position of WINDOW to (X, Y)."

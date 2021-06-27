@@ -206,6 +206,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-set-window-title
   void "SDL_SetWindowTitle" '(* *))
 
+(define-foreign sdl-set-window-icon
+  void "SDL_SetWindowIcon" (list '* '*))
+
 (define-foreign sdl-set-window-position
   void "SDL_SetWindowPosition" (list '* int int))
 
