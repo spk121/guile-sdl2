@@ -12,8 +12,8 @@
 ;; library load path as a fallback method.  Useful when restributing
 ;; relocatable builds.
 (define (dynamic-link* names)
-  (let loop ((names names))
-    (match names
+  (let loop ((names* names))
+    (match names*
       (()
        (error "could not find library" names))
       ((name . rest)
