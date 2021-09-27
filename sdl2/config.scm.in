@@ -47,7 +47,7 @@
   ("SDL2"))
 (define-library-name %libsdl2-image
   ("@SDL2_IMAGE_LIBDIR@/libSDL2_image")
-  ("libSDL2_image" "libSDL_image-2.0")
+  ("libSDL2_image" "libSDL2_image-2.0")
   ("SDL2_image"))
 (define-library-name %libsdl2-ttf
   ("@SDL2_TTF_LIBDIR@/libSDL2_ttf")
