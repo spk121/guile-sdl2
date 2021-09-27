@@ -23,20 +23,37 @@
 ;; Special case Windows since the DLL names are different.  Performing
 ;; this check at runtime allows a Linux machine to cross-compile
 ;; guile-sdl2 for a Windows target.
+;;
+;; Another special case is when LD_LIBRARY_PATH is set.  We *don't*
+;; want to use the absolute file name of the library that pkgconfig
+;; found.  Instead, we want to use the library name itself so the
+;; search path is used.
 (define %windows? (string-prefix? "Windows" (utsname:sysname (uname))))
-(define %libsdl2
-  (if %windows?
-      '("SDL2")
-      '("@SDL2_LIBDIR@/libSDL2" "libSDL2")))
-(define %libsdl2-image
-  (if %windows?
-      '("SDL2_image")
-      '("@SDL2_IMAGE_LIBDIR@/libSDL2_image" "libSDL2_image")))
-(define %libsdl2-ttf
-  (if %windows?
-      '("SDL2_ttf")
-      '("@SDL2_TTF_LIBDIR@/libSDL2_ttf" "libSDL2_ttf")))
-(define %libsdl2-mixer
-  (if %windows?
-      '("SDL2_mixer")
-      '("@SDL2_MIXER_LIBDIR@/libSDL2_mixer" "libSDL2_mixer")))
+(define-syntax-rule (define-library-name name
+                      (absolute ...)
+                      (relative ...)
+                      (windows ...))
+  (define name
+    (cond
+     (%windows? '(windows ...))
+     ((getenv "LD_LIBRARY_PATH")
+      '(relative ...))
+     (else
+      '(absolute ...)))))
+
+(define-library-name %libsdl2
+  ("@SDL2_LIBDIR@/libSDL2")
+  ("libSDL2" "libSDL2-2.0")
+  ("SDL2"))
+(define-library-name %libsdl2-image
+  ("@SDL2_IMAGE_LIBDIR@/libSDL2_image")
+  ("libSDL2_image" "libSDL_image-2.0")
+  ("SDL2_image"))
+(define-library-name %libsdl2-ttf
+  ("@SDL2_TTF_LIBDIR@/libSDL2_ttf")
+  ("libSDL2_ttf" "libSDL2_ttf-2.0")
+  ("SDL2_ttf"))
+(define-library-name %libsdl2-mixer
+  ("@SDL2_MIXER_LIBDIR@/libSDL2_mixer")
+  ("libSDL2_mixer" "libSDL2_mixer-2.0")
+  ("SDL2_mixer"))
