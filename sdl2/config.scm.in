@@ -26,8 +26,12 @@
 ;;
 ;; Another special case is when LD_LIBRARY_PATH is set.  We *don't*
 ;; want to use the absolute file name of the library that pkgconfig
-;; found.  Instead, we want to use the library name itself so the
-;; search path is used.
+;; found.  Instead, we want to use just the library name so the search
+;; path is used.  HOWEVER, it could be that LD_LIBRARY_PATH is set but
+;; libSDL2 is not within that path BUT it is available at the absolute
+;; file name provided by pkgconfig.  So, we want to prioritize
+;; searching LD_LIBRARY_PATH when present, but still fallback to the
+;; absolute file names.
 (define %windows? (string-prefix? "Windows" (utsname:sysname (uname))))
 (define-syntax-rule (define-library-name name
                       (absolute ...)
@@ -37,7 +41,7 @@
     (cond
      (%windows? '(windows ...))
      ((getenv "LD_LIBRARY_PATH")
-      '(relative ...))
+      '(relative ... absolute ...))
      (else
       '(absolute ...)))))
 
