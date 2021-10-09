@@ -64,6 +64,7 @@
             texture-alpha-mod
             set-texture-color-mod!
             set-texture-alpha-mod!
+            set-texture-blend-mode!
 
             make-texture
             update-texture
