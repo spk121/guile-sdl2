@@ -973,6 +973,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-get-keyboard-state
   '* "SDL_GetKeyboardState" '(*))
 
+(define-foreign sdl-get-scancode-from-key
+  int "SDL_GetScancodeFromKey" (list int))
+
 
 ;;;
 ;;; Text Input
