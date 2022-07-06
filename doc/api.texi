@@ -1242,6 +1242,14 @@ Convert @var{surface} to a texture suitable for @var{renderer}.
 Free the memory used by @var{texture}.
 @end deffn
 
+@deffn {Procedure} update-texture texture rect pixels pitch
+Update the subsection of @var{texture} defined by @var{rect} with new
+pixel data in the @var{pixels} bytevector.  @var{pitch} represents the
+number of bytes in a row of pixel data, including any padding between
+rows.  This is a fairly slow process: Better to use the lock/unlock
+mechanism in streaming textures.
+@end deffn
+
 @deffn {Procedure} texture-color-mod texture
 Get color mod of @var{texture} as a list of the integers.
 @end deffn

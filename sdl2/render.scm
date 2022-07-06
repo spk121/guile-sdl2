@@ -66,6 +66,7 @@
             set-texture-alpha-mod!
 
             make-texture
+            update-texture
             delete-texture!
             surface->texture
             query-texture))
@@ -331,6 +332,21 @@ created with 'texture')"
     (if (null-pointer? ptr)
         (sdl-error "make-texture" "Failed to create texture")
         (wrap-texture ptr))))
+
+(define (update-texture texture rect pixels pitch)
+  "Update the subsection of TEXTURE defined by RECT with new pixel
+data in the PIXELS bytevector.  PITCH represents the number of bytes
+in a row of pixel data, including any padding between rows.  This is a
+fairly slow process: Better to use the lock/unlock mechanism in
+streaming textures."
+  (let ((ret (ffi:sdl-update-texture
+                (unwrap-texture texture)
+                ((@@ (sdl2 rect) unwrap-rect) rect)
+                (bytevector->pointer pixels)
+                pitch)))
+    (if (> 0 ret)
+      (sdl-error "update-texture" "failed to update texture")
+      ret)))
 
 (define (surface->texture renderer surface)
   "Convert SURFACE to a texture suitable for RENDERER."
