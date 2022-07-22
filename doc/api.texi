@@ -313,6 +313,47 @@ Return @code{#t} if @var{button} is currently being pressed.
 Return @code{#t} if @var{button} is not currently being pressed.
 @end deffn
 
+@deffn {Procedure} make-system-cursor cursor-type
+Create a new cursor from the system's available set, chosen by
+@var{cursor-type}.  The possible values for @var{cursor-type} are:
+
+@itemize
+@item @code{arrow}
+@item @code{crosshair}
+@item @code{hand}
+@item @code{i-beam}
+@item @code{size-north-south}
+@item @code{size-northwest-southeast}
+@item @code{size-northeast-southwest}
+@item @code{size-west-east}
+@item @code{size-all}
+@item @code{no}
+@item @code{wait}
+@item @code{wait-arrow}
+@end itemize
+
+@end deffn
+
+@deffn {Procedure} make-surface-cursor surface hot-x hot-y
+Create a new cursor from a surface and the given hotspot coordinates
+(@var{hot-x}, @var{hot-y}).
+@end deffn
+
+@deffn {Procedure} get-cursor
+Return the cursor currently in use. The returned cursor object is
+internally managed and it's not necessary to call
+@code{delete-cursor!} for it.
+@end deffn
+
+@deffn {Procedure} set-cursor! cursor
+Set the current cursor to @var{cursor}.  If @var{cursor} is @code{#f},
+the system default cursor is restored.
+@end deffn
+
+@deffn {Procedure} delete-cursor! cursor
+Free the memory used by @var{cursor}.  Be careful!
+@end deffn
+
 @node Joysticks
 @subsection Joysticks
 

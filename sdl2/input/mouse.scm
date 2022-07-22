@@ -1,5 +1,6 @@
 ;;; guile-sdl2 --- FFI bindings for SDL2
 ;;; Copyright © 2017, 2021 David Thompson <dthompson2@worcester.edu>
+;;; Copyright © 2022 Ekaitz Zarraga <ekaitz@elenq.tech>
 ;;;
 ;;; This file is part of guile-sdl2.
 ;;;
@@ -19,12 +20,13 @@
 
 ;;; Commentary:
 ;;
-;; Mouse input.
+;; Mouse input and cursor manipulation.
 ;;
 ;;; Code:
 
 (define-module (sdl2 input mouse)
   #:use-module (ice-9 match)
+  #:use-module (ice-9 format)
   #:use-module (rnrs bytevectors)
   #:use-module (sdl2)
   #:use-module ((sdl2 bindings) #:prefix ffi:)
@@ -35,7 +37,12 @@
             mouse-button-released?
             set-show-cursor!
             cursor-visible?
-            warp-mouse))
+            warp-mouse
+            create-system-cursor
+            create-surface-cursor
+            get-cursor
+            set-cursor!
+            delete-cursor!))
 
 (define (make-int)
   (make-bytevector (sizeof int)))
@@ -92,3 +99,66 @@ coordinates (X, Y)."
                                     x y)
       (unless (= (ffi:sdl-warp-mouse-global x y) 0)
         (sdl-error "warp-mouse" "failed to warp mouse globally"))))
+
+
+;;;
+;;; Cursors
+;;;
+
+(define-wrapped-pointer-type <cursor>
+  cursor?
+  wrap-cursor unwrap-cursor
+  (lambda (cursor port)
+    (format port "#<cursor ~x>"
+            (pointer-address (unwrap-cursor cursor)))))
+
+(define (make-system-cursor cursor-type)
+  "Return a new cursor from the system's available set, chosen by
+CURSOR-TYPE.  Valid cursor types are: arrow, crosshair, hand, i-beam,
+no, size-north-south, size-northwest-southeast,
+size-northeast-southwest, size-east-west, size-all, wait, and
+wait-arrow."
+  (let* ((id (case cursor-type
+               ((arrow) ffi:SDL_SYSTEM_CURSOR_ARROW)
+               ((crosshair) ffi:SDL_SYSTEM_CURSOR_CROSSHAIR)
+               ((hand) ffi:SDL_SYSTEM_CURSOR_HAND)
+               ((i-beam) ffi:SDL_SYSTEM_CURSOR_IBEAM)
+               ((no) ffi:SDL_SYSTEM_CURSOR_NO)
+               ((size-north-south) ffi:SDL_SYSTEM_CURSOR_SIZENS)
+               ((size-northwest-southeast) ffi:SDL_SYSTEM_CURSOR_SIZENWSE)
+               ((size-northeast-southwest) ffi:SDL_SYSTEM_CURSOR_SIZENESW)
+               ((size-west-east) ffi:SDL_SYSTEM_CURSOR_SIZEWE)
+               ((size-all) ffi:SDL_SYSTEM_CURSOR_SIZEALL)
+               ((wait) ffi:SDL_SYSTEM_CURSOR_WAIT)
+               ((wait-arrow) ffi:SDL_SYSTEM_CURSOR_WAITARROW)
+               (else
+                 (sdl-error "make-system-cursor" "unknown cursor type"))))
+         (ptr (ffi:sdl-create-system-cursor id)))
+    (if (null-pointer? ptr)
+        (sdl-error "make-system-cursor" "failed to create system cursor")
+        (wrap-cursor ptr))))
+
+(define (make-color-cursor surface hot-x hot-y)
+  "Make a cursor from SURFACE with a hot spot of (HOT-X, HOT-Y)."
+  (let ((ptr (ffi:sdl-create-color-cursor
+               ((@@ (sdl2 surface) unwrap-surface) surface) hot-x hot-y)))
+    (if (null-pointer? ptr)
+        (sdl-error "make-color-cursor" "failed to create color cursor")
+        (wrap-cursor ptr))))
+
+(define (get-cursor)
+  "Return the cursor currently in use.  The returned cursor object is
+internally managed and it's not necessary to call delete-cursor! for
+it."
+  (wrap-cursor (ffi:sdl-get-cursor)))
+
+(define (set-cursor! cursor)
+  "Set current cursor to CURSOR.  If CURSOR is #f, the system default
+cursor is restored."
+  (ffi:sdl-set-cursor (if cursor
+                        (unwrap-cursor cursor)
+                        %null-pointer)))
+
+(define (delete-cursor! cursor)
+  "Free the memory used by CURSOR.  Be careful!"
+  (ffi:sdl-free-cursor (unwrap-cursor cursor)))

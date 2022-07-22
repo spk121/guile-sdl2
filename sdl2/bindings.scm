@@ -2,6 +2,7 @@
 ;;; Copyright © 2015, 2016, 2021 David Thompson <dthompson2@worcester.edu>
 ;;; Copyright © 2018 Eero Leno <eero@leno.fi>
 ;;; Copyright © 2019 Pierre-Antoine Rouby <contact@parouby.fr>
+;;; Copyright © 2022 Ekaitz Zarraga <ekaitz@elenq.tech>
 ;;;
 ;;; This file is part of guile-sdl2.
 ;;;
@@ -1027,6 +1028,38 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 (define-foreign sdl-warp-mouse-global
   int "SDL_WarpMouseGlobal" (list int int))
+
+(define-public SDL_SYSTEM_CURSOR_ARROW 0)
+(define-public SDL_SYSTEM_CURSOR_IBEAM 1)
+(define-public SDL_SYSTEM_CURSOR_WAIT 2)
+(define-public SDL_SYSTEM_CURSOR_CROSSHAIR 3)
+(define-public SDL_SYSTEM_CURSOR_WAITARROW 4)
+(define-public SDL_SYSTEM_CURSOR_SIZENWSE 5)
+(define-public SDL_SYSTEM_CURSOR_SIZENESW 6)
+(define-public SDL_SYSTEM_CURSOR_SIZEWE 7)
+(define-public SDL_SYSTEM_CURSOR_SIZENS 8)
+(define-public SDL_SYSTEM_CURSOR_SIZEALL 9)
+(define-public SDL_SYSTEM_CURSOR_NO 10)
+(define-public SDL_SYSTEM_CURSOR_HAND 11)
+(define-public SDL_NUM_SYSTEM_CURSORS 12)
+
+(define-foreign sdl-create-system-cursor
+  '* "SDL_CreateSystemCursor" (list int))
+
+(define-foreign sdl-create-color-cursor
+  '* "SDL_CreateColorCursor" (list '* int int))
+
+(define-foreign sdl-free-cursor
+  void "SDL_FreeCursor" (list '*))
+
+(define-foreign sdl-set-cursor
+  void "SDL_SetCursor" (list '*))
+
+(define-foreign sdl-get-cursor
+  '* "SDL_GetCursor" '())
+
+(define-foreign sdl-show-cursor
+  int "SDL_ShowCursor" (list int))
 
 
 ;;;
