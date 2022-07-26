@@ -334,7 +334,7 @@ Create a new cursor from the system's available set, chosen by
 
 @end deffn
 
-@deffn {Procedure} make-surface-cursor surface hot-x hot-y
+@deffn {Procedure} make-color-cursor surface hot-x hot-y
 Create a new cursor from a surface and the given hotspot coordinates
 (@var{hot-x}, @var{hot-y}).
 @end deffn
