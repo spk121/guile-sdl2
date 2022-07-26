@@ -38,8 +38,8 @@
             set-show-cursor!
             cursor-visible?
             warp-mouse
-            create-system-cursor
-            create-surface-cursor
+            make-system-cursor
+            make-color-cursor
             get-cursor
             set-cursor!
             delete-cursor!))
