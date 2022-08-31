@@ -62,17 +62,8 @@
      (modify-phases %standard-phases
        (add-after 'unpack 'bootstrap
          (lambda _ (zero? (system* "sh" "bootstrap")))))))
-  (native-inputs
-   `(("autoconf" ,autoconf)
-     ("automake" ,automake)
-     ("pkg-config" ,pkg-config)
-     ("texinfo" ,texinfo)))
-  (inputs
-   `(("guile" ,guile-3.0-latest)
-     ("sdl2" ,sdl2)
-     ("sdl2-image" ,sdl2-image)
-     ("sdl2-mixer" ,sdl2-mixer)
-     ("sdl2-ttf" ,sdl2-ttf)))
+  (native-inputs (list autoconf automake pkg-config texinfo))
+  (inputs (list guile-3.0-latest sdl2 sdl2-image sdl2-mixer sdl2-ttf))
   (synopsis "Guile bindings for SDL2")
   (description "Guile-sdl2 provides pure Guile Scheme bindings to the
 SDL2 C shared library via the foreign function interface.")
