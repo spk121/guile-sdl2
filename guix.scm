@@ -25,7 +25,7 @@
 ;;
 ;; To use as the basis for a development environment, run:
 ;;
-;;   guix environment -l guix.scm
+;;   guix shell
 ;;
 ;;; Code:
 
@@ -34,10 +34,9 @@
              (ice-9 rdelim)
              (srfi srfi-1)
              (srfi srfi-26)
-             (guix gexp)
+             (guix git)
              (guix packages)
              (guix licenses)
-             (guix git-download)
              (guix build-system gnu)
              ((guix build utils) #:select (with-directory-excursion))
              (gnu packages)
@@ -47,14 +46,10 @@
              (gnu packages sdl)
              (gnu packages texinfo))
 
-(define %source-dir (dirname (current-filename)))
-
 (package
   (name "guile-sdl2")
-  (version "0.6.0")
-  (source (local-file %source-dir
-                      #:recursive? #t
-                      #:select? (git-predicate %source-dir)))
+  (version "0.7.0")
+  (source (git-checkout (url (dirname (current-filename)))))
   (build-system gnu-build-system)
   (arguments
    '(#:make-flags '("GUILE_AUTO_COMPILE=0")
