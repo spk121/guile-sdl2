@@ -1288,7 +1288,13 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-public SDL_CONTROLLER_BUTTON_DPAD_DOWN 12)
 (define-public SDL_CONTROLLER_BUTTON_DPAD_LEFT 13)
 (define-public SDL_CONTROLLER_BUTTON_DPAD_RIGHT 14)
-(define-public SDL_CONTROLLER_BUTTON_MAX 15)
+(define-public SDL_CONTROLLER_BUTTON_MISC1 15)
+(define-public SDL_CONTROLLER_BUTTON_PADDLE1 16)
+(define-public SDL_CONTROLLER_BUTTON_PADDLE2 17)
+(define-public SDL_CONTROLLER_BUTTON_PADDLE3 18)
+(define-public SDL_CONTROLLER_BUTTON_PADDLE4 19)
+(define-public SDL_CONTROLLER_BUTTON_TOUCHPAD 20)
+(define-public SDL_CONTROLLER_BUTTON_MAX 21)
 
 (define-foreign sdl-game-controller-add-mappings-from-rw
   int "SDL_GameControllerAddMappingsFromRW" (list '* int))
