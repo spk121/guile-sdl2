@@ -29,16 +29,10 @@
 ;;
 ;;; Code:
 
-(use-modules (ice-9 match)
-             (ice-9 popen)
-             (ice-9 rdelim)
-             (srfi srfi-1)
-             (srfi srfi-26)
-             (guix git)
+(use-modules (guix git)
              (guix packages)
              (guix licenses)
              (guix build-system gnu)
-             ((guix build utils) #:select (with-directory-excursion))
              (gnu packages)
              (gnu packages autotools)
              (gnu packages guile)
@@ -56,11 +50,11 @@
      #:phases
      (modify-phases %standard-phases
        (add-after 'unpack 'bootstrap
-         (lambda _ (zero? (system* "sh" "bootstrap")))))))
+         (lambda _ (invoke "sh" "bootstrap"))))))
   (native-inputs (list autoconf automake pkg-config texinfo))
   (inputs (list guile-3.0-latest sdl2 sdl2-image sdl2-mixer sdl2-ttf))
   (synopsis "Guile bindings for SDL2")
-  (description "Guile-sdl2 provides pure Guile Scheme bindings to the
-SDL2 C shared library via the foreign function interface.")
+  (description "Guile-SDL2 provides pure Guile Scheme bindings to the SDL2 C shared
+library via the foreign function interface.")
   (home-page "https://git.dthompson.us/guile-sdl2.git")
   (license lgpl3+))
