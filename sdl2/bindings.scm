@@ -454,6 +454,8 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-public SDL_WINDOWEVENT_FOCUS_GAINED 12)
 (define-public SDL_WINDOWEVENT_FOCUS_LOST   13)
 (define-public SDL_WINDOWEVENT_CLOSE        14)
+(define-public SDL_WINDOWEVENT_TAKE_FOCUS   15)
+(define-public SDL_WINDOWEVENT_HIT_TEST     16)
 
 (define-foreign sdl-poll-event
   int "SDL_PollEvent" '(*))
