@@ -279,22 +279,25 @@
 
 (define (parse-window-event ptr)
   (define (type-symbol n)
-    (list-ref '(none
-                shown
-                hidden
-                exposed
-                moved
-                resized
-                size-changed
-                minimized
-                maximized
-                restored
-                enter
-                leave
-                focus-gained
-                focus-lost
-                close)
-              (1- n)))
+    (cond
+     ((= n ffi:SDL_WINDOWEVENT_NONE) 'none)
+     ((= n ffi:SDL_WINDOWEVENT_SHOWN) 'shown)
+     ((= n ffi:SDL_WINDOWEVENT_HIDDEN) 'hidden)
+     ((= n ffi:SDL_WINDOWEVENT_EXPOSED) 'exposed)
+     ((= n ffi:SDL_WINDOWEVENT_MOVED) 'moved)
+     ((= n ffi:SDL_WINDOWEVENT_RESIZED) 'resized)
+     ((= n ffi:SDL_WINDOWEVENT_SIZE_CHANGED) 'size-changed)
+     ((= n ffi:SDL_WINDOWEVENT_MINIMIZED) 'minimized)
+     ((= n ffi:SDL_WINDOWEVENT_MAXIMIZED) 'maximized)
+     ((= n ffi:SDL_WINDOWEVENT_RESTORED) 'restored)
+     ((= n ffi:SDL_WINDOWEVENT_ENTER) 'enter)
+     ((= n ffi:SDL_WINDOWEVENT_LEAVE) 'leave)
+     ((= n ffi:SDL_WINDOWEVENT_FOCUS_GAINED) 'focus-gained)
+     ((= n ffi:SDL_WINDOWEVENT_FOCUS_LOST) 'focus-lost)
+     ((= n ffi:SDL_WINDOWEVENT_CLOSE) 'close)
+     ((= n ffi:SDL_WINDOWEVENT_TAKE_FOCUS) 'take-focus)
+     ((= n ffi:SDL_WINDOWEVENT_HIT_TEST) 'hit-test)
+     (else 'unknown)))
 
   (define types
     (list uint32  ; type
