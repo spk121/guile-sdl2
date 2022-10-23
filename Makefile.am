@@ -56,7 +56,8 @@ SOURCES =					\
   sdl2/input/joystick.scm			\
   sdl2/input/game-controller.scm		\
   sdl2/input/mouse.scm				\
-  sdl2/input/text.scm
+  sdl2/input/text.scm				\
+  sdl2/input/sensor.scm
 
 if HAVE_SDL2_IMAGE
 

@@ -1065,6 +1065,68 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 
 
 ;;;
+;;; Sensors
+;;;
+
+(define-public SDL_SENSOR_INVALID -1)
+(define-public SDL_SENSOR_UNKNOWN 0)
+(define-public SDL_SENSOR_ACCEL 1)
+(define-public SDL_SENSOR_GYRO 2)
+(define-public SDL_SENSOR_ACCEL_L 3)
+(define-public SDL_SENSOR_GYRO_L 4)
+(define-public SDL_SENSOR_ACCEL_R 5)
+(define-public SDL_SENSOR_GYRO_R 6)
+
+(define-public SDL_STANDARD_GRAVITY 9.80665)
+
+(define-foreign sdl-num-sensors
+  int "SDL_NumSensors" '())
+
+(define-foreign sdl-sensor-get-device-name
+  '* "SDL_SensorGetDeviceName" (list int))
+
+(define-foreign sdl-sensor-get-device-type
+  int "SDL_SensorGetDeviceType" (list int))
+
+(define-foreign sdl-sensor-get-device-non-portable-type
+  int "SDL_SensorGetDeviceNonPortableType" (list int))
+
+(define-foreign sdl-sensor-get-device-instance-id
+  int "SDL_SensorGetDeviceInstanceID" (list int))
+
+(define-foreign sdl-sensor-open
+  '* "SDL_SensorOpen" (list int))
+
+(define-foreign sdl-sensor-from-instance-id
+  '* "SDL_SensorFromInstanceID" (list int))
+
+(define-foreign sdl-sensor-get-name
+  '* "SDL_SensorGetName" '(*))
+
+(define-foreign sdl-sensor-get-type
+  int "SDL_SensorGetType" '(*))
+
+(define-foreign sdl-sensor-get-non-portable-type
+  int "SDL_SensorGetNonPortableType" '(*))
+
+(define-foreign sdl-sensor-get-instance-id
+  int "SDL_SensorGetInstanceID" '(*))
+
+(define-foreign sdl-sensor-get-data
+  int "SDL_SensorGetData" (list '* '* int))
+
+;; Only available in very recent versions of SDL2.
+;; (define-foreign sdl-sensor-get-data-with-timestamp
+;;   int "SDL_SensorGetDataWithTimestamp" (list '* uint64 '* int))
+
+(define-foreign sdl-sensor-close
+  void "SDL_SensorClose" '(*))
+
+(define-foreign sdl-sensor-update
+  void "SDL_SensorUpdate" '())
+
+
+;;;
 ;;; Timer
 ;;;
 
