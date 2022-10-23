@@ -19,7 +19,7 @@
 # License along with guile-sdl2.  If not, see
 # <http://www.gnu.org/licenses/>.
 
-AC_INIT(guile-sdl2, 0.7.0)
+AC_INIT(guile-sdl2, 0.8.0)
 AC_CONFIG_SRCDIR(sdl2)
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([color-tests -Wall -Wno-portability foreign])

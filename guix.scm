@@ -42,7 +42,7 @@
 
 (package
   (name "guile-sdl2")
-  (version "0.7.0")
+  (version "0.8.0")
   (source (git-checkout (url (dirname (current-filename)))))
   (build-system gnu-build-system)
   (arguments
