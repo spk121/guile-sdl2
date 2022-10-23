@@ -1240,6 +1240,20 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-public AUDIO_F32MSB #x9120)
 (define-public AUDIO_F32    AUDIO_F32LSB)
 
+(define-public SDL_AUDIO_ALLOW_FREQUENCY_CHANGE 1)
+(define-public SDL_AUDIO_ALLOW_FORMAT_CHANGE 2)
+(define-public SDL_AUDIO_ALLOW_CHANNELS_CHANGE 4)
+(define-public SDL_AUDIO_ALLOW_SAMPLES_CHANGE 8)
+
+(define-foreign sdl-get-num-audio-devices
+  int "SDL_GetNumAudioDevices" (list int))
+
+(define-foreign sdl-get-audio-device-name
+  '* "SDL_GetAudioDeviceName" (list int int))
+
+(define-foreign sdl-open-audio-device
+  int "SDL_OpenAudioDevice" (list '* int '* '* int))
+
 
 ;;;
 ;;; Joystick

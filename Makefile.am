@@ -51,6 +51,7 @@ SOURCES =					\
   sdl2/surface.scm				\
   sdl2/render.scm				\
   sdl2/video.scm				\
+  sdl2/audio.scm				\
   sdl2/events.scm				\
   sdl2/input/keyboard.scm			\
   sdl2/input/joystick.scm			\
