@@ -794,7 +794,7 @@
      (,ffi:SDL_SCANCODE_RCTRL . right-control)
      (,ffi:SDL_SCANCODE_RSHIFT . right-shift)
      (,ffi:SDL_SCANCODE_RALT . right-alt)
-     (,ffi:SDL_SCANCODE_RGUI . right-cui)
+     (,ffi:SDL_SCANCODE_RGUI . right-gui)
      (,ffi:SDL_SCANCODE_MODE . mode)
      (,ffi:SDL_SCANCODE_AUDIONEXT . audio-next)
      (,ffi:SDL_SCANCODE_AUDIOPREV . audio-prev)
