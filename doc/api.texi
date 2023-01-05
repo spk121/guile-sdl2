@@ -1249,11 +1249,11 @@ instead be a bytevector packed with signed 32 bit integers, 4 per rect
 (x, y, width, height).
 @end deffn
 
-@deffn {Procedure} fill-rect renderer rectangle
+@deffn {Procedure} render-fill-rect renderer rectangle
 Fill @var{rectangle} onto @var{renderer}.
 @end deffn
 
-@deffn {Procedure} fill-rects renderer rects
+@deffn {Procedure} render-fill-rects renderer rects
 Fill the list @var{rects} onto @var{renderer}.  Optionally, for best
 performance, @var{rects} may instead be a bytevector packed with
 signed 32 bit integers, 4 per rect (x, y, width, height).

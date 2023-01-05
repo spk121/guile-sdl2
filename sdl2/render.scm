@@ -57,8 +57,8 @@
             draw-points
             draw-rect
             draw-rects
-            fill-rect
-            fill-rects
+            render-fill-rect
+            render-fill-rects
 
             texture-color-mod
             texture-alpha-mod
@@ -284,7 +284,7 @@ disable it."
                                    (bytevector->pointer bv)
                                    (length rects)))))
 
-(define (fill-rect renderer rect)
+(define (render-fill-rect renderer rect)
   "Fill RECT on RENDERER."
   (ffi:sdl-render-fill-rect
    (unwrap-renderer renderer)
@@ -292,7 +292,7 @@ disable it."
        ((@@ (sdl2 rect) unwrap-rect) rect)
        %null-pointer)))
 
-(define (fill-rects renderer rects)
+(define (render-fill-rects renderer rects)
   "Fill RECTS on RENDERER."
   (if (bytevector? rects)
       (ffi:sdl-render-fill-rects (unwrap-renderer renderer)
