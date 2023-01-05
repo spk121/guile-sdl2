@@ -466,14 +466,14 @@ TEXTURE."
                  (unwrap-renderer renderer)
                  (unwrap-texture texture)
                  (if srcrect
-                     (make-c-struct ffi:sdl-rect srcrect)
+                     ((@@ (sdl2 rect) unwrap-rect) srcrect)
                      %null-pointer)
                  (if dstrect
-                     (make-c-struct ffi:sdl-rect dstrect)
+                     ((@@ (sdl2 rect) unwrap-rect) dstrect)
                      %null-pointer)
                  angle
                  (if center
-                     (make-c-struct ffi:sdl-point center)
+                     ((@@ (sdl2 rect) unwrap-rect) center)
                      %null-pointer)
                  0)))
     (unless (zero? result)
