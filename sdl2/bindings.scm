@@ -234,6 +234,9 @@ RETURN-TYPE and accept arguments of ARG-TYPES."
 (define-foreign sdl-gl-delete-context
   void "SDL_GL_DeleteContext" '(*))
 
+(define-foreign sdl-gl-make-current
+  void "SDL_GL_MakeCurrent" '(* *))
+
 (define-foreign sdl-gl-swap-window
   void "SDL_GL_SwapWindow" '(*))
 

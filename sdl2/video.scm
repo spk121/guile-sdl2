@@ -63,6 +63,7 @@
             delete-gl-context!
             call-with-gl-context
             swap-gl-window
+            gl-context-make-current!
             set-gl-attribute!
             set-gl-swap-interval!))
 
@@ -291,6 +292,12 @@ that takes the size of the desktop."
     (if (null-pointer? ptr)
         (sdl-error "make-gl-context" "failed to create OpenGL context")
         (wrap-gl-context ptr))))
+
+(define (gl-context-make-current! window context)
+  "Make CONTEXT the current context for rendering to WINDOW in the
+current thread."
+  (unless (zero? (ffi:sdl-gl-make-current (unwrap-window window) (unwrap-gl-context context)))
+    (sdl-error "gl-make-current" "failed to set current GL context")))
 
 (define (delete-gl-context! context)
   "Delete CONTEXT, an OpenGL context object."
