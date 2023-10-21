@@ -32,7 +32,8 @@
 ;; file name provided by pkgconfig.  So, we want to prioritize
 ;; searching LD_LIBRARY_PATH when present, but still fallback to the
 ;; absolute file names.
-(define %windows? (string-prefix? "Windows" (utsname:sysname (uname))))
+(define %windows? (or (string-prefix? "Windows" (utsname:sysname (uname)))
+		      (string-prefix? "MINGW" (utsname:sysname (uname)))))
 (define-syntax-rule (define-library-name name
                       (absolute ...)
                       (relative ...)
